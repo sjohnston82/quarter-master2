@@ -8,8 +8,8 @@ import { householdRouter } from "./routers/household";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  userRouter: userRouter,
-  householdRouter: householdRouter
+  user: userRouter,
+  household: householdRouter,
 });
 
 // export type definition of API
