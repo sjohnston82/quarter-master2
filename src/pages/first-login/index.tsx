@@ -12,8 +12,8 @@ const CreateHouseholdForm = () => {
   const defaultHouseholdName = sessionData?.user?.name?.split(" ")[1];
   const { register, reset, handleSubmit } = useForm({
     defaultValues: {
-      name: defaultHouseholdName ?? ""
-    }
+      name: defaultHouseholdName ?? "",
+    },
   });
 
   // get last name of logged in user and set it to default HH name
@@ -28,23 +28,24 @@ const CreateHouseholdForm = () => {
 
   const createHousehold = api.household.createNewHousehold.useMutation({
     onSuccess: () => {
-      reset()
-    }
+      reset();
+    },
   });
 
   // const onSubmit = (data) => createHousehold.mutate(data);
 
   return (
-    
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    <form className="" onSubmit={handleSubmit((name) => createHousehold.mutate(name))}>
+    <form
+      className=""
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      onSubmit={handleSubmit((name) => createHousehold.mutate(name))}
+    >
       <div className="">
         <span>The </span>
         <input
           type="text"
           id="name"
           {...register("name")}
-          
           className=""
           // onChange={(e) => setHouseholdName(e.target.value)}
         />
