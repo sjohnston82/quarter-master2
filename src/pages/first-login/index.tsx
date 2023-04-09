@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import { api } from "~/utils/api";
+import { useRouter } from "next/router";
 
 // interface IFormInput {
 //   name: string;
@@ -10,6 +11,7 @@ import { api } from "~/utils/api";
 const CreateHouseholdForm = () => {
   const { data: sessionData } = useSession();
   const defaultHouseholdName = sessionData?.user?.name?.split(" ")[1];
+  const router = useRouter();
   const { register, reset, handleSubmit } = useForm({
     defaultValues: {
       name: defaultHouseholdName ?? "",
@@ -18,19 +20,25 @@ const CreateHouseholdForm = () => {
 
   // get last name of logged in user and set it to default HH name
 
-  // const [householdName, setHouseholdName] = useState("");
+  const getHouseholdId = api.household.getHouseholdId.useQuery();
+  const [householdId, setHouseholdId] = useState<string | null>(null);
 
-  // useEffect(() => {
-  //   householdName === "" &&
-  //     defaultHouseholdName &&
-  //     setHouseholdName(defaultHouseholdName);
-  // }, [defaultHouseholdName, householdName]);
+  useEffect(() => {
+    getHouseholdId.data &&
+      getHouseholdId.data !== null &&
+      setHouseholdId(getHouseholdId.data.householdId);
+  }, [getHouseholdId.data]);
 
+  console.log(getHouseholdId.data);
   const createHousehold = api.household.createNewHousehold.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       reset();
+      await redirectToHousehold();
     },
   });
+  const redirectToHousehold = async () => {
+    householdId && (await router.push(`/household/${householdId}`));
+  };
 
   // const onSubmit = (data) => createHousehold.mutate(data);
 

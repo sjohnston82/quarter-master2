@@ -24,4 +24,15 @@ export const householdRouter = createTRPCRouter({
         },
       });
     }),
+
+  getHouseholdId: protectedProcedure.query(async({ctx}) => {
+    const userId = ctx.session.user.id;
+
+    return ctx.prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        householdId: true
+      }
+    })
+  })
 });
