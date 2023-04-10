@@ -25,14 +25,33 @@ export const householdRouter = createTRPCRouter({
       });
     }),
 
-  getHouseholdId: protectedProcedure.query(async({ctx}) => {
+  getHouseholdId: protectedProcedure.query(async ({ ctx }) => {
     const userId = ctx.session.user.id;
 
     return ctx.prisma.user.findUnique({
       where: { id: userId },
       select: {
-        householdId: true
-      }
-    })
-  })
+        householdId: true,
+      },
+    });
+  }),
+
+  getHouseholdInfo: protectedProcedure
+    .input(z.object({ householdId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
+
+      return ctx.prisma.household.findUnique({
+        where: {
+          householdId: input.householdId,
+        },
+        select: {
+          name: true,
+          members: true,
+          invitedList: true,
+          householdId: true,
+          _count: true,
+        },
+      });
+    }),
 });
