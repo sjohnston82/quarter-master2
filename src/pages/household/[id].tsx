@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
+import Modal from "~/components/layouts/ui/Modal";
+import { useForm } from "react-hook-form";
 
 const HouseholdPage = () => {
-  const router = useRouter();
-   const getHouseholdId = api.household.getHouseholdId.useQuery();
-   const [householdId, setHouseholdId] = useState<string>("");
+  const { register, reset, handleSubmit } = useForm();
+  const getHouseholdId = api.household.getHouseholdId.useQuery();
+  const [householdId, setHouseholdId] = useState<string>("");
+  const [isShowingInviteModal, setIsShowingInviteModal] = useState(false);
+  const [emailsToSendInvitesTo, setEmailsToSendInvitesTo] = useState<string[]>(
+    []
+  );
   useEffect(() => {
     getHouseholdId.data &&
       getHouseholdId.data !== null &&
@@ -14,9 +20,67 @@ const HouseholdPage = () => {
   }, [getHouseholdId.data]);
 
   const getHouseholdInfo = api.household.getHouseholdInfo.useQuery({
-    householdId
+    householdId,
   });
-  return <div>{getHouseholdInfo.data && getHouseholdInfo.data?.name}</div>;
+
+  const addNameToInviteQueue = (data: string) => {
+    setEmailsToSendInvitesTo((prev) => [...prev, data]);
+    reset();
+  };
+
+  return (
+    <div className="h-full w-full">
+      <Modal
+        isOpen={isShowingInviteModal}
+        title="Invite members to household"
+        onClose={() => setIsShowingInviteModal(false)}
+      >
+        <div className="flex flex-col gap-2">
+          <form
+            action=""
+            className="flex w-full gap-2"
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
+            onSubmit={handleSubmit((data) => addNameToInviteQueue(data))}
+          >
+            <input
+              type="email"
+              id="email"
+              className="w-full"
+              {...register("email")}
+            />
+            <button>Add</button>
+          </form>
+          <div className="flex flex-col">
+            {emailsToSendInvitesTo.map((invite, i) => (
+              <div className="" key={i}>
+                <p className="">{invite.email}</p>
+                <button
+                // onClick={() =>
+                //   setEmailsToSendInvitesTo((prev) =>
+                //     prev.filter(
+                //       (currEmail) => currEmail.indexOf(currEmail) !== i
+                //     )
+                //   )
+                // }
+                >
+                  X
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="">
+          {emailsToSendInvitesTo.length > 0 && <button>Confirm</button>}
+        </div>
+      </Modal>
+      <h1 className="text-center text-2xl">
+        {getHouseholdInfo.data && getHouseholdInfo.data.name} Household
+      </h1>
+      <button onClick={() => setIsShowingInviteModal(true)}>
+        Invite members
+      </button>
+    </div>
+  );
 };
 
 // interface IParams extends ParsedUrlQuery {
