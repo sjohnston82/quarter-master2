@@ -4,14 +4,18 @@ import { api } from "~/utils/api";
 import Modal from "~/components/layouts/ui/Modal";
 import { useForm } from "react-hook-form";
 
+interface InviteInputProps {
+  email: string;
+}
+
 const HouseholdPage = () => {
-  const { register, reset, handleSubmit } = useForm();
+  const { register, reset, handleSubmit } = useForm<InviteInputProps>();
   const getHouseholdId = api.household.getHouseholdId.useQuery();
   const [householdId, setHouseholdId] = useState<string>("");
   const [isShowingInviteModal, setIsShowingInviteModal] = useState(false);
-  const [emailsToSendInvitesTo, setEmailsToSendInvitesTo] = useState<string[]>(
-    []
-  );
+  const [emailsToSendInvitesTo, setEmailsToSendInvitesTo] = useState<
+    InviteInputProps[]
+  >([]);
   useEffect(() => {
     getHouseholdId.data &&
       getHouseholdId.data !== null &&
@@ -23,10 +27,15 @@ const HouseholdPage = () => {
     householdId,
   });
 
-  const addNameToInviteQueue = (data: string) => {
+  const addNameToInviteQueue = (data: InviteInputProps) => {
     setEmailsToSendInvitesTo((prev) => [...prev, data]);
     reset();
   };
+
+  const removeFromInviteList = (index: number | React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
+    setEmailsToSendInvitesTo(
+      emailsToSendInvitesTo.filter((_, i) => i !== index)
+    );
 
   return (
     <div className="h-full w-full">
@@ -52,17 +61,9 @@ const HouseholdPage = () => {
           </form>
           <div className="flex flex-col">
             {emailsToSendInvitesTo.map((invite, i) => (
-              <div className="" key={i}>
+              <div className="flex gap-4" key={i}>
                 <p className="">{invite.email}</p>
-                <button
-                // onClick={() =>
-                //   setEmailsToSendInvitesTo((prev) =>
-                //     prev.filter(
-                //       (currEmail) => currEmail.indexOf(currEmail) !== i
-                //     )
-                //   )
-                // }
-                >
+                <button onClick={() => removeFromInviteList(i)}>
                   X
                 </button>
               </div>
