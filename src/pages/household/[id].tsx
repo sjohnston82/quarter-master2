@@ -3,9 +3,12 @@ import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import Modal from "~/components/layouts/ui/Modal";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 
 interface InviteInputProps {
   email: string;
+  householdId: string;
+  household: string;
 }
 
 const HouseholdPage = () => {
@@ -13,9 +16,8 @@ const HouseholdPage = () => {
   const getHouseholdId = api.household.getHouseholdId.useQuery();
   const [householdId, setHouseholdId] = useState<string>("");
   const [isShowingInviteModal, setIsShowingInviteModal] = useState(false);
-  const [emailsToSendInvitesTo, setEmailsToSendInvitesTo] = useState<
-    InviteInputProps[]
-  >([]);
+  const [emailsToSendInvitesTo, setEmailsToSendInvitesTo] =
+    useState<InviteInputProps>();
   useEffect(() => {
     getHouseholdId.data &&
       getHouseholdId.data !== null &&
@@ -27,15 +29,30 @@ const HouseholdPage = () => {
     householdId,
   });
 
+  const createInvite = api.invite.addNewInvites.useMutation({
+    onSuccess: () => {
+      toast.success("Invite successfully sent!");
+      setIsShowingInviteModal(false);
+    },
+    onError: () => {
+      toast.error("Invite failed!");
+    },
+  });
+
   const addNameToInviteQueue = (data: InviteInputProps) => {
-    setEmailsToSendInvitesTo((prev) => [...prev, data]);
+    const mutationData = {
+      email: data.email,
+      householdId,
+      household: getHouseholdInfo?.data?.name
+    }
+    createInvite.mutate(mutationData);
     reset();
   };
 
-  const removeFromInviteList = (index: number | React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
-    setEmailsToSendInvitesTo(
-      emailsToSendInvitesTo.filter((_, i) => i !== index)
-    );
+  // const removeFromInviteList = (index: number | React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
+  //   setEmailsToSendInvitesTo(
+  //     emailsToSendInvitesTo.filter((_, i) => i !== index)
+  //   );
 
   return (
     <div className="h-full w-full">
@@ -60,18 +77,18 @@ const HouseholdPage = () => {
             <button>Add</button>
           </form>
           <div className="flex flex-col">
-            {emailsToSendInvitesTo.map((invite, i) => (
+            {/* {emailsToSendInvitesTo.map((invite, i) => (
               <div className="flex gap-4" key={i}>
                 <p className="">{invite.email}</p>
                 <button onClick={() => removeFromInviteList(i)}>
                   X
                 </button>
               </div>
-            ))}
+            ))} */}
           </div>
         </div>
         <div className="">
-          {emailsToSendInvitesTo.length > 0 && <button>Confirm</button>}
+          {/* {emailsToSendInvitesTo && <button>Confirm</button>} */}
         </div>
       </Modal>
       <h1 className="text-center text-2xl">

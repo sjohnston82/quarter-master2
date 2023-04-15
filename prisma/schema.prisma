@@ -71,7 +71,7 @@ model Household {
 
 model Invite {
   email       String     @unique
-  isVerified  Boolean?
+  isVerified  Boolean?   @default(false)
   Household   Household? @relation(fields: [householdId], references: [householdId])
   householdId String?
   token       String     @unique
