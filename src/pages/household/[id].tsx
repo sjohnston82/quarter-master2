@@ -43,8 +43,9 @@ const HouseholdPage = () => {
     const mutationData = {
       email: data.email,
       householdId,
-      household: getHouseholdInfo?.data?.name
-    }
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      household: getHouseholdInfo.data!.name,
+    };
     createInvite.mutate(mutationData);
     reset();
   };
