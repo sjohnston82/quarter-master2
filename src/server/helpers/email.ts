@@ -5,9 +5,15 @@ interface EmailProps {
   household: string;
   householdId: string;
   token: string;
+  inviter: string;
 }
 
-export const sendEmail = async ({ email, household, token }: EmailProps) => {
+export const sendEmail = async ({
+  email,
+  household,
+  token,
+  inviter,
+}: EmailProps) => {
   const transporter = nodemailer.createTransport({
     service: "Gmail",
     auth: {
@@ -23,7 +29,7 @@ export const sendEmail = async ({ email, household, token }: EmailProps) => {
     to: email,
     subject: "You have been invited to a Household on QuarterMaster!",
     html: `
-      <h1>You have been invited to the ${household} Household on QuarterMaster!</h1>
+      <h1>You have been invited to the ${household} Household on QuarterMaster by ${inviter}!</h1>
       <p>Copy the following code after logging in at <a href="http://localhost:3000">http://localhost:3000</a> to join your household!</p>
       <p>Your join code is: ${token}</p>
 

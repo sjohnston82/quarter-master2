@@ -10,23 +10,27 @@ import { redirect } from "next/navigation";
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const { data: sessionData } = useSession();
+  const { data: sessionData, status } = useSession();
   const [householdId, setHouseholdId] = useState<string | null>(null);
   const getHouseholdId = api.household.getHouseholdId.useQuery();
 
   useEffect(() => {
     getHouseholdId.data &&
-    getHouseholdId.data !== null &&
-    setHouseholdId(getHouseholdId.data.householdId);
-    if (!sessionData) return redirect("/");
-    if (sessionData && householdId)
-    return redirect(`/household/${householdId}`);
-  }, [getHouseholdId.data, householdId, sessionData]);
+      getHouseholdId.data !== null &&
+      setHouseholdId(getHouseholdId.data.householdId);
+    // if (!sessionData) return redirect("/");
+    if (status !== "loading" && sessionData !== undefined && householdId) {
+      void router.push(`/household/${householdId}`);
+    }
+
+    if (status !== "loading" && sessionData == undefined) void router.push("/");
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getHouseholdId.data, householdId, sessionData, status]);
 
   // const redirectToHousehold = async () => {
   //   householdId && sessionData && (await router.push(`/household/${householdId}`));
   // };
-  console.log(sessionData);
 
   return (
     <>

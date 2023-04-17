@@ -20,6 +20,7 @@ export const inviteRouter = createTRPCRouter({
         email: z.string(),
         householdId: z.string(),
         household: z.string(),
+        inviter: z.string(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -37,6 +38,7 @@ export const inviteRouter = createTRPCRouter({
         household: input.household,
         token: secretCode,
         householdId: input.householdId,
+        inviter: input.inviter
       };
       sendEmail(emailData).catch((err) => {
         console.log("email failed", err);

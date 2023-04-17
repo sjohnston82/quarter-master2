@@ -3,11 +3,13 @@ import { api } from "~/utils/api";
 import Modal from "~/components/layouts/ui/Modal";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { useSession } from "next-auth/react";
 
 interface InviteInputProps {
   email: string;
   householdId: string;
   household: string;
+  inviter: string;
 }
 
 const HouseholdPage = () => {
@@ -17,6 +19,7 @@ const HouseholdPage = () => {
   const [isShowingInviteModal, setIsShowingInviteModal] = useState(false);
   const [emailsToSendInvitesTo, setEmailsToSendInvitesTo] =
     useState<InviteInputProps>();
+  const { data: sessionData, status } = useSession();
   useEffect(() => {
     getHouseholdId.data &&
       getHouseholdId.data !== null &&
@@ -27,6 +30,8 @@ const HouseholdPage = () => {
   const getHouseholdInfo = api.household.getHouseholdInfo.useQuery({
     householdId,
   });
+
+  console.log(sessionData)
 
   const createInvite = api.invite.addNewInvites.useMutation({
     onSuccess: () => {
@@ -44,6 +49,8 @@ const HouseholdPage = () => {
       householdId,
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       household: getHouseholdInfo.data!.name,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      inviter: sessionData!.user.name ?? '',
     };
     createInvite.mutate(mutationData);
     reset();
