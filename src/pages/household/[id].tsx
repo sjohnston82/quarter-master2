@@ -4,6 +4,7 @@ import Modal from "~/components/layouts/ui/Modal";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 interface InviteInputProps {
   email: string;
@@ -13,6 +14,7 @@ interface InviteInputProps {
 }
 
 const HouseholdPage = () => {
+  const router = useRouter();
   const { register, reset, handleSubmit } = useForm<InviteInputProps>();
   const getHouseholdId = api.household.getHouseholdId.useQuery();
   const [householdId, setHouseholdId] = useState<string>("");
@@ -25,13 +27,16 @@ const HouseholdPage = () => {
       getHouseholdId.data !== null &&
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       setHouseholdId(getHouseholdId.data.householdId!);
-  }, [getHouseholdId.data]);
+
+    if (status === "unauthenticated" && sessionData == undefined)
+      void router.push("/");
+  }, [getHouseholdId.data, sessionData, status, router]);
 
   const getHouseholdInfo = api.household.getHouseholdInfo.useQuery({
     householdId,
   });
 
-  console.log(sessionData)
+ 
 
   const createInvite = api.invite.addNewInvites.useMutation({
     onSuccess: () => {
@@ -50,7 +55,7 @@ const HouseholdPage = () => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       household: getHouseholdInfo.data!.name,
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      inviter: sessionData!.user.name ?? '',
+      inviter: sessionData!.user.name ?? "",
     };
     createInvite.mutate(mutationData);
     reset();
