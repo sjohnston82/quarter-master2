@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
@@ -29,13 +30,13 @@ const CreateHouseholdForm = () => {
       setHouseholdId(getHouseholdId.data.householdId);
   }, [getHouseholdId.data]);
 
-  console.log(getHouseholdId.data);
   const createHousehold = api.household.createNewHousehold.useMutation({
     onSuccess: async () => {
       reset();
       await redirectToHousehold();
     },
   });
+
   const redirectToHousehold = async () => {
     householdId && (await router.push(`/household/${householdId}`));
   };
@@ -66,6 +67,36 @@ const CreateHouseholdForm = () => {
   );
 };
 
+interface JoinByInviteCodeProps {
+  email: string;
+  inviteCode: string;
+}
+
+const JoinHouseholdByInviteForm = () => {
+  const { data: sessionData, status } = useSession();
+  const { register, handleSubmit } = useForm<JoinByInviteCodeProps>();
+
+  const joinByInviteCode = api.invite.joinByInviteCode.useMutation();
+
+  const onSubmitByInvite = (data: JoinByInviteCodeProps) => {
+    const mutationData = {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      email: sessionData?.user.email ?? "",
+      inviteCode: data.inviteCode,
+    };
+    joinByInviteCode.mutate(mutationData);
+  };
+
+  return (
+    <div className="">
+      <form onSubmit={handleSubmit((data) => onSubmitByInvite(data))}>
+        <input type="text" id="inviteCode" {...register("inviteCode")} />
+        <button className="">Join</button>
+      </form>
+    </div>
+  );
+};
+
 const FirstTimeLogin = () => {
   return (
     <div className="flex h-full w-full justify-center px-28">
@@ -79,12 +110,14 @@ const FirstTimeLogin = () => {
           <CreateHouseholdForm />
         </div>
       </div>
+
       <div className="flex h-full w-full flex-col items-center justify-center bg-blue-200">
         <h1 className="text-2xl">Join Household</h1>
         <p className="mt-10">
           Receive a join invitation via email? Enter your code below to join
           your household!
         </p>
+        <JoinHouseholdByInviteForm />
       </div>
     </div>
   );
