@@ -87,7 +87,6 @@ const JoinHouseholdByInviteForm = () => {
 
   const onSubmitByInvite = (data: JoinByInviteCodeProps) => {
     const mutationData = {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       email: sessionData?.user.email ?? "",
       inviteCode: data.inviteCode,
     };
