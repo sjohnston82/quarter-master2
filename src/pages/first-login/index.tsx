@@ -4,6 +4,7 @@ import { type SubmitHandler, useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import { api } from "~/utils/api";
 import { useRouter } from "next/router";
+import { toast } from "react-hot-toast";
 
 // interface IFormInput {
 //   name: string;
@@ -75,8 +76,14 @@ interface JoinByInviteCodeProps {
 const JoinHouseholdByInviteForm = () => {
   const { data: sessionData, status } = useSession();
   const { register, handleSubmit } = useForm<JoinByInviteCodeProps>();
+  const router = useRouter();
 
-  const joinByInviteCode = api.invite.joinByInviteCode.useMutation();
+  const joinByInviteCode = api.invite.joinByInviteCode.useMutation({
+    onSuccess: () => {
+      void router.push("/");
+      toast.success("Successfully joined household!");
+    },
+  });
 
   const onSubmitByInvite = (data: JoinByInviteCodeProps) => {
     const mutationData = {

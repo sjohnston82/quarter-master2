@@ -56,23 +56,15 @@ export const inviteRouter = createTRPCRouter({
         });
         if (!currUser)
           throw new Error("This email address hasn't been sent an invitation!");
-        console.log("||||||||||||||||||||||||||||||||||", currUser);
 
         if (currUser.token !== inviteCode)
           throw new Error("The invite code is incorrect!");
 
-        // const HH = await prisma.household.findFirst({
-        //   where: {
-        //     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        //     householdId: currUser.householdId!,
-        //   },
-        // });
-
-        // console.log("||||||||||||||||||||||||||||||", HH);
+        if (!currUser.householdId) throw new Error("No householdId!");
 
         await prisma.household.update({
           where: {
-            householdId: currUser.householdId!,
+            householdId: currUser.householdId,
           },
           data: {
             members: {
@@ -81,6 +73,19 @@ export const inviteRouter = createTRPCRouter({
               },
             },
           },
+        });
+
+        await prisma.user.update({
+          where: {
+            id: session.user.id,
+          },
+          data: {
+            householdId: currUser.householdId,
+          },
+        });
+
+        await prisma.invite.delete({
+          where: { email },
         });
       }
     ),
