@@ -9,8 +9,12 @@ import {
 export const householdRouter = createTRPCRouter({
   createNewHousehold: protectedProcedure
     .input(z.object({ name: z.string() }))
-    .mutation(({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
+      await ctx.prisma.user.update({
+        where: { id: userId },
+        data: { role: "ADMIN" },
+      });
 
       return ctx.prisma.household.create({
         data: {

@@ -16,7 +16,7 @@ const ShowUsers = ({ householdId }: ShowUserProps) => {
       {getHouseholdMembers.data &&
         getHouseholdMembers.data[0]?.members.map((member) => (
           <>
-            <div key={member.id} className="flex items-center gap-3">
+            <div key={member.id} className="flex items-center gap-3 my-2">
               <Image
                 className="rounded-full"
                 src={member.image ?? ""}
@@ -25,6 +25,7 @@ const ShowUsers = ({ householdId }: ShowUserProps) => {
                 alt={member.name ?? ""}
               />
               <h3 className="">{member.name}</h3>
+              <p className="italic">{member.role === "USER" ? "Member" : "Founder"}</p>
             </div>
           </>
         ))}

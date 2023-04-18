@@ -32,22 +32,16 @@ const CreateHouseholdForm = () => {
   }, [getHouseholdId.data]);
 
   const createHousehold = api.household.createNewHousehold.useMutation({
-    onSuccess: async () => {
+    onSuccess: () => {
       reset();
-      await redirectToHousehold();
+      void router.push("/");
     },
   });
 
-  const redirectToHousehold = async () => {
-    householdId && (await router.push(`/household/${householdId}`));
-  };
-
-  // const onSubmit = (data) => createHousehold.mutate(data);
 
   return (
     <form
       className=""
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       onSubmit={handleSubmit((name) => createHousehold.mutate(name))}
     >
       <div className="">
@@ -57,7 +51,6 @@ const CreateHouseholdForm = () => {
           id="name"
           {...register("name")}
           className=""
-          // onChange={(e) => setHouseholdName(e.target.value)}
         />
         <span> Household</span>
       </div>
@@ -74,7 +67,7 @@ interface JoinByInviteCodeProps {
 }
 
 const JoinHouseholdByInviteForm = () => {
-  const { data: sessionData, status } = useSession();
+  const { data: sessionData } = useSession();
   const { register, handleSubmit } = useForm<JoinByInviteCodeProps>();
   const router = useRouter();
 
