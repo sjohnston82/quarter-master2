@@ -37,10 +37,13 @@ const HouseholdPage = () => {
     householdId,
   });
 
+  const inviteRoute = api.useContext().invite;
+
   const createInvite = api.invite.addNewInvites.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("Invite successfully sent!");
       setIsShowingInviteModal(false);
+      await inviteRoute.invalidate();
     },
     onError: () => {
       toast.error("Invite failed!");
@@ -48,7 +51,6 @@ const HouseholdPage = () => {
   });
 
   const addNameToInviteQueue = (data: InviteInputProps) => {
-
     const mutationData = {
       email: data.email,
       householdId,
@@ -83,12 +85,9 @@ const HouseholdPage = () => {
             />
             <button>Add</button>
           </form>
-          <div className="flex flex-col">
-           
-          </div>
+          <div className="flex flex-col"></div>
         </div>
-        <div className="">
-        </div>
+        <div className=""></div>
       </Modal>
       <h1 className="text-center text-2xl">
         {getHouseholdInfo.data && getHouseholdInfo.data.name} Household
@@ -102,6 +101,5 @@ const HouseholdPage = () => {
     </div>
   );
 };
-
 
 export default HouseholdPage;

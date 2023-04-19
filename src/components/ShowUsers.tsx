@@ -9,9 +9,18 @@ interface ShowUserProps {
 }
 
 const ShowUsers = ({ householdId }: ShowUserProps) => {
+  const inviteRoute = api.useContext().household;
   const getHouseholdMembers = api.household.getHouseholdMembers.useQuery({
     householdId,
+  },
+  {
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    onSuccess: async () => {
+      // await inviteRoute.invalidate({householdId});
+    }
   });
+
+  const deleteInvite = api.invite.deleteInvite.useMutation()
 
   const { data: sessionData } = useSession();
   console.log(sessionData);
@@ -42,8 +51,9 @@ const ShowUsers = ({ householdId }: ShowUserProps) => {
       <h2>Invited</h2>
       {getHouseholdMembers.data &&
         getHouseholdMembers.data[0]?.invitedList.map((invite, i) => (
-          <div key={i}>
+          <div key={i} className="flex gap-3">
             <p>{invite.email}</p>
+            {sessionData?.user.role === "ADMIN" && <p onClick={() => deleteInvite.mutate({email: invite.email})}>X</p>}
           </div>
         ))}
     </div>

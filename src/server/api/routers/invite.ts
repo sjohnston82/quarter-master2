@@ -89,4 +89,14 @@ export const inviteRouter = createTRPCRouter({
         });
       }
     ),
+
+  deleteInvite: protectedProcedure
+    .input(z.object({ email: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.invite.delete({
+        where: {
+          email: input.email,
+        },
+      });
+    }),
 });
