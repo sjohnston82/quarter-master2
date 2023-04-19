@@ -24,7 +24,7 @@ declare module "next-auth" {
       image?: string | null | undefined;
       name?: string | null | undefined;
       // ...other properties
-      // role: UserRole;
+      role: UserRole;
     } & DefaultSession["user"];
   }
 
