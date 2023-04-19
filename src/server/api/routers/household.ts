@@ -68,6 +68,7 @@ export const householdRouter = createTRPCRouter({
         },
         select: {
           members: true,
+          invitedList: true,
         },
       });
 

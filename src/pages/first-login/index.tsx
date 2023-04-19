@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { api } from "~/utils/api";
 import { useRouter } from "next/router";
 import { toast } from "react-hot-toast";
+import Modal from "~/components/layouts/ui/Modal";
 
 // interface IFormInput {
 //   name: string;
@@ -38,7 +39,6 @@ const CreateHouseholdForm = () => {
     },
   });
 
-
   return (
     <form
       className=""
@@ -46,12 +46,7 @@ const CreateHouseholdForm = () => {
     >
       <div className="">
         <span>The </span>
-        <input
-          type="text"
-          id="name"
-          {...register("name")}
-          className=""
-        />
+        <input type="text" id="name" {...register("name")} className="" />
         <span> Household</span>
       </div>
       <button className="" type="submit">
@@ -97,6 +92,9 @@ const JoinHouseholdByInviteForm = () => {
 };
 
 const FirstTimeLogin = () => {
+  const [showingCreateHouseholdModal, setShowCreateHouseholdModal] =
+    useState(false);
+  const [showingJoinByInviteModal, setShowJoinByInviteModal] = useState(false);
   return (
     <div className="flex h-full w-full justify-center px-28">
       <div className="flex h-full w-full flex-col items-center justify-center bg-red-200">
@@ -106,17 +104,34 @@ const FirstTimeLogin = () => {
           organized pantry today!
         </p>
         <div className="">
-          <CreateHouseholdForm />
+          <button onClick={() => setShowCreateHouseholdModal(true)}>
+            Create Household
+          </button>
+          <Modal
+            isOpen={showingCreateHouseholdModal}
+            title="Enter Household Name"
+            onClose={() => setShowCreateHouseholdModal(false)}
+          >
+            <CreateHouseholdForm />
+          </Modal>
         </div>
       </div>
 
       <div className="flex h-full w-full flex-col items-center justify-center bg-blue-200">
-        <h1 className="text-2xl">Join Household</h1>
         <p className="mt-10">
-          Receive a join invitation via email? Enter your code below to join
-          your household!
+          Receive a join invitation via email? Enter your code to join your
+          household!
         </p>
-        <JoinHouseholdByInviteForm />
+        <button onClick={() => setShowJoinByInviteModal(true)}>
+          Join Household
+        </button>
+        <Modal
+          isOpen={showingJoinByInviteModal}
+          title="Enter invite code"
+          onClose={() => setShowJoinByInviteModal(false)}
+        >
+          <JoinHouseholdByInviteForm />
+        </Modal>
       </div>
     </div>
   );

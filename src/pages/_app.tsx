@@ -8,6 +8,7 @@ import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import Head from "next/head";
 import MainLayout from "~/components/layouts/MainLayout";
+import GlobalContextProvider from "~/context/GlobalContextProvider";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -24,8 +25,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Toaster position="top-center" />
-      <MainLayout></MainLayout>
-      <Component {...pageProps} />
+      <GlobalContextProvider>
+        <MainLayout></MainLayout>
+        <Component {...pageProps} />
+      </GlobalContextProvider>
     </SessionProvider>
   );
 };

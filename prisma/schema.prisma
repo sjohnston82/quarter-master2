@@ -50,8 +50,9 @@ model User {
   accounts      Account[]
   sessions      Session[]
   householdId   String?
-  role          UserRole  @default(USER)
+  role          UserRole   @default(USER)
   household     Household? @relation(fields: [householdId], references: [householdId])
+  joinedAt      DateTime?  @default(now())
 }
 
 model VerificationToken {
