@@ -68,10 +68,26 @@ export const householdRouter = createTRPCRouter({
         },
         select: {
           members: true,
-          invitedList: true,
+
         },
       });
 
       return membersList;
+    }),
+
+  getInviteList: protectedProcedure
+    .input(z.object({ householdId: z.string() }))
+    .query(async ({ ctx: { prisma, session }, input }) => {
+      const inviteList = await prisma.household.findMany({
+        where: {
+          householdId: input.householdId,
+        },
+        select: {
+
+          invitedList: true,
+        },
+      });
+
+      return inviteList;
     }),
 });

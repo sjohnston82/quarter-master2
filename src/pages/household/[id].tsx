@@ -20,8 +20,7 @@ const HouseholdPage = () => {
   const getHouseholdId = api.household.getHouseholdId.useQuery();
   const [householdId, setHouseholdId] = useState<string>("");
   const [isShowingInviteModal, setIsShowingInviteModal] = useState(false);
-  const [emailsToSendInvitesTo, setEmailsToSendInvitesTo] =
-    useState<InviteInputProps>();
+
   const { data: sessionData, status } = useSession();
   useEffect(() => {
     getHouseholdId.data &&
@@ -37,13 +36,13 @@ const HouseholdPage = () => {
     householdId,
   });
 
-  const inviteRoute = api.useContext().invite;
+  const inviteRoute = api.useContext().household;
 
   const createInvite = api.invite.addNewInvites.useMutation({
-    onSuccess: async () => {
+    onSuccess: () => {
       toast.success("Invite successfully sent!");
       setIsShowingInviteModal(false);
-      await inviteRoute.invalidate();
+      void inviteRoute.getInviteList.invalidate();
     },
     onError: () => {
       toast.error("Invite failed!");
