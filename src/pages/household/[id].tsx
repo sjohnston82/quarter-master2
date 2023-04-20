@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { api } from "~/utils/api";
 import Modal from "~/components/layouts/ui/Modal";
 import { useForm } from "react-hook-form";
@@ -6,6 +6,8 @@ import { toast } from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import ShowUsers from "~/components/ShowUsers";
+import StorageAreas from "~/components/storage-areas/StorageAreas";
+import { GlobalContext } from "~/context/GlobalContextProvider";
 
 interface InviteInputProps {
   email: string;
@@ -16,9 +18,10 @@ interface InviteInputProps {
 
 const HouseholdPage = () => {
   const router = useRouter();
+  const { householdId, setHouseholdId } = useContext(GlobalContext);
   const { register, reset, handleSubmit } = useForm<InviteInputProps>();
   const getHouseholdId = api.household.getHouseholdId.useQuery();
-  const [householdId, setHouseholdId] = useState<string>("");
+
   const [isShowingInviteModal, setIsShowingInviteModal] = useState(false);
 
   const { data: sessionData, status } = useSession();
@@ -30,7 +33,7 @@ const HouseholdPage = () => {
 
     if (status === "unauthenticated" && sessionData == undefined)
       void router.push("/");
-  }, [getHouseholdId.data, sessionData, status, router]);
+  }, [getHouseholdId.data, sessionData, status, router, setHouseholdId]);
 
   const getHouseholdInfo = api.household.getHouseholdInfo.useQuery({
     householdId,
@@ -96,6 +99,9 @@ const HouseholdPage = () => {
       </button>
       <div className="">
         <ShowUsers householdId={householdId} />
+      </div>
+      <div className="">
+        <StorageAreas />
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   title?: string;
+  secondaryTitle?: string;
 };
 
 export default function Modal({
@@ -12,7 +13,7 @@ export default function Modal({
   onClose,
   title,
   children,
-
+  secondaryTitle,
 }: React.PropsWithChildren<ModalProps>) {
   return (
     <>
@@ -48,9 +49,15 @@ export default function Modal({
                 >
                   <Dialog.Title
                     as="h3"
-                    className="text-lg text-center font-medium leading-6 text-gray-900"
+                    className="text-center text-lg font-medium leading-6 text-gray-900"
                   >
                     {title}
+                  </Dialog.Title>
+                  <Dialog.Title
+                    as="h5"
+                    className="text-md text-center font-medium leading-6 text-gray-500"
+                  >
+                    {secondaryTitle}
                   </Dialog.Title>
                   {children}
                 </Dialog.Panel>

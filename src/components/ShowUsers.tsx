@@ -28,23 +28,21 @@ const ShowUsers = ({ householdId }: ShowUserProps) => {
     <div>
       {getHouseholdMembers.data &&
         getHouseholdMembers.data[0]?.members.map((member) => (
-          <>
-            <div key={member.id} className="my-2 flex items-center gap-3">
-              <Image
-                className="rounded-full"
-                src={member.image ?? ""}
-                width={40}
-                height={40}
-                alt={member.name ?? ""}
-              />
-              <div className="flex flex-col">
-                <h3 className="">{member.name}</h3>
-                <p className="italic">
-                  {member.role === "USER" ? "Member" : "Founder"}
-                </p>
-              </div>
+          <div key={member.id} className="my-2 flex items-center gap-3">
+            <Image
+              className="rounded-full"
+              src={member.image ?? ""}
+              width={40}
+              height={40}
+              alt={member.name ?? ""}
+            />
+            <div className="flex flex-col">
+              <h3 className="">{member.name}</h3>
+              <p className="italic">
+                {member.role === "USER" ? "Member" : "Founder"}
+              </p>
             </div>
-          </>
+          </div>
         ))}
       <h2>Invited</h2>
       {getInviteList.data &&

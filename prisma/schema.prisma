@@ -65,9 +65,10 @@ model VerificationToken {
 
 model Household {
   name        String
-  householdId String   @id @default(cuid())
+  householdId String        @id @default(cuid())
   members     User[]
   invitedList Invite[]
+  StorageArea StorageArea[]
 }
 
 model Invite {
@@ -79,9 +80,11 @@ model Invite {
 }
 
 model StorageArea {
-  name  String
-  id    String @id @default(cuid())
-  items Item[]
+  name        String
+  id          String     @id @default(cuid())
+  items       Item[]
+  household   Household? @relation(fields: [householdId], references: [householdId])
+  householdId String?
 }
 
 model Item {
