@@ -36,15 +36,15 @@ const HouseholdPage = () => {
       <h1 className="text-center text-2xl">
         {getHouseholdInfo.data && getHouseholdInfo.data.name} Household
       </h1>
-
-      <div className="">
-        <InviteMembers
-          household={getHouseholdInfo.data?.name}
-        />
-        <ShowUsers householdId={householdId} />
-      </div>
-      <div className="">
-        <StorageAreas />
+      <div className="grid grid-cols-12 gap-4 min-h-screen">
+        <div className="col-span-2">
+          <StorageAreas />
+        </div>
+        <div className="col-span-8 bg-blue-200"></div>
+        <div className="grid col-span-2 ">
+          <InviteMembers household={getHouseholdInfo.data?.name} />
+          <ShowUsers householdId={householdId} />
+        </div>
       </div>
     </div>
   );
