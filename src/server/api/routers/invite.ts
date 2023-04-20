@@ -31,6 +31,7 @@ export const inviteRouter = createTRPCRouter({
           email: input.email,
           householdId: input.householdId,
           token: secretCode,
+          inviter: input.inviter,
         },
       });
       const emailData = {

@@ -30,7 +30,6 @@ const CreateStorageArea = () => {
       name: data.name,
       householdId,
     };
-    console.log(mutationData);
     createNewStorageArea.mutate(mutationData);
     reset();
   };

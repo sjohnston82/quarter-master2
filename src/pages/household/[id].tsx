@@ -5,24 +5,16 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import ShowUsers from "~/components/ShowUsers";
+import ShowUsers from "~/components/householdMembers/ShowUsers";
 import StorageAreas from "~/components/storage-areas/StorageAreas";
 import { GlobalContext } from "~/context/GlobalContextProvider";
-
-interface InviteInputProps {
-  email: string;
-  householdId: string;
-  household: string;
-  inviter: string;
-}
+import InviteMembers from "~/components/householdMembers/InviteMembers";
 
 const HouseholdPage = () => {
   const router = useRouter();
   const { householdId, setHouseholdId } = useContext(GlobalContext);
-  const { register, reset, handleSubmit } = useForm<InviteInputProps>();
-  const getHouseholdId = api.household.getHouseholdId.useQuery();
 
-  const [isShowingInviteModal, setIsShowingInviteModal] = useState(false);
+  const getHouseholdId = api.household.getHouseholdId.useQuery();
 
   const { data: sessionData, status } = useSession();
   useEffect(() => {
@@ -39,65 +31,16 @@ const HouseholdPage = () => {
     householdId,
   });
 
-  const inviteRoute = api.useContext().household;
-
-  const createInvite = api.invite.addNewInvites.useMutation({
-    onSuccess: () => {
-      toast.success("Invite successfully sent!");
-      setIsShowingInviteModal(false);
-      void inviteRoute.getInviteList.invalidate();
-    },
-    onError: () => {
-      toast.error("Invite failed!");
-    },
-  });
-
-  const addNameToInviteQueue = (data: InviteInputProps) => {
-    const mutationData = {
-      email: data.email,
-      householdId,
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      household: getHouseholdInfo.data!.name ?? "",
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      inviter: sessionData!.user.name ?? "",
-    };
-    createInvite.mutate(mutationData);
-    reset();
-  };
-
   return (
-    <div className="h-full w-full">
-      <Modal
-        isOpen={isShowingInviteModal}
-        title="Invite members to household"
-        onClose={() => setIsShowingInviteModal(false)}
-      >
-        <div className="flex flex-col gap-2">
-          <form
-            action=""
-            className="flex w-full gap-2"
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
-            onSubmit={handleSubmit((data) => addNameToInviteQueue(data))}
-          >
-            <input
-              type="email"
-              id="email"
-              className="w-full"
-              {...register("email")}
-            />
-            <button>Add</button>
-          </form>
-          <div className="flex flex-col"></div>
-        </div>
-        <div className=""></div>
-      </Modal>
+    <div className="h-full w-full ">
       <h1 className="text-center text-2xl">
         {getHouseholdInfo.data && getHouseholdInfo.data.name} Household
       </h1>
-      <button onClick={() => setIsShowingInviteModal(true)}>
-        Invite members
-      </button>
+
       <div className="">
+        <InviteMembers
+          household={getHouseholdInfo.data?.name}
+        />
         <ShowUsers householdId={householdId} />
       </div>
       <div className="">
