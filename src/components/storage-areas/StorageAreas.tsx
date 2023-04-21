@@ -10,7 +10,7 @@ const StorageAreas = () => {
     householdId,
   });
 
-  console.log(data);
+
   return (
     <div>
       <CreateStorageArea />

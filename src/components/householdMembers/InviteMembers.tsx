@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import Modal from "../layouts/ui/Modal";
+import Modal from "../ui/Modal";
 import { api } from "~/utils/api";
 import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";

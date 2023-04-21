@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { api } from "~/utils/api";
 import { useRouter } from "next/router";
 import { toast } from "react-hot-toast";
-import Modal from "~/components/layouts/ui/Modal";
+import Modal from "~/components/ui/Modal";
 
 // interface IFormInput {
 //   name: string;

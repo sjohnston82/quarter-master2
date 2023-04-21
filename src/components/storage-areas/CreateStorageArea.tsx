@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import Modal from "../layouts/ui/Modal";
+import Modal from "../ui/Modal";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import { api } from "~/utils/api";
 import { toast } from "react-hot-toast";

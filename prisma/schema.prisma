@@ -69,6 +69,7 @@ model Household {
   members     User[]
   invitedList Invite[]
   StorageArea StorageArea[]
+  Item        Item[]
 }
 
 model Invite {
@@ -98,6 +99,8 @@ model Item {
   amount         Int?        @default(0)
   amountType     String?
   expirationDate DateTime?
+  household      Household?  @relation(fields: [householdId], references: [householdId])
+  householdId    String?
 }
 
 enum UserRole {

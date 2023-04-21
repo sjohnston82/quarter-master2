@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { api } from "~/utils/api";
-import Modal from "~/components/layouts/ui/Modal";
+import Modal from "~/components/ui/Modal";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useSession } from "next-auth/react";
@@ -9,6 +9,7 @@ import ShowUsers from "~/components/householdMembers/ShowUsers";
 import StorageAreas from "~/components/storage-areas/StorageAreas";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import InviteMembers from "~/components/householdMembers/InviteMembers";
+import FoodItems from "~/components/items/FoodItems";
 
 const HouseholdPage = () => {
   const router = useRouter();
@@ -36,12 +37,16 @@ const HouseholdPage = () => {
       <h1 className="text-center text-2xl">
         {getHouseholdInfo.data && getHouseholdInfo.data.name} Household
       </h1>
-      <div className="grid grid-cols-12 gap-4 min-h-screen">
+      <div className="grid min-h-screen grid-cols-12 gap-4">
         <div className="col-span-2">
           <StorageAreas />
         </div>
-        <div className="col-span-8 bg-blue-200"></div>
-        <div className="grid col-span-2 ">
+
+        <div className="col-span-8 bg-blue-200">
+          <FoodItems />
+        </div>
+
+        <div className="col-span-2 grid ">
           <InviteMembers household={getHouseholdInfo.data?.name} />
           <ShowUsers householdId={householdId} />
         </div>
