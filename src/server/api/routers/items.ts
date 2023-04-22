@@ -14,20 +14,50 @@ export const itemsRouter = createTRPCRouter({
         where: {
           householdId: input.householdId,
         },
-       
       });
 
       return items;
     }),
 
-  // createStorageArea: protectedProcedure
-  //   .input(z.object({ name: z.string(), householdId: z.string() }))
-  //   .mutation(async ({ ctx, input }) => {
-  //     await ctx.prisma.storageArea.create({
-  //       data: {
-  //         name: input.name,
-  //         householdId: input.householdId,
-  //       },
-  //     });
-  //   }),
+  createNewItem: protectedProcedure
+    .input(
+      z.object({
+        name: z.string(),
+        householdId: z.string(),
+        amount: z.number(),
+        amountType: z.string(),
+        storageAreaId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const newItem = await ctx.prisma.item.create({
+        data: {
+          name: input.name,
+          householdId: input.householdId,
+          amount: input.amount,
+          amountType: input.amountType,
+        },
+      });
+
+      const currStorage = await ctx.prisma.storageArea.findUnique({
+        where: {
+          id: input.storageAreaId,
+        },
+      });
+
+      if (!currStorage) throw new Error("No storage area found.");
+
+      await ctx.prisma.storageArea.update({
+        where: {
+          id: currStorage.id,
+        },
+        data: {
+          items: {
+            connect: {
+              id: newItem.id,
+            },
+          },
+        },
+      });
+    }),
 });
