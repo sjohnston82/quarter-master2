@@ -3,28 +3,7 @@ import { GlobalContext } from "~/context/GlobalContextProvider";
 import Modal from "../ui/Modal";
 import { useForm } from "react-hook-form";
 import { api } from "~/utils/api";
-
-const packageTypes = [
-  " ",
-  "can",
-  "box",
-  "package",
-  "bag",
-  "carton",
-  "bunch",
-  "other",
-];
-const foodCategories = [
-  "produce",
-  "canned goods",
-  "pasta",
-  "spices",
-  "meats",
-  "dairy",
-  "snacks",
-  "frozen",
-  "breads",
-];
+import { packageTypes } from "~/utils/foodTypes";
 
 type NewItemInputProps = {
   name: string;
@@ -44,6 +23,7 @@ const CreateNewItem = () => {
 
   const createNewItem = api.items.createNewItem.useMutation();
 
+  const [amount, setAmount] = useState("");
   const onSubmit = (data: NewItemInputProps) => {
     console.log(data);
     const mutationData = {
@@ -54,6 +34,9 @@ const CreateNewItem = () => {
       storageAreaId: data.storageAreaId,
     };
     createNewItem.mutate(mutationData);
+    reset();
+    setShowingAddItemModal(false);
+    setAmount("");
   };
 
   return (
@@ -92,7 +75,12 @@ const CreateNewItem = () => {
               <div className="flex">
                 <div className="">
                   <label htmlFor="amount">Amount:</label>
-                  <input type="number" {...register("amount")} id="amount" />
+                  <input
+                    type="number"
+                    {...register("amount")}
+                    id="amount"
+                    onChange={(e) => setAmount(e.target.value)}
+                  />
                 </div>
 
                 <div className="">
@@ -105,8 +93,11 @@ const CreateNewItem = () => {
                       Package Type
                     </option>
                     {packageTypes.map((type, i) => (
-                      <option value={type} key={i}>
-                        {type}
+                      <option
+                        value={amount === "1" ? type.singular : type.plural}
+                        key={i}
+                      >
+                        {amount === "1" ? type.singular : type.plural}
                       </option>
                     ))}
                   </select>
