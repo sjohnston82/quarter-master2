@@ -11,6 +11,8 @@ import Modal from "~/components/ui/Modal";
 //   name: string;
 // }
 
+// look to daisyui divider horizontal for layout
+
 const CreateHouseholdForm = () => {
   const { data: sessionData } = useSession();
   const defaultHouseholdName = sessionData?.user?.name?.split(" ")[1];

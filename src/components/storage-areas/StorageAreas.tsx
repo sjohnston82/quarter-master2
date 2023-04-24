@@ -1,15 +1,30 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import { api } from "~/utils/api";
 import CreateStorageArea from "./CreateStorageArea";
 
 const StorageAreas = () => {
   const { householdId } = useContext(GlobalContext);
+  const [currentStorageAreaId, setCurrentStorageAreaId] = useState("");
 
   const { data } = api.storageAreas.getStorageAreas.useQuery({
     householdId,
   });
 
+  const getItemByStorageArea = api.items.getItemsByStorageArea.useQuery(
+    {
+      storageAreaId: currentStorageAreaId,
+    },
+    {
+      onSuccess: () => {
+        console.log(data);
+        // setCurrentStorageAreaId("");
+      },
+    }
+  );
+  // useEffect(() => {
+  //   }
+  // }, [currentStorageAreaId, data]);
 
   return (
     <div>
@@ -17,10 +32,17 @@ const StorageAreas = () => {
 
       {data &&
         (data.length === 0 ? (
-          <p>You currently do not have any storage areas created!  Create one now to get started saving your food items!</p>
+          <p>
+            You currently do not have any storage areas created! Create one now
+            to get started saving your food items!
+          </p>
         ) : (
           data.map((storageArea) => (
-            <div className="" key={storageArea.id}>
+            <div
+              className=""
+              key={storageArea.id}
+              onClick={() => setCurrentStorageAreaId(storageArea.id)}
+            >
               {storageArea.name}
             </div>
           ))

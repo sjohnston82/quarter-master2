@@ -23,6 +23,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           content="QuarterMaster pantry inventory manager"
         />
         <link rel="icon" href="/favicon.ico" />
+        
       </Head>
       <Toaster position="top-center" />
       <GlobalContextProvider>

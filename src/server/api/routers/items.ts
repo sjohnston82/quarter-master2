@@ -60,4 +60,15 @@ export const itemsRouter = createTRPCRouter({
         },
       });
     }),
+
+  getItemsByStorageArea: protectedProcedure
+    .input(z.object({ storageAreaId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const itemsInStorage = await ctx.prisma.item.findMany({
+        where: {
+          storageAreaId: input.storageAreaId,
+        },
+      });
+      return itemsInStorage
+    }),
 });
