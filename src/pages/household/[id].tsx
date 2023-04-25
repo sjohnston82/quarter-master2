@@ -64,7 +64,8 @@ const HouseholdPage = () => {
         </div>
       </div>
       <BottomNavigation
-        className="fixed bottom-0 w-full"
+        sx={{ position: "fixed", bottom: 0, width: 1.0 }}
+        // className="fixed bottom-0 w-full"
         showLabels
         value={bottomNavValue}
         onChange={(event, newValue: number) => {
