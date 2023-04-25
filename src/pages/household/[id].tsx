@@ -11,9 +11,21 @@ import { GlobalContext } from "~/context/GlobalContextProvider";
 import InviteMembers from "~/components/householdMembers/InviteMembers";
 import FoodItems from "~/components/items/FoodItems";
 
+import KitchenIcon from "@mui/icons-material/Kitchen";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import GroupIcon from "@mui/icons-material/Group";
+import { BottomNavigation, BottomNavigationAction } from "@mui/material";
+
+// enum BottomNavActions {
+//   "kitchen",
+//   "members",
+//   "shopping-list"
+// }
+
 const HouseholdPage = () => {
   const router = useRouter();
   const { householdId, setHouseholdId } = useContext(GlobalContext);
+  const [bottomNavValue, setBottomNavValue] = useState(0);
 
   const getHouseholdId = api.household.getHouseholdId.useQuery();
 
@@ -33,7 +45,7 @@ const HouseholdPage = () => {
   });
 
   return (
-    <div className="h-full w-full ">
+    <div className="h-full w-full pb-16 ">
       <h1 className="text-center text-2xl">
         {getHouseholdInfo.data && getHouseholdInfo.data.name} Household
       </h1>
@@ -51,6 +63,21 @@ const HouseholdPage = () => {
           <ShowUsers householdId={householdId} />
         </div>
       </div>
+      <BottomNavigation
+        className="fixed bottom-0 w-full"
+        showLabels
+        value={bottomNavValue}
+        onChange={(event, newValue: number) => {
+          setBottomNavValue(newValue);
+        }}
+      >
+        <BottomNavigationAction label="Items" icon={<KitchenIcon />} />
+        <BottomNavigationAction
+          label="ShoppingList"
+          icon={<ShoppingCartIcon />}
+        />
+        <BottomNavigationAction label="Members" icon={<GroupIcon />} />
+      </BottomNavigation>
     </div>
   );
 };
