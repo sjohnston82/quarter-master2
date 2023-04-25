@@ -25,7 +25,7 @@ const HouseholdMembersPage = () => {
       </div>
       <InviteMembers />
       <div className="flex w-full flex-col items-center justify-center">
-        <h2 className="border-b border-slate-300 text-center text-xl font-semibold">
+        <h2 className="border-b border-slate-300 text-center text-xl font-semibold px-2">
           Members
         </h2>
         <div className=" h-full">
@@ -33,7 +33,7 @@ const HouseholdMembersPage = () => {
         </div>
       </div>
       <div className="flex w-full flex-col  items-center ">
-        <h2 className="border-b border-slate-300 text-center text-xl font-semibold">
+        <h2 className="border-b border-slate-300 text-center text-xl font-semibold px-2">
           Invited
         </h2>
         <div className="">

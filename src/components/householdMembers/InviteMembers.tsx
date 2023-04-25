@@ -5,6 +5,9 @@ import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import { useSession } from "next-auth/react";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 interface InviteInputProps {
   email: string;
@@ -13,11 +16,22 @@ interface InviteInputProps {
   inviter: string;
 }
 
+const inviteSchema = z.object({
+  email: z
+    .string()
+    .min(1, { message: "This field cannot be blank." })
+    .email("Must be a valid email address."),
+});
 
 const InviteMembers = () => {
   const { data: sessionData } = useSession();
   const { householdId, householdName } = useContext(GlobalContext);
-  const { register, reset, handleSubmit } = useForm<InviteInputProps>();
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<InviteInputProps>({ resolver: zodResolver(inviteSchema) });
   const [isShowingInviteModal, setIsShowingInviteModal] = useState(false);
 
   const inviteRoute = api.useContext().household;
@@ -48,31 +62,41 @@ const InviteMembers = () => {
     <div className="h-full">
       <Modal
         isOpen={isShowingInviteModal}
-        title="Invite members to household"
+        // title="Invite members to household"
         onClose={() => setIsShowingInviteModal(false)}
       >
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col items-center gap-2">
           <form
             action=""
-            className="flex w-full gap-2"
+            className="flex w-full items-center gap-2"
             // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onSubmit={handleSubmit((data) => addNameToInviteQueue(data))}
           >
-            <input
-              type="email"
-              id="email"
-              className="w-full"
-              {...register("email")}
-            />
-            <button>Add</button>
+            <div className="flex flex-col w-full">
+              <div className="flex gap-2 w-full">
+                <input
+                  type="email"
+                  id="email"
+                  className="w-full rounded-lg border border-slate-300 placeholder:text-slate-600 p-1 pl-3"
+                  {...register("email")}
+                  placeholder="Enter email..."
+                />
+                <button className="font-semibold ">Invite</button>
+              </div>
+              {errors.email?.message && <p className="text-red-500 text-sm italic">{errors.email?.message}</p>}
+            </div>
           </form>
           <div className="flex flex-col"></div>
         </div>
         <div className=""></div>
       </Modal>
 
-      <button onClick={() => setIsShowingInviteModal(true)}>
-        Invite members
+      <button
+        onClick={() => setIsShowingInviteModal(true)}
+        className="mx-auto flex items-center gap-1 rounded-xl border border-slate-300 p-2 hover:border-slate-600"
+      >
+        <PersonAddIcon />
+        <span className="text-xl">Invite Members</span>
       </button>
     </div>
   );
