@@ -15,6 +15,9 @@ import KitchenIcon from "@mui/icons-material/Kitchen";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import GroupIcon from "@mui/icons-material/Group";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
+import HouseholdMembersPage from "~/components/bottomNavScreens/HouseholdMembersPage";
+import FoodItemsPage from "~/components/bottomNavScreens/FoodItemsPage";
+import ShoppingListPage from "~/components/bottomNavScreens/ShoppingListPage";
 
 // enum BottomNavActions {
 //   "kitchen",
@@ -46,10 +49,13 @@ const HouseholdPage = () => {
 
   return (
     <div className="h-full w-full pb-16 ">
-      <h1 className="text-center text-2xl">
+      <h1 className="mt-2 text-center text-xl">
         {getHouseholdInfo.data && getHouseholdInfo.data.name} Household
       </h1>
-      <div className="grid min-h-screen grid-cols-12 gap-4">
+      {bottomNavValue === 0 && <FoodItemsPage />}
+      {bottomNavValue === 1 && <ShoppingListPage />}
+      {bottomNavValue === 2 && <HouseholdMembersPage />}
+      {/* <div className="grid min-h-screen grid-cols-12 gap-4">
         <div className="col-span-2">
           <StorageAreas />
         </div>
@@ -61,8 +67,8 @@ const HouseholdPage = () => {
         <div className="col-span-2 grid ">
           <InviteMembers household={getHouseholdInfo.data?.name} />
           <ShowUsers householdId={householdId} />
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */}
       <BottomNavigation
         sx={{ position: "fixed", bottom: 0, width: 1.0 }}
         // className="fixed bottom-0 w-full"
