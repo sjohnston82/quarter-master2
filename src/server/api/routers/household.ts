@@ -67,8 +67,11 @@ export const householdRouter = createTRPCRouter({
           householdId: input.householdId,
         },
         select: {
-          members: true,
-
+          members: {
+            orderBy: {
+              joinedAt: "asc",
+            },
+          },
         },
       });
 
@@ -83,7 +86,6 @@ export const householdRouter = createTRPCRouter({
           householdId: input.householdId,
         },
         select: {
-
           invitedList: true,
         },
       });

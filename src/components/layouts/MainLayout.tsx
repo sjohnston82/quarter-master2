@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { GlobalContext } from "~/context/GlobalContextProvider";
 
 const MainLayout = () => {
   const { data: sessionData, status } = useSession();
   const router = useRouter();
+  const { householdName, setBottomNavValue } = useContext(GlobalContext);
 
   // useEffect(() => {
   //   if (status !== "loading" && sessionData === null) {
@@ -25,20 +27,27 @@ const MainLayout = () => {
         QuarterMaster
       </div>
 
-      <div className=" mr-4 flex w-full justify-end text-right  ">
+      <div className=" relative mr-4 flex w-full justify-end text-right ">
         {sessionData ? (
-          <div className="flex items-center gap-2 ">
-            <Image
-              src={sessionData?.user?.image ?? ""}
-              width={30}
-              height={30}
-              className="rounded-full"
-              alt={sessionData?.user?.name ?? ""}
-            />
-            <LogoutIcon
-              className="cursor-pointer hover:text-indigo-600"
-              onClick={() => void signOutWithRedirect()}
-            />
+          <div className="">
+            <div className="flex items-center gap-2 ">
+              <Image
+                src={sessionData?.user?.image ?? ""}
+                width={30}
+                height={30}
+                className="rounded-full"
+                alt={sessionData?.user?.name ?? ""}
+              />
+              <LogoutIcon
+                className="cursor-pointer hover:text-indigo-600"
+                onClick={() => void signOutWithRedirect()}
+              />
+            </div>
+            <div className="absolute right-0 top-8 ">
+              <p className="text-xs cursor-pointer" onClick={() => setBottomNavValue(2)}>
+                {householdName} Household
+              </p>
+            </div>
           </div>
         ) : (
           <div className="w-full">

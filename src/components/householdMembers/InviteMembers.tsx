@@ -13,13 +13,10 @@ interface InviteInputProps {
   inviter: string;
 }
 
-interface InviteMemberProps {
-  household: string | undefined;
-}
 
-const InviteMembers = ({ household }: InviteMemberProps) => {
+const InviteMembers = () => {
   const { data: sessionData } = useSession();
-  const { householdId } = useContext(GlobalContext);
+  const { householdId, householdName } = useContext(GlobalContext);
   const { register, reset, handleSubmit } = useForm<InviteInputProps>();
   const [isShowingInviteModal, setIsShowingInviteModal] = useState(false);
 
@@ -40,7 +37,7 @@ const InviteMembers = ({ household }: InviteMemberProps) => {
     const mutationData = {
       email: data.email,
       householdId,
-      household: household ?? "",
+      household: householdName ?? "",
       inviter: sessionData?.user.name ?? "",
     };
     createInvite.mutate(mutationData);

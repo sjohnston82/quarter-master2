@@ -27,12 +27,18 @@ import ShoppingListPage from "~/components/bottomNavScreens/ShoppingListPage";
 
 const HouseholdPage = () => {
   const router = useRouter();
-  const { householdId, setHouseholdId } = useContext(GlobalContext);
-  const [bottomNavValue, setBottomNavValue] = useState(0);
+  const { householdId, setHouseholdId, householdName, setHouseholdName, bottomNavValue, setBottomNavValue } =
+    useContext(GlobalContext);
+  // const [bottomNavValue, setBottomNavValue] = useState(0);
 
   const getHouseholdId = api.household.getHouseholdId.useQuery();
 
   const { data: sessionData, status } = useSession();
+
+  const getHouseholdInfo = api.household.getHouseholdInfo.useQuery({
+    householdId,
+  });
+
   useEffect(() => {
     getHouseholdId.data &&
       getHouseholdId.data !== null &&
@@ -41,17 +47,25 @@ const HouseholdPage = () => {
 
     if (status === "unauthenticated" && sessionData == undefined)
       void router.push("/");
-  }, [getHouseholdId.data, sessionData, status, router, setHouseholdId]);
 
-  const getHouseholdInfo = api.household.getHouseholdInfo.useQuery({
-    householdId,
-  });
+    getHouseholdInfo.data &&
+      getHouseholdInfo.data !== null &&
+      setHouseholdName(getHouseholdInfo.data.name);
+  }, [
+    getHouseholdId.data,
+    sessionData,
+    status,
+    router,
+    setHouseholdId,
+    getHouseholdInfo.data,
+    setHouseholdName,
+  ]);
 
   return (
     <div className="h-full w-full pb-16 ">
-      <h1 className="mt-2 text-center text-xl">
-        {getHouseholdInfo.data && getHouseholdInfo.data.name} Household
-      </h1>
+      {/* <h1 className="mt-2 text-center text-xl">
+        {householdName} Household
+      </h1> */}
       {bottomNavValue === 0 && <FoodItemsPage />}
       {bottomNavValue === 1 && <ShoppingListPage />}
       {bottomNavValue === 2 && <HouseholdMembersPage />}
