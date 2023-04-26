@@ -1,29 +1,22 @@
-import type { User } from "next-auth";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import { api } from "~/utils/api";
+import UserInfoModal from "./UserInfoModal";
 
 const ShowUsers = () => {
-  const { householdId } = useContext(GlobalContext)
-  // const inviteRoute = api.useContext().household;
+  const { householdId } = useContext(GlobalContext);
   const getHouseholdMembers = api.household.getHouseholdMembers.useQuery({
     householdId,
   });
+  const [showingUserInfoModal, setShowingUserInfoModal] = useState("");
 
-  // const getInviteList = api.household.getInviteList.useQuery({ householdId });
-
-  // const deleteInvite = api.invite.deleteInvite.useMutation({
-  //   onSuccess: () => {
-  //     void inviteRoute.getInviteList.invalidate();
-  //   },
-  // });
-
-  // const { data: sessionData } = useSession();
+  const handleShowModal = (id: string) => {
+    setShowingUserInfoModal(id);
+  };
 
   return (
-    <div className="justify-center flex flex-col">
+    <div className="flex flex-col justify-center">
       {getHouseholdMembers.data &&
         getHouseholdMembers.data[0]?.members.map((member) => (
           <div key={member.id} className="my-2 flex items-center gap-3">
@@ -35,25 +28,24 @@ const ShowUsers = () => {
               alt={member.name ?? ""}
             />
             <div className="flex flex-col">
-              <h3 className="text-lg">{member.name}</h3>
+              <h3
+                className="text-lg"
+                onClick={() => setShowingUserInfoModal(member.id)}
+              >
+                {member.name}
+              </h3>
               <p className="italic">
                 {member.role === "USER" ? "Member" : "Founder"}
               </p>
             </div>
           </div>
         ))}
-      {/* <h2>Invited</h2>
-      {getInviteList.data &&
-        getInviteList.data[0]?.invitedList.map((invite, i) => (
-          <div key={i} className="flex gap-3">
-            <p>{invite.email}</p>
-            {sessionData?.user.role === "ADMIN" && (
-              <p onClick={() => deleteInvite.mutate({ email: invite.email })}>
-                X
-              </p>
-            )}
-          </div>
-        ))} */}
+      {getHouseholdMembers.data && (
+        <UserInfoModal
+          showingUserInfoModal={showingUserInfoModal}
+          setShowingUserInfoModal={setShowingUserInfoModal}
+        />
+      )}
     </div>
   );
 };

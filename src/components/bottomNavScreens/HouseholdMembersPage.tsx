@@ -1,22 +1,14 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import ShowUsers from "../householdMembers/ShowUsers";
 import { api } from "~/utils/api";
-import { useSession } from "next-auth/react";
 import InvitedMembers from "../householdMembers/InvitedMembers";
 import InviteMembers from "../householdMembers/InviteMembers";
 
 const HouseholdMembersPage = () => {
   const { householdId, householdName } = useContext(GlobalContext);
   const getInviteList = api.household.getInviteList.useQuery({ householdId });
-  const inviteRoute = api.useContext().household;
-  const deleteInvite = api.invite.deleteInvite.useMutation({
-    onSuccess: () => {
-      void inviteRoute.getInviteList.invalidate();
-    },
-  });
-
-  const { data: sessionData } = useSession();
+ 
 
   return (
     <div className="mt-3 flex w-full flex-col space-y-4">

@@ -19,7 +19,7 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
   const [userRole, setUserRole] = useState("");
   const [householdId, setHouseholdId] = useState<string>("");
   const [householdName, setHouseholdName] = useState<string>("");
-  const [bottomNavValue, setBottomNavValue] = useState(0)
+  const [bottomNavValue, setBottomNavValue] = useState(0);
 
   return (
     <GlobalContext.Provider
@@ -31,7 +31,7 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
         householdName,
         setHouseholdName,
         bottomNavValue,
-        setBottomNavValue
+        setBottomNavValue,
       }}
     >
       {children}
