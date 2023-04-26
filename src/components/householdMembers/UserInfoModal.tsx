@@ -44,20 +44,20 @@ const UserInfoModal = ({
           </div>
           <div className=" relative h-12 rounded-b-3xl bg-slate-200">
             <div className="absolute right-4 top-2">
-              <h1 className="text-2xl">{currUser?.name}</h1>
+              <h1 className="text-xl">{currUser?.name}</h1>
             </div>
           </div>
           <div className="mt-5">
-            <div className="mx-auto flex w-1/2 justify-between ">
-              <p className="text-lg font-semibold">Role:</p>
-              <p className="text-lg">
+            <div className="mx-auto flex w-2/3 justify-between ">
+              <p className=" font-semibold">Role:</p>
+              <p className="">
                 {" "}
                 {currUser?.role === "USER" ? "Member" : "Admin"}
               </p>
             </div>
-            <div className="mx-auto flex w-1/2 justify-between ">
-              <p className="text-lg font-semibold">Joined:</p>
-              <p className="text-lg">
+            <div className="mx-auto flex w-2/3 justify-between ">
+              <p className=" font-semibold">Joined:</p>
+              <p className="">
                 {dayjs(currUser?.joinedAt).format("MMMM D, YYYY")}
               </p>
             </div>
