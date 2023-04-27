@@ -31,13 +31,13 @@ const RemoveMemberConfirmationModal = ({
     >
       <div className="mt-6 flex justify-center gap-4">
         <button
-          className="rounded-2xl border border-slate-600 p-4 text-lg"
+          className="rounded-2xl border border-slate-600 px-4 text-lg"
           onClick={() => removeFromHousehold.mutate({ id })}
         >
           Yes
         </button>
         <button
-          className="rounded-2xl border border-slate-600 p-4 text-lg"
+          className="rounded-2xl border border-slate-600 px-4 text-lg"
           onClick={() => setShowConfirmationModal(false)}
         >
           No

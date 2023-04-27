@@ -70,14 +70,18 @@ const UserInfoModal = ({
               <div className="">
                 <div className="mt-3 flex gap-4">
                   <button
-                    className="rounded-3xl border border-slate-800 text-sm font-semibold"
-                    disabled={currUser?.role === "ADMIN"}
+                    className="rounded-3xl border border-slate-800 text-sm font-semibold disabled:border-slate-300 disabled:text-slate-400"
+                    disabled={
+                      currUser?.role === "ADMIN" ||
+                      currUser?.id === sessionData.user.id
+                    }
                   >
                     Promote to Admin
                   </button>
                   <button
-                    className="rounded-3xl border border-slate-800 text-sm font-semibold"
+                    className="rounded-3xl border border-slate-800 text-sm font-semibold disabled:border-slate-300 disabled:text-slate-400"
                     onClick={() => setShowConfirmationModal(true)}
+                    disabled={currUser?.role === "ADMIN"}
                   >
                     Remove from Household
                   </button>

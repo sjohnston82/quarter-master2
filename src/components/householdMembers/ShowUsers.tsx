@@ -12,16 +12,16 @@ const ShowUsers = () => {
   });
   const [showingUserInfoModal, setShowingUserInfoModal] = useState("");
 
-  const handleShowModal = (id: string) => {
-    setShowingUserInfoModal(id);
-  };
-
   return (
     <div className="flex flex-col justify-center">
       {!getHouseholdMembers.data && <LoadingSpinner />}
       {getHouseholdMembers.data &&
         getHouseholdMembers.data[0]?.members.map((member) => (
-          <div key={member.id} className="my-2 flex items-center gap-3">
+          <div
+            key={member.id}
+            className="my-2 flex items-center gap-3 cursor-pointer"
+            onClick={() => setShowingUserInfoModal(member.id)}
+          >
             <Image
               className="rounded-full"
               src={member.image ?? ""}
@@ -30,12 +30,7 @@ const ShowUsers = () => {
               alt={member.name ?? ""}
             />
             <div className="flex flex-col">
-              <h3
-                className="text-lg"
-                onClick={() => setShowingUserInfoModal(member.id)}
-              >
-                {member.name}
-              </h3>
+              <h3 className="text-lg">{member.name}</h3>
               <p className="italic">
                 {member.role === "USER" ? "Member" : "Founder"}
               </p>

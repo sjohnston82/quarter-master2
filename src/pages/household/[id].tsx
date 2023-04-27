@@ -27,12 +27,14 @@ import ShoppingListPage from "~/components/bottomNavScreens/ShoppingListPage";
 
 const HouseholdPage = () => {
   const router = useRouter();
-  const { householdId, setHouseholdId, householdName, setHouseholdName, bottomNavValue, setBottomNavValue } =
-    useContext(GlobalContext);
-  // const [bottomNavValue, setBottomNavValue] = useState(0);
-
-  const getHouseholdId = api.household.getHouseholdId.useQuery();
-
+  const {
+    householdId,
+    setHouseholdId,
+    householdName,
+    setHouseholdName,
+    bottomNavValue,
+    setBottomNavValue,
+  } = useContext(GlobalContext);
   const { data: sessionData, status } = useSession();
 
   const getHouseholdInfo = api.household.getHouseholdInfo.useQuery({
@@ -40,11 +42,6 @@ const HouseholdPage = () => {
   });
 
   useEffect(() => {
-    getHouseholdId.data &&
-      getHouseholdId.data !== null &&
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      setHouseholdId(getHouseholdId.data.householdId!);
-
     if (status === "unauthenticated" && sessionData == undefined)
       void router.push("/");
 
@@ -52,7 +49,6 @@ const HouseholdPage = () => {
       getHouseholdInfo.data !== null &&
       setHouseholdName(getHouseholdInfo.data.name);
   }, [
-    getHouseholdId.data,
     sessionData,
     status,
     router,
@@ -60,6 +56,17 @@ const HouseholdPage = () => {
     getHouseholdInfo.data,
     setHouseholdName,
   ]);
+
+  // useEffect(() => {
+  //   setBottomNavValue(
+  //     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  //     JSON.parse(window.localStorage.getItem("navValue"))
+  //   );
+  // }, []);
+
+  // useEffect(() => {
+  //   window.localStorage.setItem("navValue", bottomNavValue);
+  // }, [bottomNavValue]);
 
   return (
     <div className="h-full w-full pb-16 ">
