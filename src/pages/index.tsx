@@ -18,8 +18,8 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     getHouseholdId.data &&
-      getHouseholdId.data !== null &&
-      setHouseholdId(getHouseholdId.data.householdId);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      setHouseholdId(getHouseholdId.data.householdId!);
     // if (!sessionData) return redirect("/");
     if (status !== "loading" && sessionData !== undefined && householdId) {
       void router.push(`/household/${householdId}`);

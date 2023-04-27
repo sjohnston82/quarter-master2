@@ -3,8 +3,8 @@ import React, { createContext, type SetStateAction, useState } from "react";
 type GlobalContextType = {
   userRole: string;
   setUserRole: React.Dispatch<SetStateAction<string>>;
-  householdId: string | null;
-  setHouseholdId: React.Dispatch<SetStateAction<string | null>>;
+  householdId: string;
+  setHouseholdId: React.Dispatch<SetStateAction<string>>;
   householdName: string;
   setHouseholdName: React.Dispatch<SetStateAction<string>>;
   bottomNavValue: number;
@@ -17,7 +17,7 @@ export const GlobalContext = createContext<GlobalContextType>(
 
 const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
   const [userRole, setUserRole] = useState("");
-  const [householdId, setHouseholdId] = useState<string | null>("");
+  const [householdId, setHouseholdId] = useState<string>("");
   const [householdName, setHouseholdName] = useState<string>("");
   const [bottomNavValue, setBottomNavValue] = useState(0);
 
