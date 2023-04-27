@@ -45,7 +45,7 @@ const MainLayout = () => {
             </div>
             <div className="absolute right-0 top-8 ">
               <p className="text-xs cursor-pointer" onClick={() => setBottomNavValue(2)}>
-                {householdName} Household
+                {householdName && `${householdName} Household`}
               </p>
             </div>
           </div>
@@ -59,19 +59,6 @@ const MainLayout = () => {
             </span>
           </div>
         )}
-
-        {/* <button
-          className=""
-          onClick={
-            sessionData ? () => void signOutWithRedirect() : () => void signIn()
-          }
-        >
-          {sessionData ? (
-            <LogoutIcon />
-          ) : (
-            <span className="w-1/3">Sign in</span>
-          )}
-        </button> */}
       </div>
     </div>
   );

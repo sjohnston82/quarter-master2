@@ -69,7 +69,10 @@ const UserInfoModal = ({
             {sessionData?.user.role === "ADMIN" && (
               <div className="">
                 <div className="mt-3 flex gap-4">
-                  <button className="rounded-3xl border border-slate-800 text-sm font-semibold">
+                  <button
+                    className="rounded-3xl border border-slate-800 text-sm font-semibold"
+                    disabled={currUser?.role === "ADMIN"}
+                  >
                     Promote to Admin
                   </button>
                   <button
@@ -79,7 +82,14 @@ const UserInfoModal = ({
                     Remove from Household
                   </button>
                 </div>
-                {currUser && <RemoveMemberConfirmationModal setShowingUserInfoModal={setShowingUserInfoModal} showConfirmationModal={showConfirmationModal} setShowConfirmationModal={setShowConfirmationModal} id={currUser.id} />}
+                {currUser && (
+                  <RemoveMemberConfirmationModal
+                    setShowingUserInfoModal={setShowingUserInfoModal}
+                    showConfirmationModal={showConfirmationModal}
+                    setShowConfirmationModal={setShowConfirmationModal}
+                    id={currUser.id}
+                  />
+                )}
               </div>
             )}
           </div>

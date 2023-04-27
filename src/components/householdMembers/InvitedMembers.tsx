@@ -1,9 +1,10 @@
 import { type Invite } from "@prisma/client";
 import { api, type RouterOutputs } from "~/utils/api";
-import {RiCloseCircleFill} from "react-icons/ri";
+import { RiCloseCircleFill } from "react-icons/ri";
 
 import React from "react";
 import { useSession } from "next-auth/react";
+import LoadingSpinner from "../ui/LoadingSpinner";
 
 type InvitedMemberProps = {
   getInviteList: RouterOutputs["household"]["getInviteList"][0] | undefined;
@@ -19,13 +20,14 @@ const InvitedMembers = ({ getInviteList }: InvitedMemberProps) => {
   });
   return (
     <div>
+      {!getInviteList && <LoadingSpinner />}
       {getInviteList &&
         getInviteList.invitedList.map((invite, i) => (
-          <div key={i} className="flex gap-2 items-center">
+          <div key={i} className="flex items-center gap-2">
             <p className="text-lg">{invite.email}</p>
             {sessionData?.user.role === "ADMIN" && (
               <div onClick={() => deleteInvite.mutate({ email: invite.email })}>
-                <RiCloseCircleFill className="text-red-500 text-lg" />
+                <RiCloseCircleFill className="text-lg text-red-500" />
               </div>
             )}
           </div>

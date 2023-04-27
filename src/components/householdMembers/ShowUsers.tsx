@@ -3,6 +3,7 @@ import React, { useState, useContext } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import { api } from "~/utils/api";
 import UserInfoModal from "./UserInfoModal";
+import LoadingSpinner from "../ui/LoadingSpinner";
 
 const ShowUsers = () => {
   const { householdId } = useContext(GlobalContext);
@@ -17,6 +18,7 @@ const ShowUsers = () => {
 
   return (
     <div className="flex flex-col justify-center">
+      {!getHouseholdMembers.data && <LoadingSpinner />}
       {getHouseholdMembers.data &&
         getHouseholdMembers.data[0]?.members.map((member) => (
           <div key={member.id} className="my-2 flex items-center gap-3">
