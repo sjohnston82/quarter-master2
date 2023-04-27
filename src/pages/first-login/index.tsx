@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import { api } from "~/utils/api";
 import { useRouter } from "next/router";
 import { toast } from "react-hot-toast";
 import Modal from "~/components/ui/Modal";
+import { GlobalContext } from "~/context/GlobalContextProvider";
 
 // interface IFormInput {
 //   name: string;
@@ -14,6 +15,7 @@ import Modal from "~/components/ui/Modal";
 // look to daisyui divider horizontal for layout
 
 const CreateHouseholdForm = () => {
+  const { householdId, setHouseholdId } = useContext(GlobalContext)
   const { data: sessionData } = useSession();
   const defaultHouseholdName = sessionData?.user?.name?.split(" ")[1];
   const router = useRouter();
@@ -26,13 +28,13 @@ const CreateHouseholdForm = () => {
   // get last name of logged in user and set it to default HH name
 
   const getHouseholdId = api.household.getHouseholdId.useQuery();
-  const [householdId, setHouseholdId] = useState<string | null>(null);
+  
 
   useEffect(() => {
     getHouseholdId.data &&
-      getHouseholdId.data !== null &&
+     
       setHouseholdId(getHouseholdId.data.householdId);
-  }, [getHouseholdId.data]);
+  }, [getHouseholdId.data, setHouseholdId]);
 
   const createHousehold = api.household.createNewHousehold.useMutation({
     onSuccess: () => {
@@ -67,11 +69,13 @@ const JoinHouseholdByInviteForm = () => {
   const { data: sessionData } = useSession();
   const { register, handleSubmit } = useForm<JoinByInviteCodeProps>();
   const router = useRouter();
-
+  const { householdId } = useContext(GlobalContext)
+  
   const joinByInviteCode = api.invite.joinByInviteCode.useMutation({
-    onSuccess: () => {
-      void router.push("/");
+    onSuccess: async() => {
       toast.success("Successfully joined household!");
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      await router.push(`/household/${householdId!}`)
     },
   });
 

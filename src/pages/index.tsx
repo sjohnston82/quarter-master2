@@ -4,14 +4,16 @@ import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import { api } from "~/utils/api";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { redirect } from "next/navigation";
+import { GlobalContext } from "~/context/GlobalContextProvider";
 
 const Home: NextPage = () => {
   const router = useRouter();
+  const { householdId, setHouseholdId } = useContext(GlobalContext)
   const { data: sessionData, status } = useSession();
-  const [householdId, setHouseholdId] = useState<string | null>(null);
+  // const [householdId, setHouseholdId] = useState<string | null>(null);
   const getHouseholdId = api.household.getHouseholdId.useQuery();
 
   useEffect(() => {
@@ -23,8 +25,16 @@ const Home: NextPage = () => {
       void router.push(`/household/${householdId}`);
     }
 
+    if (
+      status !== "loading" &&
+      sessionData !== undefined &&
+      householdId === null
+    ) {
+      void router.push("/first-login");
+    }
+
     if (status !== "loading" && sessionData == undefined) void router.push("/");
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getHouseholdId.data, householdId, sessionData, status]);
 

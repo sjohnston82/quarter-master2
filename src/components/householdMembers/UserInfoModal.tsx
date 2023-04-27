@@ -6,6 +6,8 @@ import { type User } from "@prisma/client";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import Image from "next/image";
 import dayjs from "dayjs";
+import { useSession } from "next-auth/react";
+import RemoveMemberConfirmationModal from "./RemoveMemberConfirmationModal";
 
 type UserInfoModalProps = {
   showingUserInfoModal: string;
@@ -21,10 +23,12 @@ const UserInfoModal = ({
   const getMembersList = api.household.getHouseholdMembers.useQuery({
     householdId,
   });
+  const { data: sessionData } = useSession();
   const membersList = getMembersList.data && getMembersList.data[0]?.members;
   const currUser = membersList?.find(
     (member) => member.id === showingUserInfoModal
   );
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
   return (
     <div>
@@ -61,6 +65,23 @@ const UserInfoModal = ({
                 {dayjs(currUser?.joinedAt).format("MMMM D, YYYY")}
               </p>
             </div>
+
+            {sessionData?.user.role === "ADMIN" && (
+              <div className="">
+                <div className="mt-3 flex gap-4">
+                  <button className="rounded-3xl border border-slate-800 text-sm font-semibold">
+                    Promote to Admin
+                  </button>
+                  <button
+                    className="rounded-3xl border border-slate-800 text-sm font-semibold"
+                    onClick={() => setShowConfirmationModal(true)}
+                  >
+                    Remove from Household
+                  </button>
+                </div>
+                {currUser && <RemoveMemberConfirmationModal setShowingUserInfoModal={setShowingUserInfoModal} showConfirmationModal={showConfirmationModal} setShowConfirmationModal={setShowConfirmationModal} id={currUser.id} />}
+              </div>
+            )}
           </div>
         </div>
       </Modal>
