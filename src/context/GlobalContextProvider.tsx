@@ -1,4 +1,4 @@
-import React, { createContext, type SetStateAction, useState } from "react";
+import React, { createContext, type SetStateAction, useState, useEffect } from "react";
 
 type GlobalContextType = {
   userRole: string;
@@ -20,6 +20,7 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
   const [householdId, setHouseholdId] = useState<string>("");
   const [householdName, setHouseholdName] = useState<string>("");
   const [bottomNavValue, setBottomNavValue] = useState(0);
+
 
   return (
     <GlobalContext.Provider

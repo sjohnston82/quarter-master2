@@ -101,6 +101,7 @@ model Item {
   expirationDate DateTime?
   household      Household?   @relation(fields: [householdId], references: [householdId])
   householdId    String?
+  brand          String?
 }
 
 enum UserRole {

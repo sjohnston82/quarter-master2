@@ -9,7 +9,7 @@ const FoodItems = () => {
   // console.log(data);
   return (
     <div>
-      <CreateNewItem />
+
       <div>{data?.length === 0 && <p>No Items</p>}</div>
       <div className="">
         {data?.map((item) => (

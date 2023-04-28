@@ -59,13 +59,12 @@ const HouseholdPage = () => {
 
   // useEffect(() => {
   //   setBottomNavValue(
-  //     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  //     JSON.parse(window.localStorage.getItem("navValue"))
+  //     JSON.parse(+window.localStorage.getItem("bottomNavValue"))
   //   );
   // }, []);
 
   // useEffect(() => {
-  //   window.localStorage.setItem("navValue", bottomNavValue);
+  //   window.localStorage.setItem("bottomNavValue", String(bottomNavValue));
   // }, [bottomNavValue]);
 
   return (

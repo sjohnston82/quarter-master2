@@ -4,6 +4,7 @@ import Modal from "../ui/Modal";
 import { useForm } from "react-hook-form";
 import { api } from "~/utils/api";
 import { packageTypes } from "~/utils/foodTypes";
+import AddItemManuallyForm from "./AddItemManuallyForm";
 
 type NewItemInputProps = {
   name: string;
@@ -42,7 +43,8 @@ const CreateNewItem = () => {
   return (
     <div>
       <div className="">
-        <Modal
+        <AddItemManuallyForm showingAddItemModal={showingAddItemModal} setShowingAddItemModal={setShowingAddItemModal} />
+        {/* <Modal
           isOpen={showingAddItemModal}
           onClose={() => setShowingAddItemModal(false)}
           title="Add New Item"
@@ -106,10 +108,21 @@ const CreateNewItem = () => {
             </div>
             <button type="submit">Add Item</button>
           </form>
-        </Modal>
-        <button onClick={() => setShowingAddItemModal(true)}>
-          Add New Item
-        </button>
+        </Modal> */}
+        <div className="mx-3 mt-3 flex justify-between">
+          <button
+            onClick={() => setShowingAddItemModal(true)}
+            className="rounded-xl border border-slate-700 p-1"
+          >
+            Add Item Manually
+          </button>
+          <button
+            className="rounded-xl border border-slate-700 p-1 disabled:border-slate-400 disabled:text-slate-400"
+            disabled
+          >
+            Add By Barcode
+          </button>
+        </div>
       </div>
     </div>
   );
