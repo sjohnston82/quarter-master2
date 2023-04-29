@@ -4,6 +4,7 @@ import Modal from "../ui/Modal";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import { api } from "~/utils/api";
 import { toast } from "react-hot-toast";
+import { TextField } from "@mui/material";
 
 interface CreateStorageProps {
   name: string;
@@ -30,6 +31,7 @@ const CreateStorageArea = () => {
       name: data.name,
       householdId,
     };
+    console.log(mutationData);
     createNewStorageArea.mutate(mutationData);
     reset();
   };
@@ -42,18 +44,28 @@ const CreateStorageArea = () => {
         secondaryTitle="(ex: 'Pantry', 'Garage Freezer', 'Spice Rack', etc.)"
         onClose={() => setShowingCreateStorageAreaModal(false)}
       >
-        <div>
-          <form
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
-            onSubmit={handleSubmit((data) => onSubmit(data))}
-          >
-            <input type="text" id="name" {...register("name")} />
-            <button type="submit">Add</button>
+        <div className="w=full flex flex-col">
+          <form onSubmit={handleSubmit((data) => onSubmit(data))}>
+            <TextField
+              fullWidth
+              margin="dense"
+              label="Storage Area"
+              type="text"
+              id="name"
+              {...register("name")}
+            />
+            <div className="flex w-full justify-center"></div>
+            <button
+              type="submit"
+              className="mx-auto mt-3 rounded-2xl border border-slate-800 px-4 font-semibold"
+            >
+              Add
+            </button>
           </form>
         </div>
       </Modal>
       <button
-        className="border"
+        className="rounded-xl border border-slate-700 p-1 disabled:border-slate-400 disabled:text-slate-400"
         onClick={() => setShowingCreateStorageAreaModal(true)}
       >
         Create Storage Area

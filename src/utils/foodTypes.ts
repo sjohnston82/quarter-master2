@@ -5,10 +5,12 @@ export const packageTypes = [
   { singular: "bag", plural: "bags" },
   { singular: "carton", plural: "cartons" },
   { singular: "bunch", plural: "bunches" },
+  { singular: "jar", plural: "jars" },
+  { singular: "block", plural: "blocks" },
 ];
 export const foodCategories = [
   "produce",
-  "canned goods",
+  "canned",
   "pasta",
   "spices",
   "meats",
@@ -16,4 +18,5 @@ export const foodCategories = [
   "snacks",
   "frozen",
   "breads",
+  "ingredients",
 ];

@@ -72,18 +72,22 @@ const InviteMembers = () => {
             // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onSubmit={handleSubmit((data) => addNameToInviteQueue(data))}
           >
-            <div className="flex flex-col w-full">
-              <div className="flex gap-2 w-full">
+            <div className="flex w-full flex-col">
+              <div className="flex w-full gap-2">
                 <input
                   type="email"
                   id="email"
-                  className="w-full rounded-lg border border-slate-300 placeholder:text-slate-600 p-1 pl-3"
+                  className="w-full rounded-lg border border-slate-300 p-1 pl-3 placeholder:text-slate-600"
                   {...register("email")}
                   placeholder="Enter email..."
                 />
                 <button className="font-semibold ">Invite</button>
               </div>
-              {errors.email?.message && <p className="text-red-500 text-sm italic">{errors.email?.message}</p>}
+              {errors.email?.message && (
+                <p className="text-sm italic text-red-500">
+                  {errors.email?.message}
+                </p>
+              )}
             </div>
           </form>
           <div className="flex flex-col"></div>

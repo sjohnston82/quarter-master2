@@ -102,6 +102,7 @@ model Item {
   household      Household?   @relation(fields: [householdId], references: [householdId])
   householdId    String?
   brand          String?
+  foodCategories String[]
 }
 
 enum UserRole {

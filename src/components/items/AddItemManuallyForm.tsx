@@ -4,13 +4,14 @@ import { Controller, useForm } from "react-hook-form";
 import { api } from "~/utils/api";
 import Modal from "../ui/Modal";
 import {
+  Autocomplete,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
   TextField,
 } from "@mui/material";
-import { packageTypes } from "~/utils/foodTypes";
+import { packageTypes, foodCategories } from "~/utils/foodTypes";
 import { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -26,7 +27,9 @@ interface AddItemManuallyInputProps {
   brand: string;
   amount: number;
   amountType: string;
-  expirationDate: Date;
+  expirationDate: string;
+  storageAreaId: string;
+  foodCategories: string[];
 }
 
 const AddItemManuallyForm = ({
@@ -34,7 +37,9 @@ const AddItemManuallyForm = ({
   setShowingAddItemModal,
 }: AddItemManuallyFormProps) => {
   const { householdId } = useContext(GlobalContext);
+
   const [amount, setAmount] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -47,8 +52,21 @@ const AddItemManuallyForm = ({
     householdId,
   });
 
+  const createNewItem = api.items.createNewItem.useMutation();
+
   const onSubmit = (data: AddItemManuallyInputProps) => {
-    alert(JSON.stringify(data));
+    const mutationData = {
+      householdId,
+      name: data.name,
+      amount: +data.amount,
+      amountType: data.amountType,
+      storageAreaId: data.storageAreaId,
+      brand: data.brand,
+      expirationDate: data.expirationDate,
+      foodCategories: data.foodCategories,
+    };
+    // alert(JSON.stringify(data));
+    createNewItem.mutate(mutationData);
     reset();
     setShowingAddItemModal(false);
     setAmount("");
@@ -60,10 +78,10 @@ const AddItemManuallyForm = ({
       onClose={() => setShowingAddItemModal(false)}
       title="Add Item Manually"
     >
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 mt-2 flex flex-col">
         <TextField
           variant="outlined"
-          margin="dense"
+          // margin="dense"
           {...register("name")}
           required
           fullWidth
@@ -74,7 +92,7 @@ const AddItemManuallyForm = ({
         />
         <TextField
           variant="outlined"
-          margin="dense"
+          // margin="dense"
           {...register("brand")}
           fullWidth
           name="brand"
@@ -85,7 +103,7 @@ const AddItemManuallyForm = ({
         <div className="flex items-center justify-between">
           <TextField
             variant="outlined"
-            margin="dense"
+            // margin="dense"
             {...register("amount")}
             name="amount"
             id="amount"
@@ -97,7 +115,7 @@ const AddItemManuallyForm = ({
           />
           <TextField
             className="w-[55%]"
-            margin="dense"
+            // margin="dense"
             id="amountType"
             select
             label="Amount Type"
@@ -119,14 +137,65 @@ const AddItemManuallyForm = ({
         >
           <Controller
             name="expirationDate"
-            defaultValue={new Date()}
+            defaultValue={String(new Date())}
             control={control}
-            render={({ field: { ref } }) => (
-              <DatePicker inputRef={ref} className="mt-1" label="Expiration Date" />
+            render={({ field: { ref, onChange } }) => (
+              <DatePicker
+                inputRef={ref}
+                className="mb-1 mt-2"
+                label="Expiration Date"
+                onChange={(event) => {
+                  onChange(event);
+                }}
+              />
             )}
           />
         </LocalizationProvider>
-        <button type="submit">Create Item</button>
+        <TextField
+          // margin="dense"
+          className=""
+          required
+          select
+          id="storageArea"
+          label="Storage Area"
+          {...register("storageAreaId")}
+        >
+          {getStorageAreas.data &&
+            getStorageAreas.data.map((area) => (
+              <MenuItem key={area.id} value={area.id}>
+                {area.name}
+              </MenuItem>
+            ))}
+        </TextField>
+        <Controller
+          render={({ field: { onChange, value } }) => (
+            <Autocomplete
+              multiple
+              filterSelectedOptions
+              options={foodCategories}
+              getOptionLabel={(option) => option}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Food categories"
+                  variant="outlined"
+                />
+              )}
+              onChange={(_, data) => {
+                onChange(data);
+                return data;
+              }}
+            />
+          )}
+          name="foodCategories"
+          control={control}
+        />
+        <button
+          type="submit"
+          className="mt-3 rounded-xl border border-slate-700 p-1 disabled:border-slate-400 disabled:text-slate-400"
+        >
+          Create Item
+        </button>
       </form>
     </Modal>
   );

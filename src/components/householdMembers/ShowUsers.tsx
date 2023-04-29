@@ -19,7 +19,7 @@ const ShowUsers = () => {
         getHouseholdMembers.data[0]?.members.map((member) => (
           <div
             key={member.id}
-            className="my-2 flex items-center gap-3 cursor-pointer"
+            className="my-2 flex cursor-pointer items-center gap-3"
             onClick={() => setShowingUserInfoModal(member.id)}
           >
             <Image

@@ -25,8 +25,11 @@ export const itemsRouter = createTRPCRouter({
         name: z.string(),
         householdId: z.string(),
         amount: z.number(),
-        amountType: z.string(),
+        amountType: z.string().optional(),
         storageAreaId: z.string(),
+        brand: z.string().optional(),
+        foodCategories: z.array(z.string()).optional(),
+        expirationDate: z.string().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -36,6 +39,9 @@ export const itemsRouter = createTRPCRouter({
           householdId: input.householdId,
           amount: input.amount,
           amountType: input.amountType,
+          brand: input.brand,
+          foodCategories: input.foodCategories,
+          expirationDate: input.expirationDate,
         },
       });
 
@@ -69,6 +75,6 @@ export const itemsRouter = createTRPCRouter({
           storageAreaId: input.storageAreaId,
         },
       });
-      return itemsInStorage
+      return itemsInStorage;
     }),
 });

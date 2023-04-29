@@ -2,6 +2,7 @@ import { FormControl, InputLabel, MenuItem, Select, type SelectChangeEvent } fro
 import React, { useState } from "react";
 import CreateNewItem from "../items/CreateNewItem";
 import FoodItems from "../items/FoodItems";
+import CreateStorageArea from "../storage-areas/CreateStorageArea";
 
 const FoodItemsPage = () => {
   const [filterItemsCategory, setFilterItemsCategory] = useState("All")
@@ -12,6 +13,9 @@ const FoodItemsPage = () => {
   return <div>
     <div className="">
       <CreateNewItem />
+    </div>
+    <div className="">
+      <CreateStorageArea />
     </div>
     <div className="w-4/5 mt-6 mx-auto">
 

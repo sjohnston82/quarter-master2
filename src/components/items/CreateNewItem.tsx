@@ -43,72 +43,10 @@ const CreateNewItem = () => {
   return (
     <div>
       <div className="">
-        <AddItemManuallyForm showingAddItemModal={showingAddItemModal} setShowingAddItemModal={setShowingAddItemModal} />
-        {/* <Modal
-          isOpen={showingAddItemModal}
-          onClose={() => setShowingAddItemModal(false)}
-          title="Add New Item"
-        >
-          <form
-            action=""
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <div className="flex flex-col">
-              <div className="flex">
-                <div className="flex">
-                  <label htmlFor="name">Item Name: </label>
-                  <input type="text" id="name" {...register("name")} />
-                </div>
-
-                <div className="flex">
-                  <label htmlFor="storageArea">Storage Area:</label>
-                  <select id="storageAreaId" {...register("storageAreaId")}>
-                    {getStorageAreas.data &&
-                      getStorageAreas.data.map((area) => (
-                        <option key={area.id} value={area.id}>
-                          {area.name}
-                        </option>
-                      ))}
-                  </select>
-                </div>
-              </div>
-
-              <div className="flex">
-                <div className="">
-                  <label htmlFor="amount">Amount:</label>
-                  <input
-                    type="number"
-                    {...register("amount")}
-                    id="amount"
-                    onChange={(e) => setAmount(e.target.value)}
-                  />
-                </div>
-
-                <div className="">
-                  <select
-                    id="amountType"
-                    className="select"
-                    {...register("amountType")}
-                  >
-                    <option disabled selected>
-                      Package Type
-                    </option>
-                    {packageTypes.map((type, i) => (
-                      <option
-                        value={amount === "1" ? type.singular : type.plural}
-                        key={i}
-                      >
-                        {amount === "1" ? type.singular : type.plural}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-            </div>
-            <button type="submit">Add Item</button>
-          </form>
-        </Modal> */}
+        <AddItemManuallyForm
+          showingAddItemModal={showingAddItemModal}
+          setShowingAddItemModal={setShowingAddItemModal}
+        />
         <div className="mx-3 mt-3 flex justify-between">
           <button
             onClick={() => setShowingAddItemModal(true)}
