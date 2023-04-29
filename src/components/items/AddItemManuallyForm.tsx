@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { api } from "~/utils/api";
 import Modal from "../ui/Modal";
 import {
@@ -11,6 +11,10 @@ import {
   TextField,
 } from "@mui/material";
 import { packageTypes } from "~/utils/foodTypes";
+import { Dayjs } from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 interface AddItemManuallyFormProps {
   showingAddItemModal: boolean;
@@ -22,6 +26,7 @@ interface AddItemManuallyInputProps {
   brand: string;
   amount: number;
   amountType: string;
+  expirationDate: Date;
 }
 
 const AddItemManuallyForm = ({
@@ -35,6 +40,7 @@ const AddItemManuallyForm = ({
     handleSubmit,
     reset,
     formState: { errors },
+    control,
   } = useForm<AddItemManuallyInputProps>();
 
   const getStorageAreas = api.storageAreas.getStorageAreas.useQuery({
@@ -45,7 +51,7 @@ const AddItemManuallyForm = ({
     alert(JSON.stringify(data));
     reset();
     setShowingAddItemModal(false);
-    setAmount("")
+    setAmount("");
   };
 
   return (
@@ -98,10 +104,28 @@ const AddItemManuallyForm = ({
             {...register("amountType")}
           >
             {packageTypes.map((type, i) => (
-              <MenuItem key={i} value={amount === '1' ? type.singular : type.plural}>{amount === '1' ? type.singular : type.plural}</MenuItem>
+              <MenuItem
+                key={i}
+                value={amount === "1" ? type.singular : type.plural}
+              >
+                {amount === "1" ? type.singular : type.plural}
+              </MenuItem>
             ))}
           </TextField>
         </div>
+        <LocalizationProvider
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          dateAdapter={AdapterDayjs}
+        >
+          <Controller
+            name="expirationDate"
+            defaultValue={new Date()}
+            control={control}
+            render={({ field: { ref } }) => (
+              <DatePicker inputRef={ref} className="mt-1" label="Expiration Date" />
+            )}
+          />
+        </LocalizationProvider>
         <button type="submit">Create Item</button>
       </form>
     </Modal>
