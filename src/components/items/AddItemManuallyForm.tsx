@@ -16,6 +16,8 @@ import { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface AddItemManuallyFormProps {
   showingAddItemModal: boolean;
@@ -32,6 +34,28 @@ interface AddItemManuallyInputProps {
   foodCategories: string[];
 }
 
+const addItemManuallySchema = z.object({
+  name: z
+    .string()
+    .min(2, { message: "You need at least two characters" })
+    .max(50, { message: "You have exceeded the characters amount." }),
+  brand: z
+    .union([
+      z
+        .string()
+        .length(0, { message: "You need at least two characters or blank." }),
+      z.string().min(4),
+    ])
+    .optional()
+    .transform((e) => (e === "" ? undefined : e)),
+  amount: z.coerce.number().min(1),
+  // .number()
+  // .or(z.string().regex(/\d+/).transform(Number))
+  // .refine((n) => n >= 0),
+  amountType: z.string().optional(),
+  expirationDate: z.string().optional(),
+});
+
 const AddItemManuallyForm = ({
   showingAddItemModal,
   setShowingAddItemModal,
@@ -46,7 +70,9 @@ const AddItemManuallyForm = ({
     reset,
     formState: { errors },
     control,
-  } = useForm<AddItemManuallyInputProps>();
+  } = useForm<AddItemManuallyInputProps>({
+    resolver: zodResolver(addItemManuallySchema),
+  });
 
   const getStorageAreas = api.storageAreas.getStorageAreas.useQuery({
     householdId,
@@ -78,7 +104,10 @@ const AddItemManuallyForm = ({
       onClose={() => setShowingAddItemModal(false)}
       title="Add Item Manually"
     >
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 mt-2 flex flex-col">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="mt-2 flex flex-col space-y-2"
+      >
         <TextField
           variant="outlined"
           // margin="dense"
@@ -90,6 +119,9 @@ const AddItemManuallyForm = ({
           type="text"
           id="name"
         />
+        {errors.name?.message && (
+          <p className="text-sm italic text-red-500">{errors.name?.message}</p>
+        )}
         <TextField
           variant="outlined"
           // margin="dense"
@@ -100,6 +132,9 @@ const AddItemManuallyForm = ({
           type="text"
           id="brand"
         />
+        {errors.brand?.message && (
+          <p className="text-sm italic text-red-500">{errors.brand?.message}</p>
+        )}
         <div className="flex items-center justify-between">
           <TextField
             variant="outlined"
@@ -113,6 +148,7 @@ const AddItemManuallyForm = ({
             className="w-2/5"
             onChange={(e) => setAmount(e.target.value)}
           />
+
           <TextField
             className="w-[55%]"
             // margin="dense"
@@ -131,6 +167,11 @@ const AddItemManuallyForm = ({
             ))}
           </TextField>
         </div>
+          {errors.amount?.message && (
+            <p className="text-sm italic text-red-500">
+              {errors.amount?.message}
+            </p>
+          )}
         <LocalizationProvider
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           dateAdapter={AdapterDayjs}
@@ -143,6 +184,7 @@ const AddItemManuallyForm = ({
               <DatePicker
                 inputRef={ref}
                 className="mb-1 mt-2"
+                disablePast
                 label="Expiration Date"
                 onChange={(event) => {
                   onChange(event);

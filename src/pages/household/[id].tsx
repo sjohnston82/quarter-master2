@@ -46,7 +46,7 @@ const HouseholdPage = () => {
     if (status === "unauthenticated" && sessionData == undefined)
       void router.push("/");
 
-    if (householdId === undefined) {
+    if (householdId === "") {
       getHouseholdId.data &&
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         setHouseholdId(getHouseholdId.data.householdId!);
