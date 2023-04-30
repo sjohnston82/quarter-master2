@@ -29,7 +29,7 @@ export const itemsRouter = createTRPCRouter({
         storageAreaId: z.string(),
         brand: z.string().optional(),
         foodCategories: z.array(z.string()).optional(),
-        expirationDate: z.string().optional(),
+        expirationDate: z.date().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
