@@ -5,10 +5,7 @@ import { api } from "~/utils/api";
 import Modal from "../ui/Modal";
 import {
   Autocomplete,
-  FormControl,
-  InputLabel,
   MenuItem,
-  Select,
   TextField,
 } from "@mui/material";
 import { packageTypes, foodCategories } from "~/utils/foodTypes";
@@ -87,10 +84,6 @@ const AddItemManuallyForm = ({
     onSuccess: async () => {
       await createItemRoute.getAllItems.invalidate();
       toast.success("Item created!");
-    },
-    onError: (error) => {
-      console.log(error);
-      toast.error("Error creating item.");
     },
   });
 
@@ -222,6 +215,7 @@ const AddItemManuallyForm = ({
             id="storageArea"
             label="Storage Area"
             {...register("storageAreaId")}
+            
           >
             {getStorageAreas.data.map((area) => (
               <MenuItem key={area.id} value={area.id}>

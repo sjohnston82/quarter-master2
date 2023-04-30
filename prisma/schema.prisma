@@ -105,6 +105,7 @@ model Item {
   foodCategories  String[]
   daysUntilExpiry Int?
   expired         Boolean?     @default(false)
+  storageAreaName String?
 }
 
 enum UserRole {

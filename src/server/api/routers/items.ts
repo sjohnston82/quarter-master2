@@ -78,6 +78,15 @@ export const itemsRouter = createTRPCRouter({
       });
 
       if (!currStorage) throw new Error("No storage area found.");
+      await ctx.prisma.item.update({
+        where: {
+          id: newItem.id,
+        },
+        data: {
+          storageAreaName: currStorage.name,
+        },
+      });
+
 
       await ctx.prisma.storageArea.update({
         where: {
