@@ -9,10 +9,18 @@ type Item = RouterOutputs["items"]["getAllItems"][0];
 
 const Item = ({ ...item }: Item) => {
   const [showingMoreInfo, setShowingMoreInfo] = useState(false);
+
+  let size;
+  if (item.foodCategories.length > 3) {
+    size = 3;
+  } else {
+    size = item.foodCategories.length;
+  }
+
   return (
-    <div className="flex flex-col">
+    <div className="flex w-full flex-col overflow-hidden">
       <div className="flex flex-col border-t-4">
-        <div className="mx-2 flex justify-between border-b py-2">
+        <div className="mx-2 flex w-full justify-between border-b py-2">
           <div className="">
             <p className="">{item.name}</p>
           </div>
@@ -21,12 +29,12 @@ const Item = ({ ...item }: Item) => {
           </div>
           <div className="">{item.storageAreaName}</div>
         </div>
-        <div className="flex justify-between py-2">
+        <div className="w-full">
           {showingMoreInfo && (
-            <div className="flex w-full">
-              <div className="flex w-2/3 flex-col">
-                <div className="flex w-full">
-                  <div className="mx-2 flex flex-col ">
+            <div className="flex">
+              <div className="flex w-2/3 flex-col space-y-1">
+                <div className=" flex bg-red-200">
+                  <div className="mx-2 flex w-1/3 flex-col ">
                     <p className="border-b text-center font-semibold">Brand</p>
                     <p className="text-center text-sm">{item.brand}</p>
                   </div>
@@ -46,19 +54,26 @@ const Item = ({ ...item }: Item) => {
                     </p>
                   </div>
                 </div>
-                {/* <div className="flex flex-col space-y-1">
+
+                <div className=" bg-blue-200">
+                  {/* <div className="flex flex-col space-y-1">
                   <button className="p-1 border rounded-xl ">Update Quantity</button>
                   <button className="p-1 border rounded-xl ">Edit Item Details</button>
                   <button className="p-1 border rounded-xl ">Delete Item</button>
                 </div> */}
-                <div className="ml-2 flex w-4/5 flex-wrap gap-1">
-                  {item.foodCategories.map((category, i) => (
-                    <Chip label={category} key={i} />
-                  ))}
+                  <div className="justify-between flex ">
+                    {item.foodCategories.slice(0, size).map((category, i) => (
+                      <Chip label={category} key={i} />
+                    ))}
+                  </div>
                 </div>
+                <button className="rounded-xl border border-slate-700 w-2/3 mx-auto">
+                  Add to Shopping List
+                </button>
               </div>
-              <div className="flex-1">
-                <div className="flex flex-col space-y-1">
+
+              <div className=" bg-green-500">
+                <div className="flex flex-col space-y-2 mt-1 ">
                   <button className="rounded-xl border border-slate-700 p-1 text-sm">
                     Update Quantity
                   </button>
