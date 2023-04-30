@@ -90,19 +90,21 @@ model StorageArea {
 }
 
 model Item {
-  name           String
-  id             String       @id @default(cuid())
-  storageArea    StorageArea? @relation(fields: [storageAreaId], references: [id])
-  storageAreaId  String?
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
-  amount         Int?         @default(0)
-  amountType     String?
-  expirationDate DateTime?
-  household      Household?   @relation(fields: [householdId], references: [householdId])
-  householdId    String?
-  brand          String?
-  foodCategories String[]
+  name            String
+  id              String       @id @default(cuid())
+  storageArea     StorageArea? @relation(fields: [storageAreaId], references: [id])
+  storageAreaId   String?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  amount          Int?         @default(0)
+  amountType      String?
+  expirationDate  DateTime?
+  household       Household?   @relation(fields: [householdId], references: [householdId])
+  householdId     String?
+  brand           String?
+  foodCategories  String[]
+  daysUntilExpiry Int?
+  expired         Boolean?     @default(false)
 }
 
 enum UserRole {

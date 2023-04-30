@@ -30,7 +30,7 @@ export const sendEmail = async ({
     subject: "You have been invited to a Household on QuarterMaster!",
     html: `
       <h1>You have been invited to the ${household} Household on QuarterMaster by ${inviter}!</h1>
-      <p>Copy the following code after logging in at <a href="http://localhost:3000">http://localhost:3000</a> to join your household!</p>
+      <p>Copy the following code after logging in at <a href="https://quarter-master2.vercel.app">https://quarter-master2.vercel.app</a> to join your household!</p>
       <p>Your join code is: ${token}</p>
 
     `,

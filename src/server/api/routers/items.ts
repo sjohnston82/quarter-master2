@@ -15,6 +15,32 @@ export const itemsRouter = createTRPCRouter({
           householdId: input.householdId,
         },
       });
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      items.forEach(async (item) => {
+        if (item.expirationDate !== null) {
+          const expiryDate = new Date(item.expirationDate);
+          const currDate = new Date(Date.now());
+
+          const difference = currDate.getTime() - expiryDate.getTime();
+          const totalDays = Math.ceil(difference / (1000 * 3600 * 24)) * -1;
+
+          await ctx.prisma.item.update({
+            where: { id: item.id },
+            data: {
+              daysUntilExpiry: totalDays,
+            },
+          });
+
+          if (totalDays < 0 && item.expired === false) {
+            await ctx.prisma.item.update({
+              where: { id: item.id },
+              data: {
+                expired: true,
+              },
+            });
+          }
+        }
+      });
 
       return items;
     }),
