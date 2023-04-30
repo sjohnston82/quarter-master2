@@ -23,33 +23,52 @@ const Item = ({ ...item }: Item) => {
         </div>
         <div className="flex justify-between py-2">
           {showingMoreInfo && (
-            <div className="">
-              <div className="flex">
-                <div className="mx-2 flex flex-col p-3">
-                  <p className="border-b font-semibold">Brand</p>
-                  <p className="">{item.brand}</p>
+            <div className="flex w-full">
+              <div className="flex w-2/3 flex-col">
+                <div className="flex w-full">
+                  <div className="mx-2 flex flex-col ">
+                    <p className="border-b text-center font-semibold">Brand</p>
+                    <p className="text-center text-sm">{item.brand}</p>
+                  </div>
+                  <div className="mx-2 flex flex-col ">
+                    <p className="border-b font-semibold">Days Until Expiry</p>
+                    <p className="text-center text-sm">
+                      <span className="font-semibold">
+                        {item.daysUntilExpiry === null
+                          ? ""
+                          : item.daysUntilExpiry < 0
+                          ? "Expired!"
+                          : item.daysUntilExpiry}
+                      </span>{" "}
+                      {item.expirationDate !== null
+                        ? `(${dayjs(item.expirationDate).format("MM/DD/YYYY")})`
+                        : "Date not provided"}
+                    </p>
+                  </div>
                 </div>
-                <div className="mx-2 flex flex-col p-3">
-                  <p className="border-b font-semibold">Days Until Expiry</p>
-                  <p className="text-sm">
-                    <span className="font-semibold">
-                      {item.daysUntilExpiry === null
-                        ? ""
-                        : item.daysUntilExpiry < 0
-                        ? "Expired!"
-                        : item.daysUntilExpiry}
-                    </span>{" "}
-                    {item.expirationDate !== null ?
-                    (
-                      dayjs(item.expirationDate).format("MM/DD/YYYY")
-                    ) : "Date not provided"}
-                  </p>
+                {/* <div className="flex flex-col space-y-1">
+                  <button className="p-1 border rounded-xl ">Update Quantity</button>
+                  <button className="p-1 border rounded-xl ">Edit Item Details</button>
+                  <button className="p-1 border rounded-xl ">Delete Item</button>
+                </div> */}
+                <div className="ml-2 flex w-4/5 flex-wrap gap-1">
+                  {item.foodCategories.map((category, i) => (
+                    <Chip label={category} key={i} />
+                  ))}
                 </div>
               </div>
-              <div className="ml-2 flex gap-1">
-                {item.foodCategories.map((category, i) => (
-                  <Chip label={category} key={i} />
-                ))}
+              <div className="flex-1">
+                <div className="flex flex-col space-y-1">
+                  <button className="rounded-xl border border-slate-700 p-1 text-sm">
+                    Update Quantity
+                  </button>
+                  <button className="rounded-xl border border-slate-700 p-1 text-sm">
+                    Edit Item
+                  </button>
+                  <button className="rounded-xl border border-slate-700 p-1 text-sm">
+                    Delete Item
+                  </button>
+                </div>
               </div>
             </div>
           )}
