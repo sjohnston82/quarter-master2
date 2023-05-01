@@ -6,6 +6,7 @@ import IsoIcon from "@mui/icons-material/Iso";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DeleteIcon from "@mui/icons-material/Delete";
 import UpdateQuantityModal from "./UpdateQuantityModal";
+import EditItemModal from "./EditItemModal";
 
 type Item = RouterOutputs["items"]["getAllItems"][0];
 
@@ -28,10 +29,16 @@ const ItemOptionsMenu = ({
 
   const [showingUpdateQuantityModal, setShowingUpdateQuantityModal] =
     useState(false);
+  const [showingEditItemModal, setShowingEditItemModal] = useState(false);
 
   const handleUpdateQuantity = () => {
     handleClose();
     setShowingUpdateQuantityModal(true);
+  };
+
+  const handleEditItem = () => {
+    handleClose();
+    setShowingEditItemModal(true);
   };
 
   return (
@@ -48,7 +55,7 @@ const ItemOptionsMenu = ({
         <MenuItem onClick={handleUpdateQuantity}>
           <IsoIcon /> <span className="ml-3">Update Quantity</span>
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleEditItem}>
           <EditIcon /> <span className="ml-3">Edit Item</span>
         </MenuItem>
         <MenuItem onClick={handleClose}>
@@ -63,6 +70,11 @@ const ItemOptionsMenu = ({
         item={item}
         showingUpdateQuantityModal={showingUpdateQuantityModal}
         setShowingUpdateQuantityModal={setShowingUpdateQuantityModal}
+      />
+      <EditItemModal
+        showingEditItemModal={showingEditItemModal}
+        setShowingEditItemModal={setShowingEditItemModal}
+        item={item}
       />
     </div>
   );

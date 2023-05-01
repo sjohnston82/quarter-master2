@@ -7,7 +7,6 @@ import dayjs from "dayjs";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ItemOptionsMenu from "./optionsMenu/ItemOptionsMenu";
 
-
 type Item = RouterOutputs["items"]["getAllItems"][0];
 
 const Item = ({ ...item }: Item) => {
@@ -32,8 +31,10 @@ const Item = ({ ...item }: Item) => {
           </div>
           <div className="w-1/3 flex-wrap">
             <p className="text-sm">
-              {item.daysUntilExpiry && item.daysUntilExpiry > 0 ? (
+              {item.daysUntilExpiry && item.daysUntilExpiry > 1 ? (
                 `Expires: ${item.daysUntilExpiry} days`
+              ) : item.daysUntilExpiry === 1 ? (
+                "Expires tomorrow!"
               ) : (
                 <span className="font-semibold text-red-600">Expired!</span>
               )}

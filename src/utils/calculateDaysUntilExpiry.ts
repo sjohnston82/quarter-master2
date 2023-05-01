@@ -3,7 +3,7 @@ export function calculateDaysUntilExpiry(expiresDate: Date) {
   const currDate = new Date(Date.now());
 
   const difference = currDate.getTime() - expiryDate.getTime();
-  const totalDays = Math.ceil(difference / (1000 * 3600 * 24)) * -1;
+  const totalDays = Math.ceil(difference / (1000 * 3600 * 24)) * -1 + 1;
 
-  return totalDays
+  return totalDays;
 }

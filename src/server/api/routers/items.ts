@@ -150,4 +150,56 @@ export const itemsRouter = createTRPCRouter({
         },
       });
     }),
+
+  editItem: protectedProcedure
+    .input(
+      z.object({
+        name: z.string(),
+        brand: z.string(),
+        flavor: z.string(),
+        foodCategories: z.array(z.string()).optional(),
+        expirationDate: z.date().optional(),
+        storageAreaId: z.string(),
+        id: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const currItem = await ctx.prisma.item.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
+
+      if (!currItem)
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "The item does not exist.",
+        });
+
+      await ctx.prisma.item.update({
+        where: {
+          id: currItem.id,
+        },
+        data: {
+          name: input.name,
+          brand: input.brand,
+          flavor: input.flavor,
+          expirationDate: input.expirationDate,
+          foodCategories: input.foodCategories,
+        },
+      });
+
+      if (input.expirationDate !== undefined) {
+        const totalDays = calculateDaysUntilExpiry(input.expirationDate);
+
+        await ctx.prisma.item.update({
+          where: {
+            id: currItem.id,
+          },
+          data: {
+            daysUntilExpiry: totalDays,
+          },
+        });
+      }
+    }),
 });
