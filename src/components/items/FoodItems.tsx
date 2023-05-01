@@ -18,12 +18,12 @@ const FoodItems = () => {
   return (
     <div>
       <div>{data?.length === 0 && <p>No Items</p>}</div>
-      <div className="">
-        <div className="flex justify-between">
+      <div className="mt-5">
+        {/* <div className="flex justify-between">
           <p className="mx-7 font-semibold">Name</p>
           <p className="mx-7 font-semibold">Amount</p>
           <p className="mx-7 font-semibold">Location</p>
-        </div>
+        </div> */}
         {itemsSortedAlphabetically?.map((item) => (
           <Item key={item.id} {...item} />
         ))}

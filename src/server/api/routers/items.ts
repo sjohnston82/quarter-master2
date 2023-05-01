@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import {
@@ -5,6 +6,8 @@ import {
   publicProcedure,
   protectedProcedure,
 } from "~/server/api/trpc";
+import { prisma } from "~/server/db";
+import { calculateDaysUntilExpiry } from "~/utils/calculateDaysUntilExpiry";
 
 export const itemsRouter = createTRPCRouter({
   getAllItems: protectedProcedure
@@ -18,11 +21,7 @@ export const itemsRouter = createTRPCRouter({
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
       items.forEach(async (item) => {
         if (item.expirationDate !== null) {
-          const expiryDate = new Date(item.expirationDate);
-          const currDate = new Date(Date.now());
-
-          const difference = currDate.getTime() - expiryDate.getTime();
-          const totalDays = Math.ceil(difference / (1000 * 3600 * 24)) * -1;
+          const totalDays = calculateDaysUntilExpiry(item.expirationDate);
 
           await ctx.prisma.item.update({
             where: { id: item.id },
@@ -56,6 +55,7 @@ export const itemsRouter = createTRPCRouter({
         brand: z.string().optional(),
         foodCategories: z.array(z.string()).optional(),
         expirationDate: z.date().optional(),
+        flavor: z.string().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -68,6 +68,7 @@ export const itemsRouter = createTRPCRouter({
           brand: input.brand,
           foodCategories: input.foodCategories,
           expirationDate: input.expirationDate,
+          flavor: input.flavor,
         },
       });
 
@@ -87,7 +88,6 @@ export const itemsRouter = createTRPCRouter({
         },
       });
 
-
       await ctx.prisma.storageArea.update({
         where: {
           id: currStorage.id,
@@ -100,6 +100,19 @@ export const itemsRouter = createTRPCRouter({
           },
         },
       });
+
+      if (input.expirationDate !== undefined) {
+        const totalDays = calculateDaysUntilExpiry(input.expirationDate);
+
+        await ctx.prisma.item.update({
+          where: {
+            id: newItem.id,
+          },
+          data: {
+            daysUntilExpiry: totalDays,
+          },
+        });
+      }
     }),
 
   getItemsByStorageArea: protectedProcedure
@@ -111,5 +124,30 @@ export const itemsRouter = createTRPCRouter({
         },
       });
       return itemsInStorage;
+    }),
+
+  updateItemAmount: protectedProcedure
+    .input(
+      z.object({ amount: z.number(), id: z.string(), amountType: z.string() })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const currItem = await ctx.prisma.item.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
+
+      if (!currItem)
+        throw new TRPCError({ code: "NOT_FOUND", message: "Item not found" });
+
+      await ctx.prisma.item.update({
+        where: {
+          id: currItem.id,
+        },
+        data: {
+          amount: input.amount,
+          amountType: input.amountType,
+        },
+      });
     }),
 });

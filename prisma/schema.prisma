@@ -106,6 +106,7 @@ model Item {
   daysUntilExpiry Int?
   expired         Boolean?     @default(false)
   storageAreaName String?
+  flavor          String?
 }
 
 enum UserRole {

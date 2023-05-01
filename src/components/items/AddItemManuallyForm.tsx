@@ -3,11 +3,7 @@ import { GlobalContext } from "~/context/GlobalContextProvider";
 import { Controller, useForm } from "react-hook-form";
 import { api } from "~/utils/api";
 import Modal from "../ui/Modal";
-import {
-  Autocomplete,
-  MenuItem,
-  TextField,
-} from "@mui/material";
+import { Autocomplete, MenuItem, TextField } from "@mui/material";
 import { packageTypes, foodCategories } from "~/utils/foodTypes";
 import { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -31,6 +27,7 @@ interface AddItemManuallyInputProps {
   expirationDate: string;
   storageAreaId: string;
   foodCategories: string[];
+  flavor: string;
 }
 
 const addItemManuallySchema = z.object({
@@ -49,6 +46,7 @@ const addItemManuallySchema = z.object({
     .transform((e) => (e === "" ? undefined : e)),
   amount: z.coerce.number().min(1),
   amountType: z.string().optional(),
+  flavor: z.string().optional(),
   storageAreaId: z.string(),
   foodCategories: z.string().array().optional(),
   expirationDate: z.coerce.date().optional(),
@@ -98,6 +96,7 @@ const AddItemManuallyForm = ({
       brand: data.brand,
       expirationDate: new Date(data.expirationDate),
       foodCategories: data.foodCategories,
+      flavor: data.flavor,
     };
 
     createNewItem.mutate(mutationData);
@@ -132,15 +131,31 @@ const AddItemManuallyForm = ({
               {errors.name?.message}
             </p>
           )}
-          <TextField
-            variant="outlined"
-            {...register("brand")}
-            fullWidth
-            name="brand"
-            label="Brand"
-            type="text"
-            id="brand"
-          />
+          <div className="flex gap-1">
+            <div className="flex flex-col">
+              <TextField
+                variant="outlined"
+                {...register("brand")}
+                name="brand"
+                label="Brand"
+                type="text"
+                id="brand"
+              />
+            </div>
+            <TextField
+              variant="outlined"
+              {...register("flavor")}
+              name="flavor"
+              label="Flavor"
+              type="text"
+              id="flavor"
+            />
+            {errors.flavor?.message && (
+              <p className="text-sm italic text-red-500">
+                {errors.flavor?.message}
+              </p>
+            )}
+          </div>
           {errors.brand?.message && (
             <p className="text-sm italic text-red-500">
               {errors.brand?.message}
@@ -160,7 +175,7 @@ const AddItemManuallyForm = ({
             />
 
             <TextField
-              className="w-[55%]"
+              className="w-[59%]"
               id="amountType"
               select
               label="Amount Type"
@@ -215,7 +230,6 @@ const AddItemManuallyForm = ({
             id="storageArea"
             label="Storage Area"
             {...register("storageAreaId")}
-            
           >
             {getStorageAreas.data.map((area) => (
               <MenuItem key={area.id} value={area.id}>
