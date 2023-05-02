@@ -4,7 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import { api } from "~/utils/api";
 import Modal from "../ui/Modal";
 import { Autocomplete, MenuItem, TextField } from "@mui/material";
-import { packageTypes, foodCategories } from "~/utils/foodTypes";
+import { packageTypes, foodCategories } from "~/utils/helperLists";
 import { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";

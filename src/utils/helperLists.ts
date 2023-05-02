@@ -8,7 +8,6 @@ export const packageTypes = [
   { singular: "jar", plural: "jars" },
   { singular: "block", plural: "blocks" },
   { singular: "loaf", plural: "loaves" },
-
 ];
 export const foodCategories = [
   "produce",
@@ -21,4 +20,15 @@ export const foodCategories = [
   "frozen",
   "breads",
   "ingredients",
+];
+
+export const groceryStoreAreas = [
+  "Meats",
+  "Produce",
+  "Dry Goods",
+  "Dairy",
+  "Frozen",
+  "Household Goods",
+  "Baby",
+  "Other",
 ];

@@ -9,7 +9,7 @@ import { z } from "zod";
 import Modal from "~/components/ui/Modal";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import { api, type RouterOutputs } from "~/utils/api";
-import { foodCategories } from "~/utils/foodTypes";
+import { foodCategories } from "~/utils/helperLists";
 
 type Item = RouterOutputs["items"]["getAllItems"][0];
 
@@ -38,7 +38,9 @@ const editItemSchema = z.object({
     .union([
       z
         .string()
-        .length(0, { message: "Brand needs at least two characters or blank." }),
+        .length(0, {
+          message: "Brand needs at least two characters or blank.",
+        }),
       z.string().min(2),
     ])
     .optional()
@@ -47,7 +49,9 @@ const editItemSchema = z.object({
     .union([
       z
         .string()
-        .length(0, { message: "Flavor needs at least two characters or blank." }),
+        .length(0, {
+          message: "Flavor needs at least two characters or blank.",
+        }),
       z.string().min(2),
     ])
     .optional()
@@ -62,7 +66,12 @@ const EditItemModal = ({
   setShowingEditItemModal,
   item,
 }: EditItemModalProps) => {
-  const { register, handleSubmit, control, formState: {errors} } = useForm<EditItemInputProps>({
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<EditItemInputProps>({
     defaultValues: {
       name: item.name,
       brand: item.brand ?? "",
@@ -70,7 +79,7 @@ const EditItemModal = ({
       storageAreaName: item.storageAreaName ?? "",
       foodCategories: item.foodCategories.map((foodCategory) => foodCategory),
     },
-    resolver: zodResolver(editItemSchema)
+    resolver: zodResolver(editItemSchema),
   });
   const { householdId } = useContext(GlobalContext);
 
@@ -145,9 +154,7 @@ const EditItemModal = ({
           />
         </div>
         {errors.brand?.message && (
-          <p className="text-sm italic text-red-500">
-            {errors.brand?.message}
-          </p>
+          <p className="text-sm italic text-red-500">{errors.brand?.message}</p>
         )}
         {errors.flavor?.message && (
           <p className="text-sm italic text-red-500">

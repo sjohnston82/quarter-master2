@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import ShowUsers from "~/components/householdMembers/ShowUsers";
-import StorageAreas from "~/components/storage-areas/StorageAreas";
+import StorageAreas from "~/components/storageAreas/StorageAreas";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import InviteMembers from "~/components/householdMembers/InviteMembers";
 import FoodItems from "~/components/items/FoodItems";

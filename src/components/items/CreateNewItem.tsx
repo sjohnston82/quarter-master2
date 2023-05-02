@@ -3,7 +3,7 @@ import { GlobalContext } from "~/context/GlobalContextProvider";
 import Modal from "../ui/Modal";
 import { useForm } from "react-hook-form";
 import { api } from "~/utils/api";
-import { packageTypes } from "~/utils/foodTypes";
+import { packageTypes } from "~/utils/helperLists";
 import AddItemManuallyForm from "./AddItemManuallyForm";
 
 type NewItemInputProps = {

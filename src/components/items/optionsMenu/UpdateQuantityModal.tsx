@@ -4,7 +4,7 @@ import { api, type RouterOutputs } from "~/utils/api";
 import { MenuItem, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { packageTypes } from "~/utils/foodTypes";
+import { packageTypes } from "~/utils/helperLists";
 
 type Item = RouterOutputs["items"]["getAllItems"][0];
 
