@@ -202,4 +202,12 @@ export const itemsRouter = createTRPCRouter({
         });
       }
     }),
+
+  deleteItem: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.item.delete({
+        where: { id: input.id },
+      });
+    }),
 });

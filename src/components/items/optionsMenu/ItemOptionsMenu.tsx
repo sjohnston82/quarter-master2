@@ -7,6 +7,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DeleteIcon from "@mui/icons-material/Delete";
 import UpdateQuantityModal from "./UpdateQuantityModal";
 import EditItemModal from "./EditItemModal";
+import DeleteConfirmationModal from "./DeleteConfirmationModal";
 
 type Item = RouterOutputs["items"]["getAllItems"][0];
 
@@ -30,6 +31,8 @@ const ItemOptionsMenu = ({
   const [showingUpdateQuantityModal, setShowingUpdateQuantityModal] =
     useState(false);
   const [showingEditItemModal, setShowingEditItemModal] = useState(false);
+  const [showingDeleteConfirmationModal, setShowingDeleteConfirmationModal] =
+    useState(false);
 
   const handleUpdateQuantity = () => {
     handleClose();
@@ -39,6 +42,11 @@ const ItemOptionsMenu = ({
   const handleEditItem = () => {
     handleClose();
     setShowingEditItemModal(true);
+  };
+
+  const handleDelete = () => {
+    handleClose();
+    setShowingDeleteConfirmationModal(true);
   };
 
   return (
@@ -58,7 +66,7 @@ const ItemOptionsMenu = ({
         <MenuItem onClick={handleEditItem}>
           <EditIcon /> <span className="ml-3">Edit Item</span>
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleDelete}>
           <DeleteIcon /> <span className="ml-3">Delete Item</span>
         </MenuItem>
         <MenuItem onClick={handleClose}>
@@ -76,6 +84,9 @@ const ItemOptionsMenu = ({
         setShowingEditItemModal={setShowingEditItemModal}
         item={item}
       />
+      <DeleteConfirmationModal showingDeleteConfirmationModal={showingDeleteConfirmationModal}
+        setShowingDeleteConfirmationModal={setShowingDeleteConfirmationModal}
+        id={item.id} />
     </div>
   );
 };

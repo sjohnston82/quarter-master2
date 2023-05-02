@@ -1,9 +1,11 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Autocomplete, MenuItem, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import React, { useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { z } from "zod";
 import Modal from "~/components/ui/Modal";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import { api, type RouterOutputs } from "~/utils/api";
@@ -26,12 +28,41 @@ interface EditItemInputProps {
   flavor: string;
   storageAreaName: string;
 }
+
+const editItemSchema = z.object({
+  name: z
+    .string()
+    .min(2, { message: "You need at least two characters" })
+    .max(50, { message: "You have exceeded the characters amount." }),
+  brand: z
+    .union([
+      z
+        .string()
+        .length(0, { message: "Brand needs at least two characters or blank." }),
+      z.string().min(2),
+    ])
+    .optional()
+    .transform((e) => (e === "" ? undefined : e)),
+  flavor: z
+    .union([
+      z
+        .string()
+        .length(0, { message: "Flavor needs at least two characters or blank." }),
+      z.string().min(2),
+    ])
+    .optional()
+    .transform((e) => (e === "" ? undefined : e)),
+  storageAreaId: z.string(),
+  foodCategories: z.string().array().optional(),
+  expirationDate: z.coerce.date().optional(),
+});
+
 const EditItemModal = ({
   showingEditItemModal,
   setShowingEditItemModal,
   item,
 }: EditItemModalProps) => {
-  const { register, handleSubmit, control } = useForm<EditItemInputProps>({
+  const { register, handleSubmit, control, formState: {errors} } = useForm<EditItemInputProps>({
     defaultValues: {
       name: item.name,
       brand: item.brand ?? "",
@@ -39,6 +70,7 @@ const EditItemModal = ({
       storageAreaName: item.storageAreaName ?? "",
       foodCategories: item.foodCategories.map((foodCategory) => foodCategory),
     },
+    resolver: zodResolver(editItemSchema)
   });
   const { householdId } = useContext(GlobalContext);
 
@@ -89,6 +121,9 @@ const EditItemModal = ({
           type="text"
           id="name"
         />
+        {errors.name?.message && (
+          <p className="text-sm italic text-red-500">{errors.name?.message}</p>
+        )}
         <div className="flex gap-1">
           <div className="flex flex-col">
             <TextField
@@ -109,6 +144,16 @@ const EditItemModal = ({
             id="flavor"
           />
         </div>
+        {errors.brand?.message && (
+          <p className="text-sm italic text-red-500">
+            {errors.brand?.message}
+          </p>
+        )}
+        {errors.flavor?.message && (
+          <p className="text-sm italic text-red-500">
+            {errors.flavor?.message}
+          </p>
+        )}
         <LocalizationProvider
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           dateAdapter={AdapterDayjs}
