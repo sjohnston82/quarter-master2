@@ -109,6 +109,13 @@ model Item {
   flavor          String?
 }
 
+model ShoppingList {
+  name      String
+  id        String  @id @default(cuid())
+  type      String?
+  completed Boolean @default(false)
+}
+
 enum UserRole {
   ADMIN
   USER

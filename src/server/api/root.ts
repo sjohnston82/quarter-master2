@@ -4,6 +4,7 @@ import { householdRouter } from "./routers/household";
 import { inviteRouter } from "./routers/invite";
 import { storageAreasRouter } from "./routers/storageAreas";
 import { itemsRouter } from "./routers/items";
+import { shoppingListRouter } from "./routers/shoppingList";
 
 /**
  * This is the primary router for your server.
@@ -16,6 +17,7 @@ export const appRouter = createTRPCRouter({
   invite: inviteRouter,
   storageAreas: storageAreasRouter,
   items: itemsRouter,
+  shoppingList: shoppingListRouter
 });
 
 // export type definition of API

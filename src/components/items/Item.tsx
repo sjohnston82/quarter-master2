@@ -6,6 +6,7 @@ import { Button, Chip } from "@mui/material";
 import dayjs from "dayjs";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ItemOptionsMenu from "./optionsMenu/ItemOptionsMenu";
+import MoreItemInfo from "./MoreItemInfo";
 
 type Item = RouterOutputs["items"]["getAllItems"][0];
 
@@ -59,14 +60,15 @@ const Item = ({ ...item }: Item) => {
           </div>
         </div>
         {showingMoreInfo ? (
-          <div className="">
+          <div className="flex justify-end mx-2">
             <ExpandLessIcon onClick={() => setShowingMoreInfo(false)} />
           </div>
         ) : (
-          <div className="">
+          <div className="flex justify-between mx-2 items-center"><p className="text-sm">More Information</p>
             <ExpandMoreIcon onClick={() => setShowingMoreInfo(true)} />
           </div>
         )}
+        {showingMoreInfo && <MoreItemInfo {...item} />}
       </div>
     </div>
   );
