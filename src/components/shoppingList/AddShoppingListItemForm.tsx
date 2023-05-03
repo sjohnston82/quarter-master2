@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import Modal from "../ui/Modal";
 import { MenuItem, TextField } from "@mui/material";
 import { groceryStoreAreas } from "~/utils/helperLists";
+import { api } from "~/utils/api";
 
 interface AddToShoppingListProps {
   showingAddToShoppingListModal: boolean;
@@ -23,13 +24,31 @@ const AddShoppingListItemForm = ({
 }: AddToShoppingListProps) => {
   const { householdId } = useContext(GlobalContext);
   const { register, handleSubmit, reset } = useForm<ShoppingListInputProps>();
+
+  const addToShoppingList = api.shoppingList.addToShoppingList.useMutation();
+
+  const onSubmit = (data: ShoppingListInputProps) => {
+    const mutationData = {
+      name: data.name,
+      location: data.location,
+      householdId,
+    };
+    addToShoppingList.mutate(mutationData);
+
+    reset();
+    setShowingAddToShoppingListModal(false);
+  };
+
   return (
     <Modal
       isOpen={showingAddToShoppingListModal}
       title="Add Item to Shopping List"
       onClose={() => setShowingAddToShoppingListModal(false)}
     >
-      <form className="space-y-2 mt-4">
+      <form
+        className="mt-4 space-y-2"
+        onSubmit={handleSubmit((data) => onSubmit(data))}
+      >
         <TextField
           variant="outlined"
           {...register("name")}
@@ -43,9 +62,9 @@ const AddShoppingListItemForm = ({
         <TextField
           select
           fullWidth
-          name="location"
           label="Item location"
           id="location"
+          {...register("location")}
         >
           {groceryStoreAreas.map((area, i) => (
             <MenuItem key={i} value={area}>
