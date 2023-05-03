@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Autocomplete, MenuItem, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 import React, { useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -22,7 +23,7 @@ interface EditItemModalProps {
 interface EditItemInputProps {
   name: string;
   brand: string;
-  expirationDate: string;
+  expirationDate: Date;
   storageAreaId: string;
   foodCategories: string[];
   flavor: string;
@@ -34,28 +35,16 @@ const editItemSchema = z.object({
     .string()
     .min(2, { message: "You need at least two characters" })
     .max(50, { message: "You have exceeded the characters amount." }),
-  brand: z
-    .union([
-      z
-        .string()
-        .length(0, {
-          message: "Brand needs at least two characters or blank.",
-        }),
-      z.string().min(2),
-    ])
-    .optional()
-    .transform((e) => (e === "" ? undefined : e)),
-  flavor: z
-    .union([
-      z
-        .string()
-        .length(0, {
-          message: "Flavor needs at least two characters or blank.",
-        }),
-      z.string().min(2),
-    ])
-    .optional()
-    .transform((e) => (e === "" ? undefined : e)),
+  brand: z.string().optional(),
+  flavor: z.string().optional(),
+  // .union([
+  //   z.string().length(0, {
+  //     message: "Flavor needs at least two characters or blank.",
+  //   }),
+  //   z.string().min(2),
+  // ])
+  // .optional()
+  // .transform((e) => (e === "" ? undefined : e)),
   storageAreaId: z.string(),
   foodCategories: z.string().array().optional(),
   expirationDate: z.coerce.date().optional(),
@@ -101,7 +90,7 @@ const EditItemModal = ({
       name: data.name,
       brand: data.brand,
       flavor: data.flavor,
-      expirationDate: new Date(data.expirationDate),
+      expirationDate: data.expirationDate,
       storageAreaId: data.storageAreaId,
       foodCategories: data.foodCategories,
       id: item.id,
@@ -117,7 +106,7 @@ const EditItemModal = ({
       onClose={() => setShowingEditItemModal(false)}
     >
       <form
-        className="flex flex-col space-y-2"
+        className="mt-4 flex flex-col space-y-2"
         onSubmit={handleSubmit((data) => onSubmit(data))}
       >
         <TextField
@@ -174,6 +163,7 @@ const EditItemModal = ({
                 className="mb-1 mt-2 w-full"
                 disablePast
                 label="Expiration Date"
+                defaultValue={dayjs(item.expirationDate)}
                 onChange={(event) => {
                   onChange(event);
                 }}
@@ -222,7 +212,12 @@ const EditItemModal = ({
           name="foodCategories"
           control={control}
         />
-        <button type="submit">Edit Item</button>
+        <button
+          type="submit"
+          className="mx-auto w-1/2 rounded-2xl border border-slate-600 px-4 text-lg"
+        >
+          Edit Item
+        </button>
       </form>
     </Modal>
   );

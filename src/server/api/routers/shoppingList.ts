@@ -6,4 +6,8 @@ import {
   protectedProcedure,
 } from "~/server/api/trpc";
 
-export const shoppingListRouter = createTRPCRouter({});
+export const shoppingListRouter = createTRPCRouter({
+  addToShoppingList: protectedProcedure.input(z.object({ householdId: z.string(), name: z.string(), location: z.string()})).mutation(async ({ ctx, input}) => {
+    
+  })
+});

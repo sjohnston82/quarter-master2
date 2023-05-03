@@ -29,30 +29,32 @@ const AddShoppingListItemForm = ({
       title="Add Item to Shopping List"
       onClose={() => setShowingAddToShoppingListModal(false)}
     >
-      <TextField
-        variant="outlined"
-        {...register("name")}
-        required
-        fullWidth
-        name="name"
-        label="Item Name"
-        type="text"
-        id="name"
-      />
-      <TextField
-        select
-        fullWidth
-        name="location"
-        label="Item location"
-        id="location"
-      >
-        {groceryStoreAreas.map((area, i) => (
-          <MenuItem key={i} value={area}>
-            {area}
-          </MenuItem>
-        ))}
-      </TextField>
-      <button type="submit"></button>
+      <form className="space-y-2 mt-4">
+        <TextField
+          variant="outlined"
+          {...register("name")}
+          required
+          fullWidth
+          name="name"
+          label="Item Name"
+          type="text"
+          id="name"
+        />
+        <TextField
+          select
+          fullWidth
+          name="location"
+          label="Item location"
+          id="location"
+        >
+          {groceryStoreAreas.map((area, i) => (
+            <MenuItem key={i} value={area}>
+              {area}
+            </MenuItem>
+          ))}
+        </TextField>
+        <button type="submit">Add</button>
+      </form>
     </Modal>
   );
 };

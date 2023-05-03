@@ -190,7 +190,9 @@ export const itemsRouter = createTRPCRouter({
       });
 
       if (input.expirationDate !== undefined) {
-        const totalDays = calculateDaysUntilExpiry(input.expirationDate);
+        const totalDays = calculateDaysUntilExpiry(
+          input.expirationDate
+        );
 
         await ctx.prisma.item.update({
           where: {
