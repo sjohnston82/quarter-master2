@@ -5,6 +5,7 @@ import Modal from "../ui/Modal";
 import { MenuItem, TextField } from "@mui/material";
 import { groceryStoreAreas } from "~/utils/helperLists";
 import { api } from "~/utils/api";
+import { toast } from "react-hot-toast";
 
 interface AddToShoppingListProps {
   showingAddToShoppingListModal: boolean;
@@ -25,7 +26,13 @@ const AddShoppingListItemForm = ({
   const { householdId } = useContext(GlobalContext);
   const { register, handleSubmit, reset } = useForm<ShoppingListInputProps>();
 
-  const addToShoppingList = api.shoppingList.addToShoppingList.useMutation();
+  const addToShoppingListRoute = api.useContext().shoppingList;
+  const addToShoppingList = api.shoppingList.addToShoppingList.useMutation({
+    onSuccess: async () => {
+      toast.success("Item added to shopping list.");
+      await addToShoppingListRoute.getAllShoppingListItems.invalidate();
+    },
+  });
 
   const onSubmit = (data: ShoppingListInputProps) => {
     const mutationData = {

@@ -1,18 +1,18 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
-import { api } from "~/utils/api";
+import { RouterOutputs, api } from "~/utils/api";
+
+type Item = RouterOutputs["shoppingList"]["getAllShoppingListItems"][0];
 
 interface LocationContainerProps {
   location: string;
+  items: Item[];
 }
 
-const LocationContainer = ({ location }: LocationContainerProps) => {
+const LocationContainer = ({ location, items }: LocationContainerProps) => {
   const { householdId } = useContext(GlobalContext);
 
-  const { data } = api.shoppingList.findByLocation.useQuery({
-    householdId,
-    location,
-  });
+
 
   const toggleCompleteRoute = api.useContext().shoppingList;
   const toggleComplete = api.shoppingList.toggleComplete.useMutation({
@@ -21,16 +21,10 @@ const LocationContainer = ({ location }: LocationContainerProps) => {
     },
   });
   return (
-    <div>
-      <h1
-        className={`text-2xl underline ${
-          data && data.length > 0 ? "font-semibold" : ""
-        }`}
-      >
-        {location}
-      </h1>
-      {data &&
-        data.map((item) => (
+    <div className="flex w-full flex-col items-center" role="dialog">
+      <h1 className="text-xl underline">{location}</h1>
+      {items &&
+        items.map((item) => (
           <div
             key={item.id}
             onClick={() => toggleComplete.mutate({ id: item.id })}

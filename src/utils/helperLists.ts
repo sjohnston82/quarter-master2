@@ -30,5 +30,6 @@ export const groceryStoreAreas = [
   "Frozen",
   "Household Goods",
   "Baby",
+  "Personal Care",
   "Other",
 ];
