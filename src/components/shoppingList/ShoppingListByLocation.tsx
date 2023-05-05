@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import LocationContainer from "./LocationContainer";
 import { api } from "~/utils/api";
@@ -30,7 +30,7 @@ const ShoppingListByLocation = () => {
     api.shoppingList.deleteAllCompleteItems.useMutation({
       onSuccess: async () => {
         await toggleCompleteRoute.invalidate();
-        setIdsToDelete([]);
+        // setIdsToDelete([]);
       },
     });
 
@@ -50,20 +50,22 @@ const ShoppingListByLocation = () => {
   const uncategorized = data?.filter((item) => item.location === "");
 
   const deleteAllComplete = () => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    // for (const item of data!) {
-    //   if (item.completed === true) {
-    //     setIdsToDelete((prev) => [...prev, item.id]);
-    //   }
-    // }
     data?.forEach((item) => {
       if (item.completed) {
         setIdsToDelete((prev) => [...prev, item.id]);
       }
     });
-    console.log(idsToDelete);
-    deleteAllCompletedItems.mutate(idsToDelete);
+
   };
+
+  useEffect(() => {
+    if (idsToDelete.length > 0) {
+      deleteAllCompletedItems.mutate(idsToDelete);
+      setIdsToDelete([]);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deleteAllCompletedItems]);
+
   return (
     <div className="flex w-full flex-col">
       <button onClick={deleteAllComplete}>Delete Completed</button>
