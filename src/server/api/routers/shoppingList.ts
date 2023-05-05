@@ -77,5 +77,23 @@ export const shoppingListRouter = createTRPCRouter({
       }
     }),
 
-  
+  deleteItemFromShoppingList: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.shoppingList.delete({
+        where: { id: input.id },
+      });
+    }),
+
+  deleteAllCompleteItems: protectedProcedure
+    .input(z.string().array())
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.shoppingList.deleteMany({
+        where: {
+          id: {
+            in: input,
+          },
+        },
+      });
+    }),
 });

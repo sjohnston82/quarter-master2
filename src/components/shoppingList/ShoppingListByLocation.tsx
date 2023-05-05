@@ -1,14 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import LocationContainer from "./LocationContainer";
 import { api } from "~/utils/api";
 import LoadingSpinner from "../ui/LoadingSpinner";
+import { type ShoppingList } from "@prisma/client";
 
 const ShoppingListByLocation = () => {
   const { householdId } = useContext(GlobalContext);
   const { data, isLoading } = api.shoppingList.getAllShoppingListItems.useQuery(
     { householdId }
   );
+  const [idsToDelete, setIdsToDelete] = useState<string[]>([]);
 
   const toggleCompleteRoute = api.useContext().shoppingList;
   const toggleComplete = api.shoppingList.toggleComplete.useMutation({
@@ -16,6 +18,21 @@ const ShoppingListByLocation = () => {
       await toggleCompleteRoute.invalidate();
     },
   });
+
+  const deleteShoppingListItem =
+    api.shoppingList.deleteItemFromShoppingList.useMutation({
+      onSuccess: async () => {
+        // await toggleCompleteRoute.invalidate();
+      },
+    });
+
+  const deleteAllCompletedItems =
+    api.shoppingList.deleteAllCompleteItems.useMutation({
+      onSuccess: async () => {
+        await toggleCompleteRoute.invalidate();
+        setIdsToDelete([]);
+      },
+    });
 
   const produceItems = data?.filter((item) => item.location === "Produce");
   const meatItems = data?.filter((item) => item.location === "Meats");
@@ -30,51 +47,117 @@ const ShoppingListByLocation = () => {
     (item) => item.location === "Personal Care"
   );
   const otherItems = data?.filter((item) => item.location === "Other");
+  const uncategorized = data?.filter((item) => item.location === "");
+
+  const deleteAllComplete = () => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    // for (const item of data!) {
+    //   if (item.completed === true) {
+    //     setIdsToDelete((prev) => [...prev, item.id]);
+    //   }
+    // }
+    data?.forEach((item) => {
+      if (item.completed) {
+        setIdsToDelete((prev) => [...prev, item.id]);
+      }
+    });
+    console.log(idsToDelete);
+    deleteAllCompletedItems.mutate(idsToDelete);
+  };
   return (
     <div className="flex w-full flex-col">
+      <button onClick={deleteAllComplete}>Delete Completed</button>
       {isLoading && <LoadingSpinner size={40} />}
       {/* this div renders first if the lists are not empty */}
       <div className="">
         {produceItems && produceItems.length > 0 && (
-          <LocationContainer location="Produce" items={produceItems} />
+          <LocationContainer
+            location="Produce"
+            items={produceItems}
+            idsToDelete={idsToDelete}
+            setIdsToDelete={setIdsToDelete}
+          />
         )}
 
         {dryGoodsItems && dryGoodsItems.length > 0 && (
-          <LocationContainer location="Dry Goods" items={dryGoodsItems} />
+          <LocationContainer
+            location="Dry Goods"
+            items={dryGoodsItems}
+            idsToDelete={idsToDelete}
+            setIdsToDelete={setIdsToDelete}
+          />
         )}
 
         {meatItems && meatItems.length > 0 && (
-          <LocationContainer location="Meats" items={meatItems} />
+          <LocationContainer
+            location="Meats"
+            items={meatItems}
+            idsToDelete={idsToDelete}
+            setIdsToDelete={setIdsToDelete}
+          />
         )}
 
         {dairyItems && dairyItems.length > 0 && (
-          <LocationContainer location="Dairy" items={dairyItems} />
+          <LocationContainer
+            location="Dairy"
+            items={dairyItems}
+            idsToDelete={idsToDelete}
+            setIdsToDelete={setIdsToDelete}
+          />
         )}
 
         {frozenItems && frozenItems.length > 0 && (
-          <LocationContainer location="Frozen" items={frozenItems} />
+          <LocationContainer
+            location="Frozen"
+            items={frozenItems}
+            idsToDelete={idsToDelete}
+            setIdsToDelete={setIdsToDelete}
+          />
         )}
 
         {householdGoodsItems && householdGoodsItems.length > 0 && (
           <LocationContainer
             location="Household Goods"
             items={householdGoodsItems}
+            idsToDelete={idsToDelete}
+            setIdsToDelete={setIdsToDelete}
           />
         )}
 
         {babyItems && babyItems.length > 0 && (
-          <LocationContainer location="Baby" items={babyItems} />
+          <LocationContainer
+            location="Baby"
+            items={babyItems}
+            idsToDelete={idsToDelete}
+            setIdsToDelete={setIdsToDelete}
+          />
         )}
 
         {personalCareItems && personalCareItems.length > 0 && (
           <LocationContainer
             location="Personal Care"
             items={personalCareItems}
+            idsToDelete={idsToDelete}
+            setIdsToDelete={setIdsToDelete}
           />
         )}
 
         {otherItems && otherItems.length > 0 && (
-          <LocationContainer location="Other" items={otherItems} />
+          <LocationContainer
+            location="Other"
+            items={otherItems}
+            idsToDelete={idsToDelete}
+            setIdsToDelete={setIdsToDelete}
+          />
+        )}
+
+        {uncategorized && uncategorized.length > 0 && (
+          <LocationContainer
+            location="No location info"
+            items={uncategorized}
+            idsToDelete={idsToDelete}
+            setIdsToDelete={setIdsToDelete}
+          />
         )}
       </div>
       <div className="">
