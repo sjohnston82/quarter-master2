@@ -36,7 +36,9 @@ const ShoppingListByLocation = () => {
 
   const produceItems = data?.filter((item) => item.location === "Produce");
   const meatItems = data?.filter((item) => item.location === "Meats");
-  const dryGoodsItems = data?.filter((item) => item.location === "Dry Goods");
+  const dryGoodsItems = data?.filter(
+    (item) => item.location === "Dry/Canned Goods"
+  );
   const dairyItems = data?.filter((item) => item.location === "Dairy");
   const householdGoodsItems = data?.filter(
     (item) => item.location === "Household Goods"
@@ -162,7 +164,7 @@ const ShoppingListByLocation = () => {
           />
         )}
       </div>
-      <div className="">
+      {/* <div className="">
         {produceItems?.length === 0 && (
           <div className="flex w-full flex-col items-center">
             <h1 className="text-xl underline">Produce</h1>
@@ -208,7 +210,7 @@ const ShoppingListByLocation = () => {
             <h1 className="text-xl underline">Other</h1>
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

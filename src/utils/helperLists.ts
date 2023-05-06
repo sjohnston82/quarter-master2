@@ -25,11 +25,15 @@ export const foodCategories = [
 export const groceryStoreAreas = [
   "Meats",
   "Produce",
-  "Dry Goods",
+  "Dry/Canned Goods",
   "Dairy",
   "Frozen",
   "Household Goods",
   "Baby",
   "Personal Care",
+  "Bakery",
+  "Deli",
   "Other",
 ];
+
+export const shoppingListAmountTypes = ["lbs", "oz", "grams", "kgs"];

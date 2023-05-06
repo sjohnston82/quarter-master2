@@ -14,6 +14,8 @@ export const shoppingListRouter = createTRPCRouter({
         householdId: z.string(),
         name: z.string(),
         location: z.string(),
+        amount: z.number().optional(),
+        amountType: z.string().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -22,6 +24,8 @@ export const shoppingListRouter = createTRPCRouter({
           householdId: input.householdId,
           name: input.name,
           location: input.location,
+          amount: input.amount,
+          amountType: input.amountType,
         },
       });
     }),
@@ -93,6 +97,40 @@ export const shoppingListRouter = createTRPCRouter({
           id: {
             in: input,
           },
+        },
+      });
+    }),
+
+  editShoppingItem: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+        amount: z.number().optional(),
+        amountType: z.string().optional(),
+        location: z.string().optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const currItem = await ctx.prisma.shoppingList.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
+
+      if (!currItem)
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Shopping item not found.",
+        });
+
+      await ctx.prisma.shoppingList.update({
+        where: { id: currItem.id },
+        data: {
+          name: input.name,
+          amount: input.amount,
+          amountType: input.amountType,
+          location: input.location,
         },
       });
     }),
