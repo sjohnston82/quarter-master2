@@ -106,8 +106,8 @@ export const shoppingListRouter = createTRPCRouter({
       z.object({
         id: z.string(),
         name: z.string(),
-        amount: z.number().optional(),
-        amountType: z.string().optional(),
+        amount: z.number().nullable().optional(),
+        amountType: z.string().nullable().optional(),
         location: z.string().optional(),
       })
     )

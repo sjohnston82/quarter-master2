@@ -8,16 +8,9 @@ type Item = RouterOutputs["shoppingList"]["getAllShoppingListItems"][0];
 interface LocationContainerProps {
   location: string;
   items: Item[];
-  idsToDelete: string[];
-  setIdsToDelete: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const LocationContainer = ({
-  location,
-  items,
-  idsToDelete,
-  setIdsToDelete,
-}: LocationContainerProps) => {
+const LocationContainer = ({ location, items }: LocationContainerProps) => {
   const { householdId } = useContext(GlobalContext);
 
   // useEffect(() => {
@@ -37,15 +30,11 @@ const LocationContainer = ({
 
   return (
     <div className="flex w-full flex-col items-center" role="dialog">
-      <h1 className="text-xl bg-slate-800 w-full text-slate-200 text-center">{location}</h1>
+      <h1 className="w-full bg-slate-800 text-center text-xl text-slate-200">
+        {location}
+      </h1>
       {items &&
-        items.map((item) => (
-          <ShoppingListItem
-            item={item}
-            key={item.id}
-          />
-         
-        ))}
+        items.map((item) => <ShoppingListItem item={item} key={item.id} />)}
     </div>
   );
 };

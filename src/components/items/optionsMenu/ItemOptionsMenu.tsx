@@ -8,6 +8,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import UpdateQuantityModal from "./UpdateQuantityModal";
 import EditItemModal from "./EditItemModal";
 import DeleteConfirmationModal from "./DeleteConfirmationModal";
+import AddToShoppingFromItems from "./AddToShoppingFromItems";
 
 type Item = RouterOutputs["items"]["getAllItems"][0];
 
@@ -33,6 +34,10 @@ const ItemOptionsMenu = ({
   const [showingEditItemModal, setShowingEditItemModal] = useState(false);
   const [showingDeleteConfirmationModal, setShowingDeleteConfirmationModal] =
     useState(false);
+  const [
+    showingAddToShoppingFromItemsModal,
+    setShowingAddToShoppingFromItemsModal,
+  ] = useState(false);
 
   const handleUpdateQuantity = () => {
     handleClose();
@@ -47,6 +52,11 @@ const ItemOptionsMenu = ({
   const handleDelete = () => {
     handleClose();
     setShowingDeleteConfirmationModal(true);
+  };
+
+  const handleAddToShopping = () => {
+    handleClose();
+    setShowingAddToShoppingFromItemsModal(true);
   };
 
   return (
@@ -69,7 +79,7 @@ const ItemOptionsMenu = ({
         <MenuItem onClick={handleDelete}>
           <DeleteIcon /> <span className="ml-3">Delete Item</span>
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleAddToShopping}>
           <ShoppingCartIcon />{" "}
           <span className="ml-3">Add to Shopping List</span>
         </MenuItem>
@@ -84,9 +94,18 @@ const ItemOptionsMenu = ({
         setShowingEditItemModal={setShowingEditItemModal}
         item={item}
       />
-      <DeleteConfirmationModal showingDeleteConfirmationModal={showingDeleteConfirmationModal}
+      <DeleteConfirmationModal
+        showingDeleteConfirmationModal={showingDeleteConfirmationModal}
         setShowingDeleteConfirmationModal={setShowingDeleteConfirmationModal}
-        id={item.id} />
+        id={item.id}
+      />
+      <AddToShoppingFromItems
+        showingAddToShoppingFromItemsModal={showingAddToShoppingFromItemsModal}
+        setShowingAddToShoppingFromItemsModal={
+          setShowingAddToShoppingFromItemsModal
+        }
+        item={item}
+      />
     </div>
   );
 };

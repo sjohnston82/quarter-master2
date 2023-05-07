@@ -1,38 +1,46 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import LocationContainer from "./LocationContainer";
-import { api } from "~/utils/api";
+import { RouterOutputs, api } from "~/utils/api";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import { type ShoppingList } from "@prisma/client";
+import Button from "../ui/Button";
 
-const ShoppingListByLocation = () => {
-  const { householdId } = useContext(GlobalContext);
-  const { data, isLoading } = api.shoppingList.getAllShoppingListItems.useQuery(
-    { householdId }
-  );
-  const [idsToDelete, setIdsToDelete] = useState<string[]>([]);
+type Item = RouterOutputs["shoppingList"]["getAllShoppingListItems"][0];
 
-  const toggleCompleteRoute = api.useContext().shoppingList;
-  const toggleComplete = api.shoppingList.toggleComplete.useMutation({
-    onSuccess: async () => {
-      await toggleCompleteRoute.invalidate();
-    },
-  });
+interface ShoppingListByLocationProps {
+  data: Item[] | undefined;
+  isLoading: boolean;
+}
 
-  const deleteShoppingListItem =
-    api.shoppingList.deleteItemFromShoppingList.useMutation({
-      onSuccess: async () => {
-        // await toggleCompleteRoute.invalidate();
-      },
-    });
+const ShoppingListByLocation = ({data, isLoading}: ShoppingListByLocationProps) => {
+  // const { householdId } = useContext(GlobalContext);
+  // const { data, isLoading } = api.shoppingList.getAllShoppingListItems.useQuery(
+  //   { householdId }
+  // );
+  // const [idsToDelete, setIdsToDelete] = useState<string[]>([]);
 
-  const deleteAllCompletedItems =
-    api.shoppingList.deleteAllCompleteItems.useMutation({
-      onSuccess: async () => {
-        await toggleCompleteRoute.invalidate();
-        // setIdsToDelete([]);
-      },
-    });
+  // const toggleCompleteRoute = api.useContext().shoppingList;
+  // const toggleComplete = api.shoppingList.toggleComplete.useMutation({
+  //   onSuccess: async () => {
+  //     await toggleCompleteRoute.invalidate();
+  //   },
+  // });
+
+  // const deleteShoppingListItem =
+  //   api.shoppingList.deleteItemFromShoppingList.useMutation({
+  //     onSuccess: async () => {
+  //       // await toggleCompleteRoute.invalidate();
+  //     },
+  //   });
+
+  // const deleteAllCompletedItems =
+  //   api.shoppingList.deleteAllCompleteItems.useMutation({
+  //     onSuccess: async () => {
+  //       await toggleCompleteRoute.invalidate();
+  //       // setIdsToDelete([]);
+  //     },
+  //   });
 
   const produceItems = data?.filter((item) => item.location === "Produce");
   const meatItems = data?.filter((item) => item.location === "Meats");
@@ -51,26 +59,29 @@ const ShoppingListByLocation = () => {
   const otherItems = data?.filter((item) => item.location === "Other");
   const uncategorized = data?.filter((item) => item.location === "");
 
-  const deleteAllComplete = () => {
-    data?.forEach((item) => {
-      if (item.completed) {
-        setIdsToDelete((prev) => [...prev, item.id]);
-      }
-    });
+  // const deleteAllComplete = () => {
+  //   data?.forEach((item) => {
+  //     if (item.completed) {
+  //       setIdsToDelete((prev) => [...prev, item.id]);
+  //     }
+  //   });
+  // };
 
-  };
-
-  useEffect(() => {
-    if (idsToDelete.length > 0) {
-      deleteAllCompletedItems.mutate(idsToDelete);
-      setIdsToDelete([]);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deleteAllCompletedItems]);
+  // useEffect(() => {
+  //   if (idsToDelete.length > 0) {
+  //     deleteAllCompletedItems.mutate(idsToDelete);
+  //     setIdsToDelete([]);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [deleteAllCompletedItems]);
 
   return (
     <div className="flex w-full flex-col">
-      <button onClick={deleteAllComplete}>Delete Completed</button>
+      {/* <div className="flex justify-end mb-2">
+        <Button fontSize="text-lg" onClick={deleteAllComplete}>
+          Delete Completed
+        </Button>
+      </div> */}
       {isLoading && <LoadingSpinner size={40} />}
       {/* this div renders first if the lists are not empty */}
       <div className="">
@@ -78,8 +89,7 @@ const ShoppingListByLocation = () => {
           <LocationContainer
             location="Produce"
             items={produceItems}
-            idsToDelete={idsToDelete}
-            setIdsToDelete={setIdsToDelete}
+
           />
         )}
 
@@ -87,8 +97,7 @@ const ShoppingListByLocation = () => {
           <LocationContainer
             location="Dry Goods"
             items={dryGoodsItems}
-            idsToDelete={idsToDelete}
-            setIdsToDelete={setIdsToDelete}
+
           />
         )}
 
@@ -96,8 +105,7 @@ const ShoppingListByLocation = () => {
           <LocationContainer
             location="Meats"
             items={meatItems}
-            idsToDelete={idsToDelete}
-            setIdsToDelete={setIdsToDelete}
+
           />
         )}
 
@@ -105,8 +113,7 @@ const ShoppingListByLocation = () => {
           <LocationContainer
             location="Dairy"
             items={dairyItems}
-            idsToDelete={idsToDelete}
-            setIdsToDelete={setIdsToDelete}
+
           />
         )}
 
@@ -114,8 +121,7 @@ const ShoppingListByLocation = () => {
           <LocationContainer
             location="Frozen"
             items={frozenItems}
-            idsToDelete={idsToDelete}
-            setIdsToDelete={setIdsToDelete}
+
           />
         )}
 
@@ -123,8 +129,7 @@ const ShoppingListByLocation = () => {
           <LocationContainer
             location="Household Goods"
             items={householdGoodsItems}
-            idsToDelete={idsToDelete}
-            setIdsToDelete={setIdsToDelete}
+
           />
         )}
 
@@ -132,8 +137,7 @@ const ShoppingListByLocation = () => {
           <LocationContainer
             location="Baby"
             items={babyItems}
-            idsToDelete={idsToDelete}
-            setIdsToDelete={setIdsToDelete}
+
           />
         )}
 
@@ -141,8 +145,7 @@ const ShoppingListByLocation = () => {
           <LocationContainer
             location="Personal Care"
             items={personalCareItems}
-            idsToDelete={idsToDelete}
-            setIdsToDelete={setIdsToDelete}
+
           />
         )}
 
@@ -150,8 +153,7 @@ const ShoppingListByLocation = () => {
           <LocationContainer
             location="Other"
             items={otherItems}
-            idsToDelete={idsToDelete}
-            setIdsToDelete={setIdsToDelete}
+
           />
         )}
 
@@ -159,8 +161,7 @@ const ShoppingListByLocation = () => {
           <LocationContainer
             location="No location info"
             items={uncategorized}
-            idsToDelete={idsToDelete}
-            setIdsToDelete={setIdsToDelete}
+
           />
         )}
       </div>

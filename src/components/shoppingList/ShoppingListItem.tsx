@@ -15,7 +15,8 @@ const ShoppingListItem = ({ item }: ShoppingListItemProps) => {
       await toggleCompleteRoute.invalidate();
     },
   });
-  const [showingEditShoppingItemModal, setShowingEditShoppingItemModal] = useState(false);
+  const [showingEditShoppingItemModal, setShowingEditShoppingItemModal] =
+    useState(false);
 
   return (
     <div className="flex w-full items-center justify-between border-b last:border-none">
@@ -30,10 +31,10 @@ const ShoppingListItem = ({ item }: ShoppingListItemProps) => {
             item.completed ? "line-through" : ""
           }`}
         >
-          {item.amount !== null ? (
+          {item.amount !== null || 0 ? (
             <span className="w-full text-lg">
-              {item.amount}
-              {item.amountType} {item.name}
+              {item.amount === 0 ? "" : item.amount}
+              {item.amount === 0 ? "" : item.amountType} {item.name}
             </span>
           ) : (
             <span className="">{item.name} </span>

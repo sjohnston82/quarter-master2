@@ -22,7 +22,7 @@ interface EditShoppingItemModalProps {
 
 interface EditShoppingItemInputProps {
   name: string;
-  amount: number;
+  amount: number | null;
   amountType: string;
   location: string;
 }
@@ -33,7 +33,7 @@ const editShoppingItemSchema = z.object({
     .min(2, { message: "You need at least two characters" })
     .max(50, { message: "You have exceeded the characters amount." }),
   amount: z.coerce.number().optional(),
-  amountType: z.number().optional(),
+  amountType: z.string().optional(),
   location: z.string().optional(),
 });
 
@@ -50,7 +50,7 @@ const EditShoppingItemModal = ({
   } = useForm<EditShoppingItemInputProps>({
     defaultValues: {
       name: shoppingItem.name,
-      amount: shoppingItem.amount ?? undefined,
+      amount: shoppingItem.amount ?? null,
       amountType: shoppingItem.amountType ?? "",
       location: shoppingItem.location ?? "",
     },
@@ -66,12 +66,11 @@ const EditShoppingItemModal = ({
   });
 
   const onSubmit = (data: EditShoppingItemInputProps) => {
-    console.log("submitting");
     const mutationData = {
       id: shoppingItem.id,
       name: data.name,
-      amount: +data.amount,
-      amountType: data.amountType,
+      amount: data.amount === 0 ? null : +data.amount!,
+      amountType: data.amount === 0 ? null : data.amountType,
       location: data.location,
     };
     editShoppingItem.mutate(mutationData);
@@ -149,7 +148,14 @@ const EditShoppingItemModal = ({
             </MenuItem>
           ))}
         </TextField>
-        <button type="submit">Edit</button>
+        <div className="flex w-full justify-center pt-3">
+          <button
+            type="submit"
+            className="w-1/2 rounded-2xl border border-slate-600 px-4 text-lg"
+          >
+            Edit
+          </button>
+        </div>
       </form>
     </Modal>
   );
