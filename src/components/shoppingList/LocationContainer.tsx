@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import { type RouterOutputs, api } from "~/utils/api";
 import ShoppingListItem from "./ShoppingListItem";
+import Banner from "../ui/Banner";
 
 type Item = RouterOutputs["shoppingList"]["getAllShoppingListItems"][0];
 
@@ -30,9 +31,9 @@ const LocationContainer = ({ location, items }: LocationContainerProps) => {
 
   return (
     <div className="flex w-full flex-col items-center" role="dialog">
-      <h1 className="w-full bg-slate-800 text-center text-xl text-slate-200">
+      <Banner fontSize="text-xl">
         {location}
-      </h1>
+      </Banner>
       {items &&
         items.map((item) => <ShoppingListItem item={item} key={item.id} />)}
     </div>

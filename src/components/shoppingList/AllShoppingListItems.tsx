@@ -4,6 +4,7 @@ import { type RouterOutputs, api } from "~/utils/api";
 import ShoppingListItem from "./ShoppingListItem";
 import Button from "../ui/Button";
 import LoadingSpinner from "../ui/LoadingSpinner";
+import Banner from "../ui/Banner";
 
 type Item = RouterOutputs["shoppingList"]["getAllShoppingListItems"][0];
 
@@ -18,9 +19,9 @@ const AllShoppingListItems = ({
 }: AllShoppingListItemsProps) => {
   return (
     <div className="relative h-full w-full">
-      <h1 className="w-full bg-slate-800 text-center text-xl text-slate-200">
+      <Banner fontSize="text-xl">
         All Shopping List Items
-      </h1>
+      </Banner>
       {isLoading && (
         <div className="relative mt-20 flex h-full flex-col items-center justify-center">
           <div className="absolute  top-1/2 flex h-full w-full flex-col items-center justify-center ">
