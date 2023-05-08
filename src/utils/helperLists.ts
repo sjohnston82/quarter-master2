@@ -36,4 +36,4 @@ export const groceryStoreAreas = [
   "Other",
 ];
 
-export const shoppingListAmountTypes = ["lbs", "oz", "grams", "kgs"];
+export const shoppingListAmountTypes = ["lbs", "oz", "g", "kgs"];

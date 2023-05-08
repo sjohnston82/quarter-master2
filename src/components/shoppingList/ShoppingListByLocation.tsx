@@ -56,6 +56,10 @@ const ShoppingListByLocation = ({data, isLoading}: ShoppingListByLocationProps) 
   const personalCareItems = data?.filter(
     (item) => item.location === "Personal Care"
   );
+  const deliItems = data?.filter(
+    (item) => item.location === "Deli"
+  );
+  const bakeryItems = data?.filter((item) => item.location === "Bakery");
   const otherItems = data?.filter((item) => item.location === "Other");
   const uncategorized = data?.filter((item) => item.location === "");
 
@@ -77,141 +81,67 @@ const ShoppingListByLocation = ({data, isLoading}: ShoppingListByLocationProps) 
 
   return (
     <div className="flex w-full flex-col">
-      {/* <div className="flex justify-end mb-2">
-        <Button fontSize="text-lg" onClick={deleteAllComplete}>
-          Delete Completed
-        </Button>
-      </div> */}
+
       {isLoading && <LoadingSpinner size={40} />}
       {/* this div renders first if the lists are not empty */}
       <div className="">
         {produceItems && produceItems.length > 0 && (
-          <LocationContainer
-            location="Produce"
-            items={produceItems}
-
-          />
+          <LocationContainer location="Produce" items={produceItems} />
         )}
 
         {dryGoodsItems && dryGoodsItems.length > 0 && (
-          <LocationContainer
-            location="Dry Goods"
-            items={dryGoodsItems}
-
-          />
+          <LocationContainer location="Dry Goods" items={dryGoodsItems} />
         )}
 
         {meatItems && meatItems.length > 0 && (
-          <LocationContainer
-            location="Meats"
-            items={meatItems}
-
-          />
+          <LocationContainer location="Meats" items={meatItems} />
         )}
 
         {dairyItems && dairyItems.length > 0 && (
-          <LocationContainer
-            location="Dairy"
-            items={dairyItems}
-
-          />
+          <LocationContainer location="Dairy" items={dairyItems} />
         )}
 
         {frozenItems && frozenItems.length > 0 && (
-          <LocationContainer
-            location="Frozen"
-            items={frozenItems}
-
-          />
+          <LocationContainer location="Frozen" items={frozenItems} />
         )}
 
         {householdGoodsItems && householdGoodsItems.length > 0 && (
           <LocationContainer
             location="Household Goods"
             items={householdGoodsItems}
-
           />
         )}
 
         {babyItems && babyItems.length > 0 && (
-          <LocationContainer
-            location="Baby"
-            items={babyItems}
-
-          />
+          <LocationContainer location="Baby" items={babyItems} />
         )}
 
         {personalCareItems && personalCareItems.length > 0 && (
           <LocationContainer
             location="Personal Care"
             items={personalCareItems}
-
           />
         )}
 
-        {otherItems && otherItems.length > 0 && (
-          <LocationContainer
-            location="Other"
-            items={otherItems}
+        {bakeryItems && bakeryItems.length > 0 && (
+          <LocationContainer location="Bakery" items={bakeryItems} />
+        )}
 
-          />
+        {deliItems && deliItems.length > 0 && (
+          <LocationContainer location="Deli" items={deliItems} />
+        )}
+
+        {otherItems && otherItems.length > 0 && (
+          <LocationContainer location="Other" items={otherItems} />
         )}
 
         {uncategorized && uncategorized.length > 0 && (
           <LocationContainer
             location="No location info"
             items={uncategorized}
-
           />
         )}
       </div>
-      {/* <div className="">
-        {produceItems?.length === 0 && (
-          <div className="flex w-full flex-col items-center">
-            <h1 className="text-xl underline">Produce</h1>
-          </div>
-        )}
-        {dryGoodsItems?.length === 0 && (
-          <div className="flex w-full flex-col items-center">
-            <h1 className="text-xl underline">Dry Goods</h1>
-          </div>
-        )}
-        {meatItems?.length === 0 && (
-          <div className="flex w-full flex-col items-center">
-            <h1 className="text-xl underline">Meats</h1>
-          </div>
-        )}
-        {dairyItems?.length === 0 && (
-          <div className="flex w-full flex-col items-center">
-            <h1 className="text-xl underline">Dairy</h1>
-          </div>
-        )}
-        {frozenItems?.length === 0 && (
-          <div className="flex w-full flex-col items-center">
-            <h1 className="text-xl underline">Frozen</h1>
-          </div>
-        )}
-        {householdGoodsItems?.length === 0 && (
-          <div className="flex w-full flex-col items-center">
-            <h1 className="text-xl underline">Household Goods</h1>
-          </div>
-        )}
-        {babyItems?.length === 0 && (
-          <div className="flex w-full flex-col items-center">
-            <h1 className="text-xl underline">Baby</h1>
-          </div>
-        )}
-        {personalCareItems?.length === 0 && (
-          <div className="flex w-full flex-col items-center">
-            <h1 className="text-xl underline">Personal Care</h1>
-          </div>
-        )}
-        {otherItems?.length === 0 && (
-          <div className="flex w-full flex-col items-center">
-            <h1 className="text-xl underline">Other</h1>
-          </div>
-        )}
-      </div> */}
     </div>
   );
 };

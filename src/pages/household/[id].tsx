@@ -34,11 +34,17 @@ const HouseholdPage = () => {
     setHouseholdName,
     bottomNavValue,
     setBottomNavValue,
+    storageAreas,
+    setStorageAreas,
   } = useContext(GlobalContext);
   const { data: sessionData, status } = useSession();
   const getHouseholdId = api.household.getHouseholdId.useQuery();
 
   const getHouseholdInfo = api.household.getHouseholdInfo.useQuery({
+    householdId,
+  });
+
+  const getStorageAreas = api.storageAreas.getStorageAreas.useQuery({
     householdId,
   });
 
@@ -52,19 +58,16 @@ const HouseholdPage = () => {
         setHouseholdId(getHouseholdId.data.householdId!);
     }
 
+    if (getStorageAreas.data) {
+      getStorageAreas.data?.forEach((storageArea) =>
+        setStorageAreas((prev) => [...prev, storageArea.name])
+      );
+    }
+
     getHouseholdInfo.data &&
       getHouseholdInfo.data !== null &&
       setHouseholdName(getHouseholdInfo.data.name);
-  }, [
-    sessionData,
-    status,
-    router,
-    setHouseholdId,
-    getHouseholdInfo.data,
-    setHouseholdName,
-    householdId,
-    getHouseholdId.data,
-  ]);
+  }, [sessionData, status, router, setHouseholdId, getHouseholdInfo.data, setHouseholdName, householdId, getHouseholdId.data, getStorageAreas.data, setStorageAreas]);
 
   // useEffect(() => {
   //   setBottomNavValue(

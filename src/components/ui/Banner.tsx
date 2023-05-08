@@ -14,4 +14,8 @@ const Banner = ({ children, fontSize }: BannerProps) => {
   );
 };
 
+Banner.defaultProps = {
+  fontSize: "text-xl",
+};
+
 export default Banner;

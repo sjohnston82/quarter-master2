@@ -9,6 +9,8 @@ type GlobalContextType = {
   setHouseholdName: React.Dispatch<SetStateAction<string>>;
   bottomNavValue: number;
   setBottomNavValue: React.Dispatch<SetStateAction<number>>;
+  storageAreas: string[];
+  setStorageAreas: React.Dispatch<SetStateAction<string[]>>
 };
 
 export const GlobalContext = createContext<GlobalContextType>(
@@ -20,7 +22,7 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
   const [householdId, setHouseholdId] = useState<string>("");
   const [householdName, setHouseholdName] = useState<string>("");
   const [bottomNavValue, setBottomNavValue] = useState(0);
-
+  const [storageAreas, setStorageAreas] = useState<string[]>([])
 
   return (
     <GlobalContext.Provider
@@ -33,6 +35,8 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
         setHouseholdName,
         bottomNavValue,
         setBottomNavValue,
+        storageAreas,
+        setStorageAreas
       }}
     >
       {children}

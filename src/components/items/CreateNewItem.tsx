@@ -5,6 +5,9 @@ import { useForm } from "react-hook-form";
 import { api } from "~/utils/api";
 import { packageTypes } from "~/utils/helperLists";
 import AddItemManuallyForm from "./AddItemManuallyForm";
+import AddIcon from "@mui/icons-material/Add";
+import Button from "../ui/Button";
+import { AiOutlineBarcode } from "react-icons/ai";
 
 type NewItemInputProps = {
   name: string;
@@ -43,25 +46,21 @@ const CreateNewItem = () => {
   return (
     <div>
       <div className="">
-        <AddItemManuallyForm
-          showingAddItemModal={showingAddItemModal}
-          setShowingAddItemModal={setShowingAddItemModal}
-        />
-        <div className="mx-3 mt-3 flex justify-between">
-          <button
-            onClick={() => setShowingAddItemModal(true)}
-            className="rounded-xl border border-slate-700 p-1"
-          >
-            Add Item Manually
-          </button>
-          <button
-            className="rounded-xl border border-slate-700 p-1 disabled:border-slate-400 disabled:text-slate-400"
-            disabled
-          >
-            Add By Barcode
-          </button>
+        <div className="flex flex-col gap-1">
+          <Button onClick={() => setShowingAddItemModal(true)}>
+            <AddIcon fontSize="small" /> Add Manually
+          </Button>
+          <Button disabled>
+            <span className="flex items-center gap-1">
+              <AiOutlineBarcode /> Add By Barcode
+            </span>
+          </Button>
         </div>
       </div>
+      <AddItemManuallyForm
+        showingAddItemModal={showingAddItemModal}
+        setShowingAddItemModal={setShowingAddItemModal}
+      />
     </div>
   );
 };

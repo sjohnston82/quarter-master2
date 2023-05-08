@@ -3,9 +3,13 @@ import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import Modal from "~/components/ui/Modal";
+import SubmitButton from "~/components/ui/SubmitButton";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import { api, type RouterOutputs } from "~/utils/api";
-import { groceryStoreAreas, shoppingListAmountTypes } from "~/utils/helperLists";
+import {
+  groceryStoreAreas,
+  shoppingListAmountTypes,
+} from "~/utils/helperLists";
 
 type Item = RouterOutputs["items"]["getAllItems"][0];
 
@@ -30,7 +34,13 @@ const AddToShoppingFromItems = ({
   item,
 }: AddToShoppingFromItemsProps) => {
   const { householdId } = useContext(GlobalContext);
-  const { register, watch, handleSubmit, reset, formState: { isValid } } = useForm<ShoppingListInputProps>({
+  const {
+    register,
+    watch,
+    handleSubmit,
+    reset,
+    formState: { isValid },
+  } = useForm<ShoppingListInputProps>({
     defaultValues: {
       name: item.name,
     },
@@ -115,13 +125,12 @@ const AddToShoppingFromItems = ({
             </MenuItem>
           ))}
         </TextField>
-        <button type="submit" disabled={!isValid}>
-          Add
-        </button>
+        <div className="flex justify-center">
+          <SubmitButton disabled={!isValid}>Add</SubmitButton>
+        </div>
       </form>
     </Modal>
   );
 };
-
 
 export default AddToShoppingFromItems;

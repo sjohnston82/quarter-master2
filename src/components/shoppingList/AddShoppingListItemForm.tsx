@@ -9,6 +9,7 @@ import {
 } from "~/utils/helperLists";
 import { api } from "~/utils/api";
 import { toast } from "react-hot-toast";
+import SubmitButton from "../ui/SubmitButton";
 
 interface AddToShoppingListProps {
   showingAddToShoppingListModal: boolean;
@@ -121,9 +122,9 @@ const AddShoppingListItemForm = ({
             </MenuItem>
           ))}
         </TextField>
-        <button type="submit" disabled={!isValid}>
+        <SubmitButton disabled={!isValid}>
           Add
-        </button>
+        </SubmitButton>
       </form>
     </Modal>
   );

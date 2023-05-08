@@ -3,8 +3,15 @@ import { api } from "~/utils/api";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import CreateNewItem from "./CreateNewItem";
 import Item from "./Item";
+import Banner from "../ui/Banner";
+import ItemsByStorageArea from "./ItemsByStorageArea";
 
-const FoodItems = () => {
+interface FoodItemsProps {
+  sortType: string;
+  storageAreaName?: string;
+}
+
+const FoodItems = ({ sortType, storageAreaName }: FoodItemsProps) => {
   const { householdId } = useContext(GlobalContext);
   const { data } = api.items.getAllItems.useQuery({ householdId });
   const getAllStorageAreas = api.storageAreas.getStorageAreas.useQuery({
@@ -14,20 +21,24 @@ const FoodItems = () => {
   const itemsSortedAlphabetically = data?.sort((a, b) =>
     a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
   );
-  // console.log(data);
+  const itemsExpiringSoon = data?.filter((item) => item.daysUntilExpiry! < 8);
+  console.log("exp soon", itemsExpiringSoon);
+  // const itemsSortedByExpiringSoon = data?.sort((a, b) =>
+  //   a.)
   return (
-    <div>
+    <div className="mt-2">
       <div>{data?.length === 0 && <p>No Items</p>}</div>
-      <div className="mt-5">
-        {/* <div className="flex justify-between">
-          <p className="mx-7 font-semibold">Name</p>
-          <p className="mx-7 font-semibold">Amount</p>
-          <p className="mx-7 font-semibold">Location</p>
-        </div> */}
-        {itemsSortedAlphabetically?.map((item) => (
-          <Item key={item.id} {...item} />
-        ))}
-      </div>
+      {sortType === "All" && (
+        <div className="flex flex-col gap-1">
+          <Banner>All Food Items</Banner>
+          {itemsSortedAlphabetically?.map((item) => (
+            <Item key={item.id} {...item} />
+          ))}
+        </div>
+      )}
+      {/* {sortType === "Storage Area" && (
+        <ItemsByStorageArea 
+      )} */}
     </div>
   );
 };

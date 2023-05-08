@@ -5,6 +5,7 @@ import { GlobalContext } from "~/context/GlobalContextProvider";
 import { api } from "~/utils/api";
 import { toast } from "react-hot-toast";
 import { TextField } from "@mui/material";
+import SubmitButton from "../ui/SubmitButton";
 
 interface CreateStorageProps {
   name: string;
@@ -41,7 +42,7 @@ const CreateStorageArea = () => {
       <Modal
         isOpen={showingCreateStorageAreaModal}
         title="Enter your storage area name "
-        secondaryTitle="(ex: 'Pantry', 'Garage Freezer', 'Spice Rack', etc.)"
+        // secondaryTitle="(ex: 'Pantry', 'Garage Freezer', 'Spice Rack', etc.)"
         onClose={() => setShowingCreateStorageAreaModal(false)}
       >
         <div className="w=full flex flex-col">
@@ -53,14 +54,11 @@ const CreateStorageArea = () => {
               type="text"
               id="name"
               {...register("name")}
+              helperText="Anywhere food items are stored in your house."
             />
-            <div className="flex w-full justify-center"></div>
-            <button
-              type="submit"
-              className="mx-auto mt-3 rounded-2xl border border-slate-800 px-4 font-semibold"
-            >
-              Add
-            </button>
+            <div className="flex w-full justify-center">
+              <SubmitButton>Add</SubmitButton>
+            </div>
           </form>
         </div>
       </Modal>
