@@ -48,6 +48,12 @@ const HouseholdPage = () => {
     householdId,
   });
 
+  const getCategoryCount = api.items.getFoodCategoryCount.useQuery({
+    householdId,
+  });
+
+  console.log("test", getCategoryCount.data);
+
   useEffect(() => {
     if (status === "unauthenticated" && sessionData == undefined)
       void router.push("/");
@@ -58,16 +64,35 @@ const HouseholdPage = () => {
         setHouseholdId(getHouseholdId.data.householdId!);
     }
 
+    // adds to storageAreas state only if item is not already in it
     if (getStorageAreas.data) {
-      getStorageAreas.data?.forEach((storageArea) =>
-        setStorageAreas((prev) => [...prev, storageArea.name])
-      );
+      getStorageAreas.data?.forEach((storageArea) => {
+        if (
+          !(
+            storageAreas.filter((area) => area.id === storageArea.id).length > 0
+          )
+        ) {
+          setStorageAreas((prev) => [...prev, storageArea]);
+        }
+      });
     }
 
     getHouseholdInfo.data &&
       getHouseholdInfo.data !== null &&
       setHouseholdName(getHouseholdInfo.data.name);
-  }, [sessionData, status, router, setHouseholdId, getHouseholdInfo.data, setHouseholdName, householdId, getHouseholdId.data, getStorageAreas.data, setStorageAreas]);
+  }, [
+    sessionData,
+    status,
+    router,
+    setHouseholdId,
+    getHouseholdInfo.data,
+    setHouseholdName,
+    householdId,
+    getHouseholdId.data,
+    getStorageAreas.data,
+    setStorageAreas,
+    storageAreas,
+  ]);
 
   // useEffect(() => {
   //   setBottomNavValue(

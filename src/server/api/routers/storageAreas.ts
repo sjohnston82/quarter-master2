@@ -35,4 +35,14 @@ export const storageAreasRouter = createTRPCRouter({
         },
       });
     }),
+
+  getStorageAreaById: protectedProcedure.input(z.object({ storageAreaId: z.string()})).query(async ({ ctx, input }) => {
+    const currStorageArea = await ctx.prisma.storageArea.findUnique({
+      where: { 
+        id: input.storageAreaId,
+      }
+    })
+
+    return currStorageArea
+  })
 });

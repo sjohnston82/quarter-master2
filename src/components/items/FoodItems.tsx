@@ -8,15 +8,12 @@ import ItemsByStorageArea from "./ItemsByStorageArea";
 
 interface FoodItemsProps {
   sortType: string;
-  storageAreaName?: string;
+  storageAreaId?: string | null;
 }
 
-const FoodItems = ({ sortType, storageAreaName }: FoodItemsProps) => {
+const FoodItems = ({ sortType, storageAreaId }: FoodItemsProps) => {
   const { householdId } = useContext(GlobalContext);
   const { data } = api.items.getAllItems.useQuery({ householdId });
-  const getAllStorageAreas = api.storageAreas.getStorageAreas.useQuery({
-    householdId,
-  });
 
   const itemsSortedAlphabetically = data?.sort((a, b) =>
     a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
@@ -36,9 +33,9 @@ const FoodItems = ({ sortType, storageAreaName }: FoodItemsProps) => {
           ))}
         </div>
       )}
-      {/* {sortType === "Storage Area" && (
-        <ItemsByStorageArea 
-      )} */}
+      {sortType === "Storage Area" && (
+        <ItemsByStorageArea storageAreaId={storageAreaId!} />
+      )}
     </div>
   );
 };

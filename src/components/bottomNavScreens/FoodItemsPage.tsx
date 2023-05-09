@@ -18,13 +18,12 @@ const FoodItemsPage = () => {
   const { householdId } = useContext(GlobalContext);
   const [filterItemsCategory, setFilterItemsCategory] = useState("All");
 
+  const storageAreaRoute = api.useContext().storageAreas;
   const getAllStorageAreas = api.storageAreas.getStorageAreas.useQuery({
     householdId,
   });
 
-  const storageAreaRef = useRef<
-    React.RefObject<HTMLDivElement> | null | undefined | string
-  >();
+  const storageAreaRef = useRef<HTMLSelectElement>(null);
 
   const handleChange = (event: SelectChangeEvent) => {
     setFilterItemsCategory(event.target.value);
@@ -79,6 +78,8 @@ const FoodItemsPage = () => {
             label="Storage area"
             className="w-full"
             id="storageArea"
+            inputRef={storageAreaRef}
+            onChange={async () => await storageAreaRoute.invalidate()}
           >
             {getAllStorageAreas.data &&
               getAllStorageAreas.data.map((area) => (
@@ -91,7 +92,12 @@ const FoodItemsPage = () => {
       )}
       <div className="mt-2">
         {/* <Banner >All Food Items</Banner> */}
-        <FoodItems sortType={filterItemsCategory} />
+        <FoodItems
+          sortType={filterItemsCategory}
+          storageAreaId={
+            storageAreaRef.current && storageAreaRef.current.value
+          }
+        />
       </div>
     </div>
   );

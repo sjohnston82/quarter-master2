@@ -1,4 +1,12 @@
-import React, { createContext, type SetStateAction, useState, useEffect } from "react";
+import React, {
+  createContext,
+  type SetStateAction,
+  useState,
+  useEffect,
+} from "react";
+import { RouterOutputs } from "~/utils/api";
+
+type StorageArea = RouterOutputs["storageAreas"]["getStorageAreas"][0];
 
 type GlobalContextType = {
   userRole: string;
@@ -9,8 +17,8 @@ type GlobalContextType = {
   setHouseholdName: React.Dispatch<SetStateAction<string>>;
   bottomNavValue: number;
   setBottomNavValue: React.Dispatch<SetStateAction<number>>;
-  storageAreas: string[];
-  setStorageAreas: React.Dispatch<SetStateAction<string[]>>
+  storageAreas: StorageArea[];
+  setStorageAreas: React.Dispatch<SetStateAction<StorageArea[]>>;
 };
 
 export const GlobalContext = createContext<GlobalContextType>(
@@ -22,7 +30,7 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
   const [householdId, setHouseholdId] = useState<string>("");
   const [householdName, setHouseholdName] = useState<string>("");
   const [bottomNavValue, setBottomNavValue] = useState(0);
-  const [storageAreas, setStorageAreas] = useState<string[]>([])
+  const [storageAreas, setStorageAreas] = useState<StorageArea[]>([]);
 
   return (
     <GlobalContext.Provider
@@ -36,7 +44,7 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
         bottomNavValue,
         setBottomNavValue,
         storageAreas,
-        setStorageAreas
+        setStorageAreas,
       }}
     >
       {children}

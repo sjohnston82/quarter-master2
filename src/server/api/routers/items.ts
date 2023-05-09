@@ -190,9 +190,7 @@ export const itemsRouter = createTRPCRouter({
       });
 
       if (input.expirationDate !== undefined) {
-        const totalDays = calculateDaysUntilExpiry(
-          input.expirationDate
-        );
+        const totalDays = calculateDaysUntilExpiry(input.expirationDate);
 
         await ctx.prisma.item.update({
           where: {
@@ -211,5 +209,33 @@ export const itemsRouter = createTRPCRouter({
       await ctx.prisma.item.delete({
         where: { id: input.id },
       });
+    }),
+
+  getFoodCategoryCount: protectedProcedure
+    .input(z.object({ householdId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      // const categoryCount = await ctx.prisma.item.groupBy({
+      //   by: ["foodCategories"],
+      //   where: { householdId: input.householdId },
+      //   _count: {
+      //     foodCategories: true,
+      //   },
+      // });
+      const allItems = await ctx.prisma.item.findMany({
+        where: { householdId: input.householdId },
+      });
+      const categoryCounts: Record<string, number> = {};
+
+      allItems.forEach((item) => {
+        item.foodCategories.forEach((category) => {
+          if (category in categoryCounts) {
+            categoryCounts[category]++;
+          } else {
+            categoryCounts[category] = 1;
+          }
+        });
+      });
+
+      return categoryCounts;
     }),
 });
