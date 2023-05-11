@@ -1,17 +1,23 @@
-import React, { useContext } from "react";
+import React, { MutableRefObject, useContext } from "react";
 import { api } from "~/utils/api";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import CreateNewItem from "./CreateNewItem";
 import Item from "./Item";
 import Banner from "../ui/Banner";
 import ItemsByStorageArea from "./ItemsByStorageArea";
+import ItemsByFoodType from "./ItemsByFoodType";
 
 interface FoodItemsProps {
   sortType: string;
   storageAreaId?: string | null;
+  foodTypeIds?: React.RefObject<HTMLSelectElement> | null
 }
 
-const FoodItems = ({ sortType, storageAreaId }: FoodItemsProps) => {
+const FoodItems = ({
+  sortType,
+  storageAreaId,
+  foodTypeIds,
+}: FoodItemsProps) => {
   const { householdId } = useContext(GlobalContext);
   const { data } = api.items.getAllItems.useQuery({ householdId });
 
@@ -19,7 +25,7 @@ const FoodItems = ({ sortType, storageAreaId }: FoodItemsProps) => {
     a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
   );
   const itemsExpiringSoon = data?.filter((item) => item.daysUntilExpiry! < 8);
-  console.log("exp soon", itemsExpiringSoon);
+  // console.log("exp soon", itemsExpiringSoon);
   // const itemsSortedByExpiringSoon = data?.sort((a, b) =>
   //   a.)
   return (
@@ -36,6 +42,7 @@ const FoodItems = ({ sortType, storageAreaId }: FoodItemsProps) => {
       {sortType === "Storage Area" && (
         <ItemsByStorageArea storageAreaId={storageAreaId!} />
       )}
+      {sortType === "Food Type" && <ItemsByFoodType foodTypeIds={foodTypeIds} />}
     </div>
   );
 };

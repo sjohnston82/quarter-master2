@@ -48,11 +48,7 @@ const HouseholdPage = () => {
     householdId,
   });
 
-  const getCategoryCount = api.items.getFoodCategoryCount.useQuery({
-    householdId,
-  });
-
-  console.log("test", getCategoryCount.data);
+  
 
   useEffect(() => {
     if (status === "unauthenticated" && sessionData == undefined)

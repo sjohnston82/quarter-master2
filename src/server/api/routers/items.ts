@@ -224,18 +224,36 @@ export const itemsRouter = createTRPCRouter({
       const allItems = await ctx.prisma.item.findMany({
         where: { householdId: input.householdId },
       });
-      const categoryCounts: Record<string, number> = {};
+      const categoryCounts: { name: string; count: number; ids: string[] }[] =
+        [];
 
       allItems.forEach((item) => {
         item.foodCategories.forEach((category) => {
-          if (category in categoryCounts) {
-            categoryCounts[category]++;
+          const existingCategory = categoryCounts.find(
+            (count) => count.name === category
+          );
+          if (existingCategory) {
+            existingCategory.count++;
+            existingCategory.ids.push(item.id);
           } else {
-            categoryCounts[category] = 1;
+            categoryCounts.push({ name: category, count: 1, ids: [item.id] });
           }
         });
       });
 
       return categoryCounts;
+    }),
+
+  getItemsByFoodType: protectedProcedure
+    .input(z.object({ idsToFind: z.string().array() }))
+    .query(async ({ ctx, input }) => {
+      const foodTypeItems = await ctx.prisma.item.findMany({
+        where: {
+          id: {
+            in: input.idsToFind,
+          },
+        },
+      });
+      return foodTypeItems;
     }),
 });

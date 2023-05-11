@@ -9,7 +9,7 @@ interface ItemsByStorageAreaProps {
 }
 
 const ItemsByStorageArea = ({ storageAreaId }: ItemsByStorageAreaProps) => {
-  console.log("wee", storageAreaId);
+
   const getCurrentStorageArea = api.storageAreas.getStorageAreaById.useQuery({
     storageAreaId,
   });
