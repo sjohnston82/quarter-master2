@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import Modal from "../ui/Modal";
 import { useForm } from "react-hook-form";
@@ -18,7 +18,13 @@ type NewItemInputProps = {
 };
 
 const CreateNewItem = () => {
-  const { householdId, showingBarcodeScanner, setShowingBarcodeScanner } = useContext(GlobalContext);
+  const {
+    householdId,
+    showingBarcodeScanner,
+    setShowingBarcodeScanner,
+    barcode,
+    setBarcode,
+  } = useContext(GlobalContext);
   const [showingAddItemModal, setShowingAddItemModal] = useState(false);
 
   const { register, reset, handleSubmit } = useForm<NewItemInputProps>();
@@ -28,6 +34,18 @@ const CreateNewItem = () => {
   });
 
   const createNewItem = api.items.createNewItem.useMutation();
+
+  useEffect(() => {
+    async function getUPCInfo() {
+      if (barcode !== null) {
+        const res = await fetch(
+          `https://brocade.io/api/items/${barcode.toString()}`
+        );
+        console.log(res.json());
+        alert(res.json());
+      }
+    }
+  }, [barcode]);
 
   const [amount, setAmount] = useState("");
   const onSubmit = (data: NewItemInputProps) => {
@@ -52,7 +70,9 @@ const CreateNewItem = () => {
           <Button onClick={() => setShowingAddItemModal(true)}>
             <AddIcon fontSize="small" /> Add Manually
           </Button>
-          <Button onClick={() => setShowingBarcodeScanner(!showingBarcodeScanner)}>
+          <Button
+            onClick={() => setShowingBarcodeScanner(!showingBarcodeScanner)}
+          >
             <span className="flex items-center gap-1">
               <AiOutlineBarcode /> Add By Barcode
             </span>
