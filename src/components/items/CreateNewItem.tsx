@@ -45,6 +45,8 @@ const CreateNewItem = () => {
         alert(res.json());
       }
     }
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    getUPCInfo()
   }, [barcode]);
 
   const [amount, setAmount] = useState("");
