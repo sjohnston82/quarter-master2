@@ -18,7 +18,12 @@ import BarcodeScanner from "../barcode/BarcodeScanner";
 type FoodType = RouterOutputs["items"]["getFoodCategoryCount"][0];
 
 const FoodItemsPage = () => {
-  const { householdId, showingBarcodeScanner, setShowingBarcodeScanner } = useContext(GlobalContext);
+  const {
+    householdId,
+    showingBarcodeScanner,
+    setShowingBarcodeScanner,
+    barcode,
+  } = useContext(GlobalContext);
   const [filterItemsCategory, setFilterItemsCategory] = useState("All");
   const [foodTypesList, setFoodTypesList] = useState<FoodType[]>();
   const [selectedIds, setSelectedIds] = useState<string[] | null>(null);
@@ -60,7 +65,10 @@ const FoodItemsPage = () => {
         </div>
       </div>
       {showingBarcodeScanner ? (
-        <BarcodeScanner />
+        <div className="">
+          <p className="">{barcode?.toString()}</p>
+          <BarcodeScanner />
+        </div>
       ) : (
         <div className="">
           <div className="">

@@ -2,10 +2,11 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import {
   BrowserMultiFormatReader,
-  DecodeHintType,
-  Result,
+  type DecodeHintType,
+  type Result,
 } from "@zxing/library";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useContext } from "react";
+import { GlobalContext } from "~/context/GlobalContextProvider";
 
 interface ZxingOptions {
   hints?: Map<DecodeHintType, any>;
@@ -28,7 +29,7 @@ export const useZxing = ({
   onError = () => {},
 }: ZxingOptions = {}) => {
   const ref = useRef<HTMLVideoElement>(null);
-
+  const { barcode, setBarcode } = useContext(GlobalContext);
   const reader = useMemo<BrowserMultiFormatReader>(() => {
     const instance = new BrowserMultiFormatReader(hints);
     instance.timeBetweenDecodingAttempts = timeBetweenDecodingAttempts;
@@ -39,7 +40,7 @@ export const useZxing = ({
     if (!ref.current) return;
     reader.decodeFromConstraints(constraints, ref.current, (result, error) => {
       if (result) onResult(result);
-      if (result !== null) alert(result);
+      if (result !== null) setBarcode(result);
       if (error) onError(error);
     });
     return () => {
