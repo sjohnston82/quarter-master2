@@ -39,7 +39,7 @@ export const useZxing = ({
     if (!ref.current) return;
     reader.decodeFromConstraints(constraints, ref.current, (result, error) => {
       if (result) onResult(result);
-      console.log(result);
+      if (result !== null) alert(result);
       if (error) onError(error);
     });
     return () => {
