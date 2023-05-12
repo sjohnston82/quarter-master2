@@ -19,6 +19,8 @@ type GlobalContextType = {
   setBottomNavValue: React.Dispatch<SetStateAction<number>>;
   storageAreas: StorageArea[];
   setStorageAreas: React.Dispatch<SetStateAction<StorageArea[]>>;
+  showingBarcodeScanner: boolean;
+  setShowingBarcodeScanner: React.Dispatch<SetStateAction<boolean>>
 };
 
 export const GlobalContext = createContext<GlobalContextType>(
@@ -31,6 +33,7 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
   const [householdName, setHouseholdName] = useState<string>("");
   const [bottomNavValue, setBottomNavValue] = useState(0);
   const [storageAreas, setStorageAreas] = useState<StorageArea[]>([]);
+   const [showingBarcodeScanner, setShowingBarcodeScanner] = useState(false);
 
   return (
     <GlobalContext.Provider
@@ -45,6 +48,8 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
         setBottomNavValue,
         storageAreas,
         setStorageAreas,
+        showingBarcodeScanner,
+        setShowingBarcodeScanner
       }}
     >
       {children}

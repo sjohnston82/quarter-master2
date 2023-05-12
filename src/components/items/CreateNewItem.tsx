@@ -8,6 +8,7 @@ import AddItemManuallyForm from "./AddItemManuallyForm";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "../ui/Button";
 import { AiOutlineBarcode } from "react-icons/ai";
+import BarcodeScanner from "../barcode/BarcodeScanner";
 
 type NewItemInputProps = {
   name: string;
@@ -17,8 +18,9 @@ type NewItemInputProps = {
 };
 
 const CreateNewItem = () => {
-  const { householdId } = useContext(GlobalContext);
+  const { householdId, showingBarcodeScanner, setShowingBarcodeScanner } = useContext(GlobalContext);
   const [showingAddItemModal, setShowingAddItemModal] = useState(false);
+
   const { register, reset, handleSubmit } = useForm<NewItemInputProps>();
 
   const getStorageAreas = api.storageAreas.getStorageAreas.useQuery({
@@ -50,13 +52,14 @@ const CreateNewItem = () => {
           <Button onClick={() => setShowingAddItemModal(true)}>
             <AddIcon fontSize="small" /> Add Manually
           </Button>
-          <Button disabled>
+          <Button onClick={() => setShowingBarcodeScanner(!showingBarcodeScanner)}>
             <span className="flex items-center gap-1">
               <AiOutlineBarcode /> Add By Barcode
             </span>
           </Button>
         </div>
       </div>
+      {/* {showingBarcodeScanner && <BarcodeScanner />} */}
       <AddItemManuallyForm
         showingAddItemModal={showingAddItemModal}
         setShowingAddItemModal={setShowingAddItemModal}

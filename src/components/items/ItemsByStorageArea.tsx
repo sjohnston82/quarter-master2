@@ -35,6 +35,9 @@ const ItemsByStorageArea = ({ storageAreaId }: ItemsByStorageAreaProps) => {
       <Banner>
         {getCurrentStorageArea.data && getCurrentStorageArea.data.name}
       </Banner>
+      {!data && (
+        <p className="text-center">Select a storage area to see its items.</p>
+      )}
       {shouldShowLoading && (
         <div className="relative mt-20 flex h-full flex-col items-center justify-center gap-2">
           <div className="absolute  top-1/2 flex h-full w-full flex-col items-center justify-center ">
