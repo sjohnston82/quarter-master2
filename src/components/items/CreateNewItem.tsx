@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import Modal from "../ui/Modal";
@@ -37,17 +38,28 @@ const CreateNewItem = () => {
   const createNewItem = api.items.createNewItem.useMutation();
 
   useEffect(() => {
-    async function getUPCInfo() {
+    function getUPCInfo() {
       if (barcode !== null) {
-        console.log(barcode);
-        const res = await fetch(
-          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-          `https://brocade.io/api/items/${barcode}`
-        );
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const data = await res.json();
-        console.log(data);
-        alert(res.json());
+        const apiUrl = "https://proxy.cors.sh/https://brocade.io/api/items/";
+        fetch(`${apiUrl}078742370859`, {
+          headers: {
+            "x-cors-api-key": "temp_2950d9928c59d142ba6ae1e8c7f6be74",
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Request failed");
+            }
+            return response;
+          })
+          .then((response) => response.json())
+          .then((data) => {
+            alert(JSON.stringify(data));
+            console.log(data);
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
       }
     }
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
