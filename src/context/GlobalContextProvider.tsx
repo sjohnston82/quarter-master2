@@ -5,7 +5,7 @@ import React, {
   useEffect,
 } from "react";
 import { RouterOutputs } from "~/utils/api";
-import {type Result} from '@zxing/library'
+import { type Result } from "@zxing/library";
 
 type StorageArea = RouterOutputs["storageAreas"]["getStorageAreas"][0];
 
@@ -23,7 +23,7 @@ type GlobalContextType = {
   showingBarcodeScanner: boolean;
   setShowingBarcodeScanner: React.Dispatch<SetStateAction<boolean>>;
   barcode: Result | null;
-  setBarcode: React.Dispatch<SetStateAction<Result | null>>
+  setBarcode: React.Dispatch<SetStateAction<Result | null>>;
 };
 
 export const GlobalContext = createContext<GlobalContextType>(
@@ -36,8 +36,8 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
   const [householdName, setHouseholdName] = useState<string>("");
   const [bottomNavValue, setBottomNavValue] = useState(0);
   const [storageAreas, setStorageAreas] = useState<StorageArea[]>([]);
-   const [showingBarcodeScanner, setShowingBarcodeScanner] = useState(false);
-   const [barcode, setBarcode] = useState<Result | null>(null);
+  const [showingBarcodeScanner, setShowingBarcodeScanner] = useState(false);
+  const [barcode, setBarcode] = useState<Result | null>(null);
 
   return (
     <GlobalContext.Provider
@@ -55,7 +55,7 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
         showingBarcodeScanner,
         setShowingBarcodeScanner,
         barcode,
-        setBarcode
+        setBarcode,
       }}
     >
       {children}

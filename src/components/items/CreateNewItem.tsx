@@ -9,6 +9,7 @@ import AddIcon from "@mui/icons-material/Add";
 import Button from "../ui/Button";
 import { AiOutlineBarcode } from "react-icons/ai";
 import BarcodeScanner from "../barcode/BarcodeScanner";
+import { type Result } from "@zxing/library";
 
 type NewItemInputProps = {
   name: string;
@@ -38,15 +39,19 @@ const CreateNewItem = () => {
   useEffect(() => {
     async function getUPCInfo() {
       if (barcode !== null) {
+        console.log(barcode);
         const res = await fetch(
-          `https://brocade.io/api/items/${barcode.toString()}`
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+          `https://brocade.io/api/items/${barcode}`
         );
-        console.log(res.json());
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const data = await res.json();
+        console.log(data);
         alert(res.json());
       }
     }
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    getUPCInfo()
+    getUPCInfo();
   }, [barcode]);
 
   const [amount, setAmount] = useState("");
