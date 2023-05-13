@@ -41,7 +41,7 @@ const CreateNewItem = () => {
     function getUPCInfo() {
       if (barcode !== null) {
         const apiUrl = "https://proxy.cors.sh/https://brocade.io/api/items/";
-        fetch(`${apiUrl}078742370859`, {
+        fetch(`${apiUrl}${barcode}`, {
           headers: {
             "x-cors-api-key": "temp_2950d9928c59d142ba6ae1e8c7f6be74",
           },
