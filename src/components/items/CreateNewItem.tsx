@@ -38,13 +38,15 @@ const CreateNewItem = () => {
   const createNewItem = api.items.createNewItem.useMutation();
 
   useEffect(() => {
+    // const apiUrl = "https://proxy.cors.sh/https://brocade.io/api/items/";
+    const apiUrl =
+      "https://api.codetabs.com/v1/proxy?quest=https://brocade.io/api/items/";
     function getUPCInfo() {
       if (barcode !== null) {
-        const apiUrl = "https://proxy.cors.sh/https://brocade.io/api/items/";
         fetch(`${apiUrl}${barcode}`, {
-          headers: {
-            "x-cors-api-key": "temp_2950d9928c59d142ba6ae1e8c7f6be74",
-          },
+          // headers: {
+          //   "x-cors-api-key": "temp_2950d9928c59d142ba6ae1e8c7f6be74",
+          // },
         })
           .then((response) => {
             if (!response.ok) {
