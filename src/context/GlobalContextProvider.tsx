@@ -8,6 +8,12 @@ import { RouterOutputs } from "~/utils/api";
 import { type Result } from "@zxing/library";
 
 type StorageArea = RouterOutputs["storageAreas"]["getStorageAreas"][0];
+export type UPCInfo = {
+  brand_name: string;
+  gtin14: string;
+  name: string;
+  size: string;
+};
 
 type GlobalContextType = {
   userRole: string;
@@ -24,6 +30,10 @@ type GlobalContextType = {
   setShowingBarcodeScanner: React.Dispatch<SetStateAction<boolean>>;
   barcode: Result | null;
   setBarcode: React.Dispatch<SetStateAction<Result | null>>;
+  showingAddByBarcodeModal: boolean;
+  setShowingAddByBarcodeModal: React.Dispatch<React.SetStateAction<boolean>>;
+  currentItemByUPC: UPCInfo | null;
+  setCurrentItemByUPC: React.Dispatch<React.SetStateAction<UPCInfo | null>>
 };
 
 export const GlobalContext = createContext<GlobalContextType>(
@@ -38,6 +48,9 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
   const [storageAreas, setStorageAreas] = useState<StorageArea[]>([]);
   const [showingBarcodeScanner, setShowingBarcodeScanner] = useState(false);
   const [barcode, setBarcode] = useState<Result | null>(null);
+  const [showingAddByBarcodeModal, setShowingAddByBarcodeModal] =
+    useState(false);
+  const [currentItemByUPC, setCurrentItemByUPC] = useState<UPCInfo | null>(null);
 
   return (
     <GlobalContext.Provider
@@ -56,6 +69,10 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
         setShowingBarcodeScanner,
         barcode,
         setBarcode,
+        showingAddByBarcodeModal,
+        setShowingAddByBarcodeModal,
+        currentItemByUPC,
+        setCurrentItemByUPC
       }}
     >
       {children}

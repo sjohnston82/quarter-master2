@@ -12,6 +12,8 @@ import { AiOutlineBarcode } from "react-icons/ai";
 import BarcodeScanner from "../barcode/BarcodeScanner";
 import { type Result } from "@zxing/library";
 import { toast } from "react-hot-toast";
+import AddItemByBarcodeForm from "./AddItemByBarcodeForm";
+import { type UPCInfo } from "~/context/GlobalContextProvider";
 
 type NewItemInputProps = {
   name: string;
@@ -27,10 +29,16 @@ const CreateNewItem = () => {
     setShowingBarcodeScanner,
     barcode,
     setBarcode,
+    currentItemByUPC,
+    setCurrentItemByUPC,
+    setShowingAddByBarcodeModal,
+    showingAddByBarcodeModal,
   } = useContext(GlobalContext);
   const [showingAddItemModal, setShowingAddItemModal] = useState(false);
+  // const [showingAddByBarcodeModal, setShowingAddByBarcodeModal] =
+  //   useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const [currentProductByUPC, setCurrentProductByUPC] = useState<any>(null);
+  // const [currentProductByUPC, setCurrentProductByUPC] = useState<any>(null);
 
   const { register, reset, handleSubmit } = useForm<NewItemInputProps>();
 
@@ -46,7 +54,7 @@ const CreateNewItem = () => {
       "https://api.codetabs.com/v1/proxy?quest=https://brocade.io/api/items/";
     function getUPCInfo() {
       if (barcode !== null) {
-        fetch(`${apiUrl}021000028092`, {
+        fetch(`${apiUrl}${barcode}`, {
           // headers: {
           //   "x-cors-api-key": "temp_2950d9928c59d142ba6ae1e8c7f6be74",
           // },
@@ -54,16 +62,19 @@ const CreateNewItem = () => {
           .then((response) => {
             if (!response.ok) {
               toast.error("Produce info not found.  Please add manually.");
-              throw new Error("Request failed");
+              // throw new Error("Request failed");
             }
             return response;
           })
           .then((response) => response.json())
           .then((data) => {
-            setCurrentProductByUPC(data);
-            alert(JSON.stringify(data));
-            console.log(currentProductByUPC);
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+            setCurrentItemByUPC(data);
+            setShowingAddByBarcodeModal(true);
+            // alert(JSON.stringify(data));
+            // console.log(currentItemByUPC);
           })
+          .then((currentItemByUPC) => console.log(currentItemByUPC))
           .catch((error) => {
             console.error("Error fetching data:", error);
           });
@@ -73,21 +84,21 @@ const CreateNewItem = () => {
     getUPCInfo();
   }, [barcode]);
 
-  const [amount, setAmount] = useState("");
-  const onSubmit = (data: NewItemInputProps) => {
-    console.log(data);
-    const mutationData = {
-      householdId,
-      name: data.name,
-      amount: parseInt(data.amount),
-      amountType: data.amountType,
-      storageAreaId: data.storageAreaId,
-    };
-    createNewItem.mutate(mutationData);
-    reset();
-    setShowingAddItemModal(false);
-    setAmount("");
-  };
+  // const [amount, setAmount] = useState("");
+  // const onSubmit = (data: NewItemInputProps) => {
+  //   console.log(data);
+  //   const mutationData = {
+  //     householdId,
+  //     name: data.name,
+  //     amount: parseInt(data.amount),
+  //     amountType: data.amountType,
+  //     storageAreaId: data.storageAreaId,
+  //   };
+  //   createNewItem.mutate(mutationData);
+  //   reset();
+  //   setShowingAddItemModal(false);
+  //   setAmount("");
+  // };
 
   return (
     <div>
@@ -110,6 +121,7 @@ const CreateNewItem = () => {
         showingAddItemModal={showingAddItemModal}
         setShowingAddItemModal={setShowingAddItemModal}
       />
+      <AddItemByBarcodeForm />
     </div>
   );
 };
