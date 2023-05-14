@@ -11,6 +11,7 @@ import Button from "../ui/Button";
 import { AiOutlineBarcode } from "react-icons/ai";
 import BarcodeScanner from "../barcode/BarcodeScanner";
 import { type Result } from "@zxing/library";
+import { toast } from "react-hot-toast";
 
 type NewItemInputProps = {
   name: string;
@@ -28,6 +29,8 @@ const CreateNewItem = () => {
     setBarcode,
   } = useContext(GlobalContext);
   const [showingAddItemModal, setShowingAddItemModal] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const [currentProductByUPC, setCurrentProductByUPC] = useState<any>(null);
 
   const { register, reset, handleSubmit } = useForm<NewItemInputProps>();
 
@@ -43,21 +46,23 @@ const CreateNewItem = () => {
       "https://api.codetabs.com/v1/proxy?quest=https://brocade.io/api/items/";
     function getUPCInfo() {
       if (barcode !== null) {
-        fetch(`${apiUrl}${barcode}`, {
+        fetch(`${apiUrl}021000028092`, {
           // headers: {
           //   "x-cors-api-key": "temp_2950d9928c59d142ba6ae1e8c7f6be74",
           // },
         })
           .then((response) => {
             if (!response.ok) {
+              toast.error("Produce info not found.  Please add manually.");
               throw new Error("Request failed");
             }
             return response;
           })
           .then((response) => response.json())
           .then((data) => {
+            setCurrentProductByUPC(data);
             alert(JSON.stringify(data));
-            console.log(data);
+            console.log(currentProductByUPC);
           })
           .catch((error) => {
             console.error("Error fetching data:", error);
