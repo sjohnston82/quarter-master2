@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import { Controller, useForm } from "react-hook-form";
 import { api } from "~/utils/api";
@@ -13,17 +13,17 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-hot-toast";
 import { type DateValidationError } from "@mui/x-date-pickers";
-
+import { type UPCInfo } from "~/context/GlobalContextProvider";
 interface AddItemManuallyFormProps {
   showingAddByBarcodeModal: boolean;
   setShowingAddByBarcodeModal: React.Dispatch<React.SetStateAction<boolean>>;
-  currentProductByUPC: any;
+  currentProductByUPC: UPCInfo;
   setCurrentProductByUPC: React.Dispatch<React.SetStateAction<any>>;
 }
 
 interface AddItemManuallyInputProps {
   name: string;
-  brand: string;
+  brand_name: string;
   amount: number;
   amountType: string;
   expirationDate: string;
@@ -37,7 +37,7 @@ const addItemManuallySchema = z.object({
     .string()
     .min(2, { message: "You need at least two characters" })
     .max(50, { message: "You have exceeded the characters amount." }),
-  brand: z
+  brand_name: z
     .union([
       z
         .string()
@@ -76,8 +76,8 @@ const AddItemByBarcodeForm = () => {
   } = useForm<AddItemManuallyInputProps>({
     resolver: zodResolver(addItemManuallySchema),
     defaultValues: {
-      brand: currentItemByUPC?.brand_name ?? "",
-      name: currentItemByUPC?.name ?? "",
+      brand_name: currentItemByUPC?.brand_name,
+      name: currentItemByUPC?.name,
     },
   });
 
@@ -94,6 +94,10 @@ const AddItemByBarcodeForm = () => {
     },
   });
 
+  useEffect(() => {
+    currentItemByUPC !== null && reset(currentItemByUPC);
+  }, [currentItemByUPC, reset]);
+
   const onSubmit = (data: AddItemManuallyInputProps) => {
     console.log(data.storageAreaId);
     const mutationData = {
@@ -102,7 +106,7 @@ const AddItemByBarcodeForm = () => {
       amount: +data.amount,
       amountType: data.amountType,
       storageAreaId: data.storageAreaId,
-      brand: data.brand,
+      brand_name: data.brand_name,
       expirationDate: new Date(data.expirationDate),
       foodCategories: data.foodCategories,
       flavor: data.flavor,
@@ -118,7 +122,7 @@ const AddItemByBarcodeForm = () => {
     <Modal
       isOpen={showingAddByBarcodeModal}
       onClose={() => setShowingAddByBarcodeModal(false)}
-      title="Add Item Manually"
+      title="Add Item By Barcode"
     >
       {getStorageAreas.data && (
         <form
@@ -144,7 +148,7 @@ const AddItemByBarcodeForm = () => {
             <div className="flex flex-col">
               <TextField
                 variant="outlined"
-                {...register("brand")}
+                {...register("brand_name")}
                 name="brand"
                 label="Brand"
                 type="text"
@@ -165,9 +169,9 @@ const AddItemByBarcodeForm = () => {
               </p>
             )}
           </div>
-          {errors.brand?.message && (
+          {errors.brand_name?.message && (
             <p className="text-sm italic text-red-500">
-              {errors.brand?.message}
+              {errors.brand_name?.message}
             </p>
           )}
           <div className="flex items-center justify-between">

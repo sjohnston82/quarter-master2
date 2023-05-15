@@ -53,7 +53,7 @@ const CreateNewItem = () => {
     const apiUrl =
       "https://api.codetabs.com/v1/proxy?quest=https://brocade.io/api/items/";
     function getUPCInfo() {
-      if (barcode !== null) {
+      if (barcode === null) {
         fetch(`${apiUrl}${barcode}`, {
           // headers: {
           //   "x-cors-api-key": "temp_2950d9928c59d142ba6ae1e8c7f6be74",
@@ -70,11 +70,11 @@ const CreateNewItem = () => {
           .then((data) => {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             setCurrentItemByUPC(data);
-            setShowingAddByBarcodeModal(true);
+
             // alert(JSON.stringify(data));
             // console.log(currentItemByUPC);
           })
-          .then((currentItemByUPC) => console.log(currentItemByUPC))
+
           .catch((error) => {
             console.error("Error fetching data:", error);
           });
@@ -83,6 +83,12 @@ const CreateNewItem = () => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getUPCInfo();
   }, [barcode]);
+  useEffect(() => {
+    if (currentItemByUPC !== null) {
+      reset(currentItemByUPC);
+      setShowingAddByBarcodeModal(true);
+    }
+  }, [currentItemByUPC, reset, setShowingAddByBarcodeModal]);
 
   // const [amount, setAmount] = useState("");
   // const onSubmit = (data: NewItemInputProps) => {
