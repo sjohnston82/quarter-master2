@@ -53,7 +53,7 @@ const CreateNewItem = () => {
     const apiUrl =
       "https://api.codetabs.com/v1/proxy?quest=https://brocade.io/api/items/";
     function getUPCInfo() {
-      if (barcode === null) {
+      if (barcode !== null) {
         fetch(`${apiUrl}${barcode}`, {
           // headers: {
           //   "x-cors-api-key": "temp_2950d9928c59d142ba6ae1e8c7f6be74",
@@ -70,7 +70,7 @@ const CreateNewItem = () => {
           .then((data) => {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             setCurrentItemByUPC(data);
-
+            setBarcode(null);
             // alert(JSON.stringify(data));
             // console.log(currentItemByUPC);
           })
