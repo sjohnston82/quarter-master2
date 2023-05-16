@@ -28,7 +28,7 @@ const FoodItems = ({
   const itemsSortedAlphabetically = data?.sort((a, b) =>
     a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
   );
-  const itemsExpiringSoon = data?.filter((item) => item.daysUntilExpiry! < 8);
+  const itemsExpiringSoon = data?.filter((item) => item.daysUntilExpiry !== null && item.daysUntilExpiry < 8);
   const itemsSortedByExpiringSoon = itemsExpiringSoon?.sort((a, b) =>
     a.daysUntilExpiry! > b.daysUntilExpiry! ? 1 : -1)
   return (

@@ -54,25 +54,25 @@ const CreateNewItem = () => {
       "https://api.codetabs.com/v1/proxy?quest=https://brocade.io/api/items/";
     function getUPCInfo() {
       if (barcode !== null) {
-        fetch(`${apiUrl}${barcode}`, {
-          // headers: {
-          //   "x-cors-api-key": "temp_2950d9928c59d142ba6ae1e8c7f6be74",
-          // },
-        })
+        fetch(`${apiUrl}${barcode}`, {})
           .then((response) => {
             if (!response.ok) {
               toast.error("Produce info not found.  Please add manually.");
-              // throw new Error("Request failed");
+              throw new Error("Request failed");
             }
             return response;
           })
           .then((response) => response.json())
           .then((data) => {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-            setCurrentItemByUPC(data);
+            console.log(data);
+            setCurrentItemByUPC(data as UPCInfo);
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            if (data.error) {
+              toast.error(
+                "Unable to obtain product info.  Please add item manually."
+              );
+            }
             setBarcode(null);
-            // alert(JSON.stringify(data));
-            // console.log(currentItemByUPC);
           })
 
           .catch((error) => {

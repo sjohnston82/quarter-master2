@@ -26,7 +26,7 @@ interface AddItemManuallyInputProps {
   brand_name: string;
   amount: number;
   amountType: string;
-  expirationDate: string;
+  expirationDate: string | undefined;
   storageAreaId: string;
   foodCategories: string[];
   flavor: string;
@@ -78,6 +78,7 @@ const AddItemByBarcodeForm = () => {
     defaultValues: {
       brand_name: currentItemByUPC?.brand_name,
       name: currentItemByUPC?.name,
+      storageAreaId: "",
     },
   });
 
@@ -99,7 +100,7 @@ const AddItemByBarcodeForm = () => {
   }, [currentItemByUPC, reset]);
 
   const onSubmit = (data: AddItemManuallyInputProps) => {
-    console.log(data.storageAreaId);
+    console.log(data.expirationDate);
     const mutationData = {
       householdId,
       name: data.name,
@@ -107,7 +108,8 @@ const AddItemByBarcodeForm = () => {
       amountType: data.amountType,
       storageAreaId: data.storageAreaId,
       brand_name: data.brand_name,
-      expirationDate: new Date(data.expirationDate),
+      expirationDate:
+        data.expirationDate === undefined ? null : new Date(data.expirationDate),
       foodCategories: data.foodCategories,
       flavor: data.flavor,
     };
@@ -192,6 +194,7 @@ const AddItemByBarcodeForm = () => {
               id="amountType"
               select
               label="Amount Type"
+              defaultValue=""
               {...register("amountType")}
             >
               {packageTypes.map((type, i) => (
@@ -215,7 +218,7 @@ const AddItemByBarcodeForm = () => {
           >
             <Controller
               name="expirationDate"
-              defaultValue={String(new Date())}
+              defaultValue={undefined}
               control={control}
               render={({ field: { ref, onChange } }) => (
                 <DatePicker
@@ -243,6 +246,7 @@ const AddItemByBarcodeForm = () => {
             id="storageArea"
             label="Storage Area"
             {...register("storageAreaId")}
+            defaultValue=""
           >
             {getStorageAreas.data.map((area) => (
               <MenuItem key={area.id} value={area.id}>

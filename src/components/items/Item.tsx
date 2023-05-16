@@ -32,7 +32,7 @@ const Item = ({ ...item }: Item) => {
           </div>
           <div className="w-1/3 flex-wrap">
             <p className="text-sm">
-              {item.daysUntilExpiry && item.daysUntilExpiry > 1 ? (
+              {item.daysUntilExpiry === null ? "No date given" : item.daysUntilExpiry > 1 ? (
                 `Expires: ${item.daysUntilExpiry} days`
               ) : item.daysUntilExpiry === 1 ? (
                 "Expires tomorrow!"

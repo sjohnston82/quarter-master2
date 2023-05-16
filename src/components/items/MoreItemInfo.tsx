@@ -19,7 +19,7 @@ const MoreItemInfo = ({ ...item }: Item) => {
         <div className="flex  w-1/3 flex-col ">
           <p className="text-center font-semibold">Expiration Date</p>
           <p className="text-center ">
-            {dayjs(item.expirationDate).format("MM/DD/YYYY")}
+            {item.expirationDate !== undefined && item.expirationDate !== null && dayjs(item.expirationDate).format("MM/DD/YYYY")}
           </p>
         </div>
         <div className="flex  w-1/3 flex-col ">

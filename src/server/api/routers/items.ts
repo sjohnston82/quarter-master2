@@ -52,9 +52,9 @@ export const itemsRouter = createTRPCRouter({
         amount: z.number(),
         amountType: z.string().optional(),
         storageAreaId: z.string(),
-        brand: z.string().optional(),
+        brand_name: z.string().optional(),
         foodCategories: z.array(z.string()).optional(),
-        expirationDate: z.date().optional(),
+        expirationDate: z.date().nullable().optional(),
         flavor: z.string().optional(),
       })
     )
@@ -65,7 +65,7 @@ export const itemsRouter = createTRPCRouter({
           householdId: input.householdId,
           amount: input.amount,
           amountType: input.amountType,
-          brand: input.brand,
+          brand: input.brand_name,
           foodCategories: input.foodCategories,
           expirationDate: input.expirationDate,
           flavor: input.flavor,
@@ -101,7 +101,7 @@ export const itemsRouter = createTRPCRouter({
         },
       });
 
-      if (input.expirationDate !== undefined) {
+      if (input.expirationDate) {
         const totalDays = calculateDaysUntilExpiry(input.expirationDate);
 
         await ctx.prisma.item.update({

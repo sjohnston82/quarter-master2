@@ -21,10 +21,10 @@ interface AddItemManuallyFormProps {
 
 interface AddItemManuallyInputProps {
   name: string;
-  brand: string;
+  brand_name: string;
   amount: number;
   amountType: string;
-  expirationDate: string;
+  expirationDate: string | undefined;
   storageAreaId: string;
   foodCategories: string[];
   flavor: string;
@@ -35,7 +35,7 @@ const addItemManuallySchema = z.object({
     .string()
     .min(2, { message: "You need at least two characters" })
     .max(50, { message: "You have exceeded the characters amount." }),
-  brand: z
+  brand_name: z
     .union([
       z
         .string()
@@ -86,15 +86,18 @@ const AddItemManuallyForm = ({
   });
 
   const onSubmit = (data: AddItemManuallyInputProps) => {
-    console.log(data.storageAreaId);
+    
     const mutationData = {
       householdId,
       name: data.name,
       amount: +data.amount,
       amountType: data.amountType,
       storageAreaId: data.storageAreaId,
-      brand: data.brand,
-      expirationDate: new Date(data.expirationDate),
+      brand_name: data.brand_name,
+      expirationDate:
+        data.expirationDate === undefined
+          ? null
+          : new Date(data.expirationDate),
       foodCategories: data.foodCategories,
       flavor: data.flavor,
     };
@@ -135,7 +138,7 @@ const AddItemManuallyForm = ({
             <div className="flex flex-col">
               <TextField
                 variant="outlined"
-                {...register("brand")}
+                {...register("brand_name")}
                 name="brand"
                 label="Brand"
                 type="text"
@@ -156,9 +159,9 @@ const AddItemManuallyForm = ({
               </p>
             )}
           </div>
-          {errors.brand?.message && (
+          {errors.brand_name?.message && (
             <p className="text-sm italic text-red-500">
-              {errors.brand?.message}
+              {errors.brand_name?.message}
             </p>
           )}
           <div className="flex items-center justify-between">
@@ -202,7 +205,7 @@ const AddItemManuallyForm = ({
           >
             <Controller
               name="expirationDate"
-              defaultValue={String(new Date())}
+              defaultValue={undefined}
               control={control}
               render={({ field: { ref, onChange } }) => (
                 <DatePicker
