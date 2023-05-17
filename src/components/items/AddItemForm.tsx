@@ -54,16 +54,16 @@ const addItemManuallySchema = z.object({
   expirationDate: z.coerce.date().optional(),
 });
 
-const AddItemByBarcodeForm = () => {
+const AddItemForm = () => {
   const {
     householdId,
-    setShowingAddByBarcodeModal,
-    showingAddByBarcodeModal,
+    setShowingAddItemModal,
+    showingAddItemModal,
     currentItemByUPC,
     setCurrentItemByUPC,
   } = useContext(GlobalContext);
 
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState("1");
 
   const [error, setError] = React.useState<DateValidationError | null>(null);
 
@@ -79,6 +79,7 @@ const AddItemByBarcodeForm = () => {
       brand_name: currentItemByUPC?.brand_name,
       name: currentItemByUPC?.name,
       storageAreaId: "",
+      amount: parseInt(amount),
     },
   });
 
@@ -109,22 +110,24 @@ const AddItemByBarcodeForm = () => {
       storageAreaId: data.storageAreaId,
       brand_name: data.brand_name,
       expirationDate:
-        data.expirationDate === undefined ? null : new Date(data.expirationDate),
+        data.expirationDate === undefined
+          ? null
+          : new Date(data.expirationDate),
       foodCategories: data.foodCategories,
       flavor: data.flavor,
     };
 
     createNewItem.mutate(mutationData);
     reset();
-    setShowingAddByBarcodeModal(false);
+    setShowingAddItemModal(false);
     setAmount("");
   };
 
   return (
     <Modal
-      isOpen={showingAddByBarcodeModal}
-      onClose={() => setShowingAddByBarcodeModal(false)}
-      title="Add Item By Barcode"
+      isOpen={showingAddItemModal}
+      onClose={() => setShowingAddItemModal(false)}
+      title="Add Item"
     >
       {getStorageAreas.data && (
         <form
@@ -184,6 +187,7 @@ const AddItemByBarcodeForm = () => {
               id="amount"
               type="number"
               label="Amount"
+              defaultValue={parseInt(amount)}
               required
               className="w-2/5"
               onChange={(e) => setAmount(e.target.value)}
@@ -289,4 +293,4 @@ const AddItemByBarcodeForm = () => {
   );
 };
 
-export default AddItemByBarcodeForm;
+export default AddItemForm;

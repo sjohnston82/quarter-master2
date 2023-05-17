@@ -1,19 +1,14 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
-import Modal from "../ui/Modal";
 import { useForm } from "react-hook-form";
 import { api } from "~/utils/api";
-import { packageTypes } from "~/utils/helperLists";
-import AddItemManuallyForm from "./AddItemManuallyForm";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "../ui/Button";
 import { AiOutlineBarcode } from "react-icons/ai";
-import BarcodeScanner from "../barcode/BarcodeScanner";
-import { type Result } from "@zxing/library";
 import { toast } from "react-hot-toast";
-import AddItemByBarcodeForm from "./AddItemByBarcodeForm";
 import { type UPCInfo } from "~/context/GlobalContextProvider";
+import AddItemForm from "./AddItemForm";
 
 type NewItemInputProps = {
   name: string;
@@ -31,10 +26,10 @@ const CreateNewItem = () => {
     setBarcode,
     currentItemByUPC,
     setCurrentItemByUPC,
-    setShowingAddByBarcodeModal,
-    showingAddByBarcodeModal,
+    setShowingAddItemModal,
+    showingAddItemModal,
   } = useContext(GlobalContext);
-  const [showingAddItemModal, setShowingAddItemModal] = useState(false);
+  // const [showingAddItemModal, setShowingAddItemModal] = useState(false);
   // const [showingAddByBarcodeModal, setShowingAddByBarcodeModal] =
   //   useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -54,7 +49,7 @@ const CreateNewItem = () => {
       "https://api.codetabs.com/v1/proxy?quest=https://brocade.io/api/items/";
     function getUPCInfo() {
       if (barcode !== null) {
-        fetch(`${apiUrl}${barcode}`, {})
+        fetch(`${apiUrl}${barcode}`)
           .then((response) => {
             if (!response.ok) {
               toast.error("Produce info not found.  Please add manually.");
@@ -86,25 +81,10 @@ const CreateNewItem = () => {
   useEffect(() => {
     if (currentItemByUPC !== null) {
       reset(currentItemByUPC);
-      setShowingAddByBarcodeModal(true);
+      setShowingAddItemModal(true);
     }
-  }, [currentItemByUPC, reset, setShowingAddByBarcodeModal]);
+  }, [currentItemByUPC, reset, setShowingAddItemModal]);
 
-  // const [amount, setAmount] = useState("");
-  // const onSubmit = (data: NewItemInputProps) => {
-  //   console.log(data);
-  //   const mutationData = {
-  //     householdId,
-  //     name: data.name,
-  //     amount: parseInt(data.amount),
-  //     amountType: data.amountType,
-  //     storageAreaId: data.storageAreaId,
-  //   };
-  //   createNewItem.mutate(mutationData);
-  //   reset();
-  //   setShowingAddItemModal(false);
-  //   setAmount("");
-  // };
 
   return (
     <div>
@@ -123,11 +103,8 @@ const CreateNewItem = () => {
         </div>
       </div>
       {/* {showingBarcodeScanner && <BarcodeScanner />} */}
-      <AddItemManuallyForm
-        showingAddItemModal={showingAddItemModal}
-        setShowingAddItemModal={setShowingAddItemModal}
-      />
-      <AddItemByBarcodeForm />
+
+      <AddItemForm />
     </div>
   );
 };

@@ -33,7 +33,7 @@ export const useZxing = ({
   const {
     barcode,
     setBarcode,
-    setShowingAddByBarcodeModal,
+    setShowingAddItemModal,
     setShowingBarcodeScanner,
   } = useContext(GlobalContext);
   const reader = useMemo<BrowserMultiFormatReader>(() => {

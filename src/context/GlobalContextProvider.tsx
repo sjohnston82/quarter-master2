@@ -30,8 +30,8 @@ type GlobalContextType = {
   setShowingBarcodeScanner: React.Dispatch<SetStateAction<boolean>>;
   barcode: Result | null;
   setBarcode: React.Dispatch<SetStateAction<Result | null>>;
-  showingAddByBarcodeModal: boolean;
-  setShowingAddByBarcodeModal: React.Dispatch<React.SetStateAction<boolean>>;
+  showingAddItemModal: boolean;
+  setShowingAddItemModal: React.Dispatch<React.SetStateAction<boolean>>;
   currentItemByUPC: UPCInfo | null;
   setCurrentItemByUPC: React.Dispatch<React.SetStateAction<UPCInfo | null>>
 };
@@ -48,7 +48,7 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
   const [storageAreas, setStorageAreas] = useState<StorageArea[]>([]);
   const [showingBarcodeScanner, setShowingBarcodeScanner] = useState(false);
   const [barcode, setBarcode] = useState<Result | null>(null);
-  const [showingAddByBarcodeModal, setShowingAddByBarcodeModal] =
+  const [showingAddItemModal, setShowingAddItemModal] =
     useState(false);
   const [currentItemByUPC, setCurrentItemByUPC] = useState<UPCInfo | null>(null);
 
@@ -69,8 +69,8 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
         setShowingBarcodeScanner,
         barcode,
         setBarcode,
-        showingAddByBarcodeModal,
-        setShowingAddByBarcodeModal,
+        showingAddItemModal,
+        setShowingAddItemModal,
         currentItemByUPC,
         setCurrentItemByUPC
       }}
