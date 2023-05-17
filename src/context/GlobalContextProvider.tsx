@@ -6,6 +6,7 @@ import React, {
 } from "react";
 import { RouterOutputs } from "~/utils/api";
 import { type Result } from "@zxing/library";
+import useDebounce from "~/hooks/useDebounce";
 
 type StorageArea = RouterOutputs["storageAreas"]["getStorageAreas"][0];
 export type UPCInfo = {
@@ -33,7 +34,9 @@ type GlobalContextType = {
   showingAddItemModal: boolean;
   setShowingAddItemModal: React.Dispatch<React.SetStateAction<boolean>>;
   currentItemByUPC: UPCInfo | null;
-  setCurrentItemByUPC: React.Dispatch<React.SetStateAction<UPCInfo | null>>
+  setCurrentItemByUPC: React.Dispatch<React.SetStateAction<UPCInfo | null>>;
+  searchTerm: string;
+  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export const GlobalContext = createContext<GlobalContextType>(
@@ -51,6 +54,11 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
   const [showingAddItemModal, setShowingAddItemModal] =
     useState(false);
   const [currentItemByUPC, setCurrentItemByUPC] = useState<UPCInfo | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+
+  const debouncedValue = useDebounce(searchTerm, 500);
+
 
   return (
     <GlobalContext.Provider
@@ -72,7 +80,9 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
         showingAddItemModal,
         setShowingAddItemModal,
         currentItemByUPC,
-        setCurrentItemByUPC
+        setCurrentItemByUPC,
+        searchTerm,
+        setSearchTerm
       }}
     >
       {children}
