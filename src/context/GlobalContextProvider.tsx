@@ -37,6 +37,7 @@ type GlobalContextType = {
   setCurrentItemByUPC: React.Dispatch<React.SetStateAction<UPCInfo | null>>;
   searchTerm: string;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+  debouncedValue: string;
 };
 
 export const GlobalContext = createContext<GlobalContextType>(
@@ -82,7 +83,8 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
         currentItemByUPC,
         setCurrentItemByUPC,
         searchTerm,
-        setSearchTerm
+        setSearchTerm,
+        debouncedValue
       }}
     >
       {children}

@@ -22,7 +22,7 @@ const FoodItems = ({
   foodTypeIds,
   foodTypesList
 }: FoodItemsProps) => {
-  const { householdId } = useContext(GlobalContext);
+  const { householdId, debouncedValue } = useContext(GlobalContext);
   const { data } = api.items.getAllItems.useQuery({ householdId });
 
   const itemsSortedAlphabetically = data?.sort((a, b) =>
@@ -37,9 +37,20 @@ const FoodItems = ({
       {sortType === "All" && (
         <div className="flex flex-col gap-1">
           <Banner>All Food Items</Banner>
-          {itemsSortedAlphabetically?.map((item) => (
-            <Item key={item.id} {...item} />
-          ))}
+          {itemsSortedAlphabetically
+            ?.filter((item) => {
+              if (debouncedValue === "") {
+                return item;
+              } else if (
+                item.name.toLowerCase().includes(debouncedValue) ||
+                item.brand?.toLowerCase().includes(debouncedValue)
+              ) {
+                return item;
+              }
+            })
+            .map((item) => (
+              <Item key={item.id} {...item} />
+            ))}
         </div>
       )}
       {sortType === "Storage Area" && (
@@ -54,9 +65,20 @@ const FoodItems = ({
       {sortType === "Expiring Soon" && (
         <div className="flex flex-col gap-1">
           <Banner>Expiring Soon</Banner>
-          {itemsSortedByExpiringSoon?.map((item) => (
-            <Item key={item.id} {...item} />
-          ))}
+          {itemsSortedByExpiringSoon
+            ?.filter((item) => {
+              if (debouncedValue === "") {
+                return item;
+              } else if (
+                item.name.toLowerCase().includes(debouncedValue) ||
+                item.brand?.toLowerCase().includes(debouncedValue)
+              ) {
+                return item;
+              }
+            })
+            .map((item) => (
+              <Item key={item.id} {...item} />
+            ))}
         </div>
       )}
     </div>

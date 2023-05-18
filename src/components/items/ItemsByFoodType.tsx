@@ -12,7 +12,7 @@ interface ItemsByFoodTypeProps {
 }
 
 const ItemsByFoodType = ({ foodTypeIds, foodTypesList }: ItemsByFoodTypeProps) => {
-
+  const { debouncedValue } = useContext(GlobalContext)
 
   const idsToFind = foodTypeIds?.current?.value as unknown as string[];
   const shouldEnableQuery =
@@ -42,7 +42,16 @@ const ItemsByFoodType = ({ foodTypeIds, foodTypesList }: ItemsByFoodTypeProps) =
           </div>
         </div>
       )}
-      {data && data.map((item) => <Item key={item.id} {...item} />)}
+      {data && data.filter((item) => {
+              if (debouncedValue === "") {
+                return item;
+              } else if (
+                item.name.toLowerCase().includes(debouncedValue) ||
+                item.brand?.toLowerCase().includes(debouncedValue)
+              ) {
+                return item;
+              }
+            }).map((item) => <Item key={item.id} {...item} />)}
     </div>
   );
 };

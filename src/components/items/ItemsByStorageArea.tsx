@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import Banner from "../ui/Banner";
 import { api } from "~/utils/api";
 import Item from "./Item";
 import LoadingSpinner from "../ui/LoadingSpinner";
+import { GlobalContext } from "~/context/GlobalContextProvider";
 
 interface ItemsByStorageAreaProps {
   storageAreaId: string;
 }
 
 const ItemsByStorageArea = ({ storageAreaId }: ItemsByStorageAreaProps) => {
+  const { debouncedValue } = useContext(GlobalContext)
   const shouldEnableQuery =
     !!storageAreaId && storageAreaId !== undefined && storageAreaId !== null;
 
@@ -51,7 +53,18 @@ const ItemsByStorageArea = ({ storageAreaId }: ItemsByStorageAreaProps) => {
           There are no items currently saved in this storage area.
         </p>
       ) : (
-        data?.map((item) => <Item key={item.id} {...item} />)
+        data
+          ?.filter((item) => {
+            if (debouncedValue === "") {
+              return item;
+            } else if (
+              item.name.toLowerCase().includes(debouncedValue) ||
+              item.brand?.toLowerCase().includes(debouncedValue)
+            ) {
+              return item;
+            }
+          })
+          .map((item) => <Item key={item.id} {...item} />)
       )}
     </div>
   );

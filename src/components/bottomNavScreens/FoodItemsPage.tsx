@@ -14,6 +14,7 @@ import CreateStorageArea from "../storageAreas/CreateStorageArea";
 import Banner from "../ui/Banner";
 import { type RouterOutputs, api } from "~/utils/api";
 import BarcodeScanner from "../barcode/BarcodeScanner";
+import Searchbar from "../ui/Searchbar";
 
 type FoodType = RouterOutputs["items"]["getFoodCategoryCount"][0];
 
@@ -71,6 +72,9 @@ const FoodItemsPage = () => {
         </div>
       ) : (
         <div className="">
+          <div className="">
+            <Searchbar />
+          </div>
           <div className="">
             {filterItemsCategory === "All" && (
               <div className="mx-auto mt-2 w-4/5">
