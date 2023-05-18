@@ -14,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-hot-toast";
 import { type DateValidationError } from "@mui/x-date-pickers";
 import { type UPCInfo } from "~/context/GlobalContextProvider";
+import LoadingSpinner from "../ui/LoadingSpinner";
 interface AddItemManuallyFormProps {
   showingAddByBarcodeModal: boolean;
   setShowingAddByBarcodeModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -61,6 +62,7 @@ const AddItemForm = () => {
     showingAddItemModal,
     currentItemByUPC,
     setCurrentItemByUPC,
+    fetchingProductInfo,
   } = useContext(GlobalContext);
 
   const [amount, setAmount] = useState("1");
@@ -129,165 +131,172 @@ const AddItemForm = () => {
       onClose={() => setShowingAddItemModal(false)}
       title="Add Item"
     >
-      {getStorageAreas.data && (
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="mt-2 flex flex-col space-y-2"
-        >
-          <TextField
-            variant="outlined"
-            {...register("name")}
-            required
-            fullWidth
-            name="name"
-            label="Item Name"
-            type="text"
-            id="name"
-          />
-          {errors.name?.message && (
-            <p className="text-sm italic text-red-500">
-              {errors.name?.message}
-            </p>
-          )}
-          <div className="flex gap-1">
-            <div className="flex flex-col">
-              <TextField
-                variant="outlined"
-                {...register("brand_name")}
-                name="brand"
-                label="Brand"
-                type="text"
-                id="brand"
-              />
-            </div>
+      {fetchingProductInfo ? (
+        <div className="flex h-80 flex-col items-center justify-center">
+          <p className="font-semibold">Retrieving product info...</p>
+          <LoadingSpinner size={60} />
+        </div>
+      ) : (
+        getStorageAreas.data && (
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="mt-2 flex flex-col space-y-2"
+          >
             <TextField
               variant="outlined"
-              {...register("flavor")}
-              name="flavor"
-              label="Flavor"
+              {...register("name")}
+              required
+              fullWidth
+              name="name"
+              label="Item Name"
               type="text"
-              id="flavor"
+              id="name"
             />
-            {errors.flavor?.message && (
+            {errors.name?.message && (
               <p className="text-sm italic text-red-500">
-                {errors.flavor?.message}
+                {errors.name?.message}
               </p>
             )}
-          </div>
-          {errors.brand_name?.message && (
-            <p className="text-sm italic text-red-500">
-              {errors.brand_name?.message}
-            </p>
-          )}
-          <div className="flex items-center justify-between">
-            <TextField
-              variant="outlined"
-              {...register("amount")}
-              name="amount"
-              id="amount"
-              type="number"
-              label="Amount"
-              defaultValue={parseInt(amount)}
-              required
-              className="w-2/5"
-              onChange={(e) => setAmount(e.target.value)}
-            />
+            <div className="flex gap-1">
+              <div className="flex flex-col">
+                <TextField
+                  variant="outlined"
+                  {...register("brand_name")}
+                  name="brand"
+                  label="Brand"
+                  type="text"
+                  id="brand"
+                />
+              </div>
+              <TextField
+                variant="outlined"
+                {...register("flavor")}
+                name="flavor"
+                label="Flavor"
+                type="text"
+                id="flavor"
+              />
+              {errors.flavor?.message && (
+                <p className="text-sm italic text-red-500">
+                  {errors.flavor?.message}
+                </p>
+              )}
+            </div>
+            {errors.brand_name?.message && (
+              <p className="text-sm italic text-red-500">
+                {errors.brand_name?.message}
+              </p>
+            )}
+            <div className="flex items-center justify-between">
+              <TextField
+                variant="outlined"
+                {...register("amount")}
+                name="amount"
+                id="amount"
+                type="number"
+                label="Amount"
+                defaultValue={parseInt(amount)}
+                required
+                className="w-2/5"
+                onChange={(e) => setAmount(e.target.value)}
+              />
 
-            <TextField
-              className="w-[59%]"
-              id="amountType"
-              select
-              label="Amount Type"
-              defaultValue=""
-              {...register("amountType")}
+              <TextField
+                className="w-[59%]"
+                id="amountType"
+                select
+                label="Amount Type"
+                defaultValue=""
+                {...register("amountType")}
+              >
+                {packageTypes.map((type, i) => (
+                  <MenuItem
+                    key={i}
+                    value={amount === "1" ? type.singular : type.plural}
+                  >
+                    {amount === "1" ? type.singular : type.plural}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </div>
+            {errors.amount?.message && (
+              <p className="text-sm italic text-red-500">
+                {errors.amount?.message}
+              </p>
+            )}
+            <LocalizationProvider
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+              dateAdapter={AdapterDayjs}
             >
-              {packageTypes.map((type, i) => (
-                <MenuItem
-                  key={i}
-                  value={amount === "1" ? type.singular : type.plural}
-                >
-                  {amount === "1" ? type.singular : type.plural}
+              <Controller
+                name="expirationDate"
+                defaultValue={undefined}
+                control={control}
+                render={({ field: { ref, onChange } }) => (
+                  <DatePicker
+                    inputRef={ref}
+                    className="mb-1 mt-2"
+                    disablePast
+                    label="Expiration Date"
+                    onChange={(event) => {
+                      onChange(event);
+                    }}
+                    onError={(newError) => setError(newError)}
+                    slotProps={{
+                      textField: {
+                        helperText: error,
+                      },
+                    }}
+                  />
+                )}
+              />
+            </LocalizationProvider>
+            <TextField
+              className=""
+              required
+              select
+              id="storageArea"
+              label="Storage Area"
+              {...register("storageAreaId")}
+              defaultValue=""
+            >
+              {getStorageAreas.data.map((area) => (
+                <MenuItem key={area.id} value={area.id}>
+                  {area.name}
                 </MenuItem>
               ))}
             </TextField>
-          </div>
-          {errors.amount?.message && (
-            <p className="text-sm italic text-red-500">
-              {errors.amount?.message}
-            </p>
-          )}
-          <LocalizationProvider
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            dateAdapter={AdapterDayjs}
-          >
             <Controller
-              name="expirationDate"
-              defaultValue={undefined}
-              control={control}
-              render={({ field: { ref, onChange } }) => (
-                <DatePicker
-                  inputRef={ref}
-                  className="mb-1 mt-2"
-                  disablePast
-                  label="Expiration Date"
-                  onChange={(event) => {
-                    onChange(event);
-                  }}
-                  onError={(newError) => setError(newError)}
-                  slotProps={{
-                    textField: {
-                      helperText: error,
-                    },
+              render={({ field: { onChange, value } }) => (
+                <Autocomplete
+                  multiple
+                  filterSelectedOptions
+                  options={foodCategories}
+                  getOptionLabel={(option) => option}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Food categories"
+                      variant="outlined"
+                    />
+                  )}
+                  onChange={(_, data) => {
+                    onChange(data);
+                    return data;
                   }}
                 />
               )}
+              name="foodCategories"
+              control={control}
             />
-          </LocalizationProvider>
-          <TextField
-            className=""
-            required
-            select
-            id="storageArea"
-            label="Storage Area"
-            {...register("storageAreaId")}
-            defaultValue=""
-          >
-            {getStorageAreas.data.map((area) => (
-              <MenuItem key={area.id} value={area.id}>
-                {area.name}
-              </MenuItem>
-            ))}
-          </TextField>
-          <Controller
-            render={({ field: { onChange, value } }) => (
-              <Autocomplete
-                multiple
-                filterSelectedOptions
-                options={foodCategories}
-                getOptionLabel={(option) => option}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Food categories"
-                    variant="outlined"
-                  />
-                )}
-                onChange={(_, data) => {
-                  onChange(data);
-                  return data;
-                }}
-              />
-            )}
-            name="foodCategories"
-            control={control}
-          />
-          <button
-            type="submit"
-            className="mt-3 rounded-xl border border-slate-700 p-1 disabled:border-slate-400 disabled:text-slate-400"
-          >
-            Create Item
-          </button>
-        </form>
+            <button
+              type="submit"
+              className="mt-3 rounded-xl border border-slate-700 p-1 disabled:border-slate-400 disabled:text-slate-400"
+            >
+              Create Item
+            </button>
+          </form>
+        )
       )}
     </Modal>
   );

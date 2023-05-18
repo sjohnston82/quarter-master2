@@ -37,6 +37,8 @@ type GlobalContextType = {
   setCurrentItemByUPC: React.Dispatch<React.SetStateAction<UPCInfo | null>>;
   searchTerm: string;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+  fetchingProductInfo: boolean;
+  setFetchingProductInfo: React.Dispatch<React.SetStateAction<boolean>>;
   debouncedValue: string;
 };
 
@@ -52,14 +54,14 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
   const [storageAreas, setStorageAreas] = useState<StorageArea[]>([]);
   const [showingBarcodeScanner, setShowingBarcodeScanner] = useState(false);
   const [barcode, setBarcode] = useState<Result | null>(null);
-  const [showingAddItemModal, setShowingAddItemModal] =
-    useState(false);
-  const [currentItemByUPC, setCurrentItemByUPC] = useState<UPCInfo | null>(null);
+  const [showingAddItemModal, setShowingAddItemModal] = useState(false);
+  const [currentItemByUPC, setCurrentItemByUPC] = useState<UPCInfo | null>(
+    null
+  );
   const [searchTerm, setSearchTerm] = useState<string>("");
-
+  const [fetchingProductInfo, setFetchingProductInfo] = useState(false);
 
   const debouncedValue = useDebounce(searchTerm, 500);
-
 
   return (
     <GlobalContext.Provider
@@ -84,7 +86,9 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
         setCurrentItemByUPC,
         searchTerm,
         setSearchTerm,
-        debouncedValue
+        fetchingProductInfo,
+        setFetchingProductInfo,
+        debouncedValue,
       }}
     >
       {children}

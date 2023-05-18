@@ -28,6 +28,8 @@ const CreateNewItem = () => {
     setCurrentItemByUPC,
     setShowingAddItemModal,
     showingAddItemModal,
+    fetchingProductInfo,
+    setFetchingProductInfo,
   } = useContext(GlobalContext);
   // const [showingAddItemModal, setShowingAddItemModal] = useState(false);
   // const [showingAddByBarcodeModal, setShowingAddByBarcodeModal] =
@@ -49,6 +51,7 @@ const CreateNewItem = () => {
       "https://api.codetabs.com/v1/proxy?quest=https://brocade.io/api/items/";
     function getUPCInfo() {
       if (barcode !== null) {
+        setFetchingProductInfo(true);
         fetch(`${apiUrl}${barcode}`)
           .then((response) => {
             if (!response.ok) {
@@ -80,11 +83,11 @@ const CreateNewItem = () => {
   }, [barcode]);
   useEffect(() => {
     if (currentItemByUPC !== null) {
+      setFetchingProductInfo(false);
       reset(currentItemByUPC);
       setShowingAddItemModal(true);
     }
-  }, [currentItemByUPC, reset, setShowingAddItemModal]);
-
+  }, [currentItemByUPC, reset, setShowingAddItemModal, setFetchingProductInfo]);
 
   return (
     <div>
