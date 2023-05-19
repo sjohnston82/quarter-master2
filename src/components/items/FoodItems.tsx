@@ -50,6 +50,8 @@ const FoodItems = ({
                 item.brand?.toLowerCase().includes(debouncedValue)
               ) {
                 return item;
+              } else {
+                return item;
               }
             })
             .map((item) => (
