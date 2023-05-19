@@ -40,14 +40,15 @@ const FoodItems = ({
       {sortType === "All" && (
         <div className="flex flex-col gap-1">
           <Banner>All Food Items</Banner>
-          <p className="">{debouncedValue}</p>
           {itemsSortedAlphabetically
             ?.filter((item) => {
               if (debouncedValue === "") {
                 return item;
               } else if (
-                item.name.includes(debouncedValue) ||
-                item.brand?.includes(debouncedValue)
+                item.name
+                  .toLowerCase()
+                  .includes(debouncedValue.toLowerCase()) ||
+                item.brand?.toLowerCase().includes(debouncedValue.toLowerCase())
               ) {
                 return item;
               }
