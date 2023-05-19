@@ -20,7 +20,7 @@ const FoodItems = ({
   sortType,
   storageAreaId,
   foodTypeIds,
-  foodTypesList
+  foodTypesList,
 }: FoodItemsProps) => {
   const { householdId, debouncedValue } = useContext(GlobalContext);
   const { data } = api.items.getAllItems.useQuery({ householdId });
@@ -28,15 +28,19 @@ const FoodItems = ({
   const itemsSortedAlphabetically = data?.sort((a, b) =>
     a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
   );
-  const itemsExpiringSoon = data?.filter((item) => item.daysUntilExpiry !== null && item.daysUntilExpiry < 8);
+  const itemsExpiringSoon = data?.filter(
+    (item) => item.daysUntilExpiry !== null && item.daysUntilExpiry < 8
+  );
   const itemsSortedByExpiringSoon = itemsExpiringSoon?.sort((a, b) =>
-    a.daysUntilExpiry! > b.daysUntilExpiry! ? 1 : -1)
+    a.daysUntilExpiry! > b.daysUntilExpiry! ? 1 : -1
+  );
   return (
     <div className="mt-2">
       <div>{data?.length === 0 && <p>No Items</p>}</div>
       {sortType === "All" && (
         <div className="flex flex-col gap-1">
           <Banner>All Food Items</Banner>
+          <p className="">{debouncedValue}</p>
           {itemsSortedAlphabetically
             ?.filter((item) => {
               if (debouncedValue === "") {
