@@ -61,7 +61,7 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [fetchingProductInfo, setFetchingProductInfo] = useState(false);
 
-  const debouncedValue = useDebounce(searchTerm, 500);
+  const debouncedValue = useDebounce(searchTerm, 1000);
 
   return (
     <GlobalContext.Provider

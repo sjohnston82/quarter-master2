@@ -175,8 +175,6 @@ const FoodItemsPage = () => {
                   inputRef={foodTypeRef}
                   onChange={async () => {
                     await getFoodTypesRoute.invalidate();
-                    console.log("first level", foodTypeRef.current?.value);
-                    // foodTypeRef.current !== null && setSelectedIds([foodTypeRef.current.value])
                   }}
                   defaultValue=""
                 >
@@ -192,13 +190,13 @@ const FoodItemsPage = () => {
           </div>
 
           <div className="mt-2">
-            {/* <Banner >All Food Items</Banner> */}
             <FoodItems
               sortType={filterItemsCategory}
               storageAreaId={
                 storageAreaRef.current && storageAreaRef.current.value
               }
               foodTypeIds={foodTypeRef}
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
               foodTypesList={foodTypesList!}
             />
           </div>
