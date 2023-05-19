@@ -46,11 +46,9 @@ const FoodItems = ({
               if (debouncedValue === "") {
                 return item;
               } else if (
-                item.name.toLowerCase().includes(debouncedValue) ||
-                item.brand?.toLowerCase().includes(debouncedValue)
+                item.name.includes(debouncedValue) ||
+                item.brand?.includes(debouncedValue)
               ) {
-                return item;
-              } else {
                 return item;
               }
             })
