@@ -6,10 +6,9 @@ import useDebounce from "~/hooks/useDebounce";
 const Searchbar = () => {
   const { searchTerm, setSearchTerm } = useContext(GlobalContext);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ): void => {
-    setSearchTerm(e.target.value.trim());
+  const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    setSearchTerm((e.target as HTMLInputElement).value);
   };
 
   return (
