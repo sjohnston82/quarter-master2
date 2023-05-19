@@ -21,7 +21,7 @@ const Searchbar = () => {
       </label>
       <div className="relative flex justify-center">
         <div className="pointer-events-none absolute inset-y-0 left-10 flex items-center pl-3">
-          <svg
+          {/* <svg
             aria-hidden="true"
             className="h-5 w-5 text-gray-500 dark:text-gray-400"
             fill="none"
@@ -35,7 +35,7 @@ const Searchbar = () => {
               stroke-width="2"
               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
             ></path>
-          </svg>
+          </svg> */}
         </div>
         <input
           type="search"
