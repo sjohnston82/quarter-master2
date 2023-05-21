@@ -5,3 +5,31 @@
 body {
   font-family: "Roboto";
 }
+
+@layer base {
+  @font-face {
+    font-family: "Egory Castle";
+    font-weight: 700;
+    src: url("/fonts/EgorycastlePersonal.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "Evogria";
+    src: url("/fonts/Evogria.otf") format("opentype");
+  }
+  @font-face {
+    font-family: "EvogriaItalic";
+    src: url("/fonts/EvogriaItalic.otf") format("opentype");
+  }
+  @font-face {
+    font-family: "Bavista";
+    src: url("/fonts/Bavista_Soulare.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "Barcade";
+    src: url("/fonts/Barcade.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "ALoveofThunder";
+    src: url("/fonts/ALoveofThunder.ttf") format("truetype");
+  }
+}
