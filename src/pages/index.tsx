@@ -49,7 +49,7 @@ const Home: NextPage = () => {
     <>
       <main className="flex min-h-screen flex-col scroll-smooth bg-snow">
         <div className="w-full">
-          <h1 className="my-4 text-center text-4xl font-extrabold leading-none tracking-tight text-woodsmoke">
+          <h1 className="mb-4 mt-8 text-center text-5xl font-extrabold leading-none tracking-tight text-woodsmoke">
             Take control of your family&apos;s pantry with ease
           </h1>
           <p className="px-2 text-lg text-schooner">
@@ -58,8 +58,11 @@ const Home: NextPage = () => {
             again.
           </p>
         </div>
-        <div className="flex flex-col justify-center gap-4 ">
-          <button className="mx-auto mt-8 flex w-3/5 items-center justify-center rounded-lg bg-woodsmoke px-2 py-1 text-xl text-snow transition hover:bg-mango">
+        <div className="flex flex-col justify-center gap-4 mb-24 ">
+          <button
+            onClick={() => void signIn()}
+            className="mx-auto mt-8 flex w-3/5 items-center justify-center rounded-lg bg-buttonblue px-2 py-1 text-xl text-snow transition hover:bg-mango"
+          >
             Get Started{" "}
             <svg
               aria-hidden="true"
@@ -75,12 +78,13 @@ const Home: NextPage = () => {
               ></path>
             </svg>
           </button>
-          {/* <a href="#features" className="">
-            <button className="mx-auto flex w-3/5 items-center justify-center rounded-lg bg-woodsmoke px-2 py-1 text-xl text-snow transition hover:bg-mango">
+          <a href="#learnmore" className="">
+            <button className="mx-auto flex w-3/5 items-center justify-center rounded-lg bg-buttonblue px-2 py-1 text-xl text-snow transition hover:bg-mango">
               Learn More
             </button>
-          </a> */}
+          </a>
         </div>
+
         <HowItWorks />
         <Features />
       </main>

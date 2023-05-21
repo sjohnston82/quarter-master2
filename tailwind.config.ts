@@ -13,6 +13,7 @@ export default {
         snow: "#f2f6f9",
         schooner: "#8a8683",
         woodsmoke: "#141416",
+        buttonblue: "#6F01FE",
       },
       fontFamily: {
         Evogria: ["Evogria"],
