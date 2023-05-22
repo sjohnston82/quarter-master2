@@ -4,8 +4,8 @@ const HowItWorks = () => {
   return (
     <div className="relative">
       
-      <div className="bg-woodsmoke text-snow " id="howitworks">
-        <h2 className="pt-44 text-center text-2xl text-mango w-4/5 mx-auto" >
+      <div className="bg-snow text-woodsmoke " id="howitworks">
+        <h2 className="pt-44 text-center text-2xl text-woodsmoke w-4/5 mx-auto" >
           How does Quartermaster work?
         </h2>
         <p className="">
