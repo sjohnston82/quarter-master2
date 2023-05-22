@@ -3,21 +3,9 @@ import React from "react";
 const HowItWorks = () => {
   return (
     <div className="relative">
-      <div className="custom-shape-divider-top-1684701837">
-        <svg
-          data-name="Layer 1"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M600,112.77C268.63,112.77,0,65.52,0,7.23V120H1200V7.23C1200,65.52,931.37,112.77,600,112.77Z"
-            className="shape-fill"
-          ></path>
-        </svg>
-      </div>
-      <div className="bg-woodsmoke text-snow " id="learnmore">
-        <h2 className="pt-44 text-center text-2xl text-mango w-4/5 mx-auto">
+      
+      <div className="bg-woodsmoke text-snow " id="howitworks">
+        <h2 className="pt-44 text-center text-2xl text-mango w-4/5 mx-auto" >
           How does Quartermaster work?
         </h2>
         <p className="">
