@@ -19,6 +19,10 @@ export default {
         Evogria: ["Evogria"],
         ALoveofThunder: ["ALoveofThunder"],
       },
+      listStyleImage: {
+        forkSpoon: 'url("/img/fork-spoon.webp")',
+        forkSpoonSmall: 'url("/img/fork-spoon-small.webp")',
+      },
     },
   },
   plugins: [require("@tailwindcss/typography"), require("daisyui")],

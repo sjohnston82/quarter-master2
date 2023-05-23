@@ -1,5 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
+import { signIn } from "next-auth/react";
 
 const Features = () => {
   const pageTransitionSideVariants = {
@@ -29,8 +32,81 @@ const Features = () => {
         opacity: { duration: 0.5 },
       }}
     >
-      <div className="pt-44 h-screen bg-mango" >
-        <h1 className="text-3xl text-woodsmoke">Features</h1>
+      <div className="bg-snow pt-16 mb-20" id="features">
+        <h1 className="mb-12 text-center text-3xl text-woodsmoke">Features</h1>
+        <ul className="prose-sm flex  w-full flex-col items-start px-4  text-base text-woodsmoke">
+          <li className="flex w-full items-center gap-3">
+            <img
+              src="/img/fork-spoon-small.webp"
+              alt="forkspoon"
+              // width={30}
+              // height={30}
+              className=""
+            />
+            <span className="">
+              Store all your family&apos;s food items in one convenient location
+            </span>
+          </li>
+
+          <li className="flex w-full items-center gap-3">
+            <img
+              src="/img/fork-spoon-small.webp"
+              alt="forkspoon"
+              // width={30}
+              // height={30}
+              className=""
+            />
+            <span className="">
+              Add items quickly by reading barcodes with your phone&apos;s
+              camera{" "}
+            </span>
+          </li>
+          <li className="flex w-full items-center gap-3">
+            <img
+              src="/img/fork-spoon-small.webp"
+              alt="forkspoon"
+              // width={30}
+              // height={30}
+              className=""
+            />
+            <span className="">
+              Track expiration dates so you always know when you need to throw
+              something out
+            </span>
+          </li>
+          <li className="flex w-full items-center gap-3">
+            <img
+              src="/img/fork-spoon-small.webp"
+              alt="forkspoon"
+              // width={30}
+              // height={30}
+              className=""
+            />
+            <span className="">
+              Easily send items to a shopping list so your entire family knows
+              what is needed when they go out
+            </span>
+          </li>
+        </ul>
+        <button
+          onClick={() => void signIn()}
+          className="mx-auto mt-8 flex w-3/5 items-center justify-center rounded-lg bg-blue-600 px-2 py-1 text-xl text-snow transition hover:bg-mango"
+        >
+          Create Account{" "}
+          <svg
+            aria-hidden="true"
+            className="-mr-1 ml-2 h-5 w-5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </button>
       </div>
     </motion.div>
   );

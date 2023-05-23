@@ -24,7 +24,7 @@ const LandingSectionSelectBar = ({
       <a href="#howitworks" className="">
         <button
           onClick={handleShowingHowItWorks}
-          className="mx-auto flex w-full items-center justify-center rounded-lg bg-buttonblue px-2 py-1 text-xl text-snow transition hover:bg-mango"
+          className="mx-auto flex w-full items-center justify-center rounded-lg bg-blue-600 px-2 py-1 text-xl text-snow transition hover:bg-mango"
         >
           How it Works
         </button>
@@ -32,7 +32,7 @@ const LandingSectionSelectBar = ({
       <a href="#features" className="">
         <button
           onClick={handleShowingFeatures}
-          className="mx-auto flex w-full items-center justify-center rounded-lg bg-buttonblue px-2 py-1 text-xl text-snow transition hover:bg-mango"
+          className="mx-auto flex w-full items-center justify-center rounded-lg bg-blue-600 px-2 py-1 text-xl text-snow transition hover:bg-mango"
         >
           Features
         </button>
