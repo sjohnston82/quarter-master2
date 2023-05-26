@@ -1,8 +1,10 @@
+import { TextField } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import SubmitButton from "~/components/ui/SubmitButton";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import { api } from "~/utils/api";
 
@@ -13,7 +15,11 @@ interface JoinByInviteCodeProps {
 
 const JoinHouseholdByInviteForm = () => {
   const { data: sessionData } = useSession();
-  const { register, handleSubmit } = useForm<JoinByInviteCodeProps>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<JoinByInviteCodeProps>();
   const router = useRouter();
   const { householdId } = useContext(GlobalContext);
 
@@ -39,8 +45,15 @@ const JoinHouseholdByInviteForm = () => {
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onSubmit={handleSubmit((data) => onSubmitByInvite(data))}
       >
-        <input type="text" id="inviteCode" {...register("inviteCode")} />
-        <button className="">Join</button>
+        <TextField
+          type="text"
+          id="inviteCode"
+          {...register("inviteCode")}
+          className="my-2 w-full"
+        />
+        <div className="flex justify-center ">
+          <SubmitButton className="">Join</SubmitButton>
+        </div>
       </form>
     </div>
   );

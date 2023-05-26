@@ -11,7 +11,7 @@ const Button = ({ children, onClick, fontSize, disabled }: ButtonProps) => {
   return (
     <button
       type="button"
-      className={`font-semibold rounded-xl border border-slate-700 p-1 disabled:border-slate-400 disabled:text-slate-400 ${fontSize} flex items-center disabled:border-slate-400 disabled:text-slate-400`}
+      className={`rounded-xl border border-slate-700 p-1 font-semibold disabled:border-slate-400 disabled:text-slate-400 ${fontSize} flex items-center hover:bg-slate-300 disabled:border-slate-400 disabled:text-slate-400`}
       onClick={onClick}
       disabled={disabled}
     >

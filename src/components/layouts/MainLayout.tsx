@@ -23,12 +23,12 @@ const MainLayout = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex h-16 items-center justify-center bg-snow text-woodsmoke font-ALoveofThunder text-4xl underline  ">
+      <div className="flex h-16 items-center justify-center bg-snow font-ALoveofThunder text-4xl text-woodsmoke underline  ">
         <h1 className="">
           <span className="text-[42px]">Q</span>uartermaster
         </h1>
       </div>
-      <div className="flex h-10 items-center px-2 justify-between bg-mango">
+      <div className="flex h-10 items-center justify-between bg-mango px-2">
         <div className="">
           <p
             className="w-full cursor-pointer p-1 text-sm text-snow "
@@ -53,13 +53,13 @@ const MainLayout = () => {
                   onClick={() => void signOutWithRedirect()}
                 />
               </div>
-              
             </div>
           ) : (
             <div className="w-full">
               <span
-                className="cursor-pointer hover:text-indigo-600 text-snow"
+                className="cursor-pointer text-snow hover:text-indigo-600"
                 onClick={() => void signIn()}
+                role="dialog"
               >
                 Sign In
               </span>

@@ -1,7 +1,10 @@
+import { TextField } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import Button from "~/components/ui/Button";
+import SubmitButton from "~/components/ui/SubmitButton";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import { api } from "~/utils/api";
 
@@ -31,14 +34,14 @@ const CreateHouseholdForm = () => {
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
       onSubmit={handleSubmit((name) => createHousehold.mutate(name))}
     >
-      <div className="">
+      <div className="flex items-center gap-1">
         <span>The </span>
-        <input type="text" id="name" {...register("name")} className="" />
+        <TextField type="text" id="name" {...register("name")} className="" />
         <span> Household</span>
       </div>
-      <button className="" type="submit">
-        Create
-      </button>
+      <div className="mt-2 flex justify-center">
+        <SubmitButton className="">Create</SubmitButton>
+      </div>
     </form>
   );
 };

@@ -7,6 +7,8 @@ import CreateHouseholdForm from "./CreateHouseholdForm";
 import JoinHouseholdByInviteForm from "./JoinHouseholdByInviteForm";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { Divider } from "@mui/material";
+import Button from "~/components/ui/Button";
 
 const FirstTimeLogin = () => {
   const { householdId, setHouseholdId } = useContext(GlobalContext);
@@ -37,35 +39,44 @@ const FirstTimeLogin = () => {
     status,
   ]);
   return (
-    <div className="flex h-full w-full justify-center px-28">
-      <div className="flex h-full w-full flex-col items-center justify-center bg-red-200">
-        <h1 className="text-2xl">Create Household</h1>
-        <p className="mt-10">
+    <div className="flex h-full w-full flex-col justify-center space-y-6 ">
+      <div className="flex h-full w-full flex-col items-center justify-center">
+        <p className=" my-6 text-center">
           Create a new household to start your journey to having a more
           organized pantry today!
         </p>
         <div className="">
-          <button onClick={() => setShowCreateHouseholdModal(true)}>
+          <Button onClick={() => setShowCreateHouseholdModal(true)}>
             Create Household
-          </button>
+          </Button>
           <Modal
             isOpen={showingCreateHouseholdModal}
-            title="Enter Household Name"
             onClose={() => setShowCreateHouseholdModal(false)}
           >
             <CreateHouseholdForm />
           </Modal>
         </div>
       </div>
-
-      <div className="flex h-full w-full flex-col items-center justify-center bg-blue-200">
-        <p className="mt-10">
+      <div className="flex w-full items-center justify-center">
+        <Divider
+          sx={{
+            "&::before, &::after": {
+              borderColor: "black",
+            },
+          }}
+          className="w-1/2 text-woodsmoke"
+        >
+          or
+        </Divider>
+      </div>
+      <div className="flex h-full w-full flex-col items-center justify-center px-4">
+        <p className="mb-6 text-center ">
           Receive a join invitation via email? Enter your code to join your
           household!
         </p>
-        <button onClick={() => setShowJoinByInviteModal(true)}>
+        <Button onClick={() => setShowJoinByInviteModal(true)}>
           Join Household
-        </button>
+        </Button>
         <Modal
           isOpen={showingJoinByInviteModal}
           title="Enter invite code"
