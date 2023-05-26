@@ -32,13 +32,13 @@ const AddItemMenu = () => {
   };
 
   return (
-    <div className="">
+    <div className="mt-2  ">
       <SpeedDial
-        ariaLabel="SpeedDial tooltip example"
+        ariaLabel="Add item speed dial"
         sx={{
           flexDirection: "column",
-          position: "absolute",
-          right: 8,
+          position: "relative",
+          // right: 8,
           opacity: 1,
         }}
         icon={<SpeedDialIcon />}
@@ -53,6 +53,9 @@ const AddItemMenu = () => {
           tooltipOpen
           sx={{
             whiteSpace: "nowrap",
+            position: "absolute",
+            top: 60,
+            right: -8,
           }}
           FabProps={{ size: "large", color: "success" }}
           onClick={handleAddItemByBarcode}
@@ -63,6 +66,9 @@ const AddItemMenu = () => {
           tooltipOpen
           sx={{
             whiteSpace: "nowrap",
+            position: "absolute",
+            top: 120,
+            right: -8,
           }}
           FabProps={{ size: "large" }}
           onClick={handleAddItemManually}
@@ -73,6 +79,9 @@ const AddItemMenu = () => {
           tooltipOpen
           sx={{
             whiteSpace: "nowrap",
+            position: "absolute",
+            top: 180,
+            right: -8,
           }}
           FabProps={{ size: "large" }}
           onClick={handleAddStorageArea}

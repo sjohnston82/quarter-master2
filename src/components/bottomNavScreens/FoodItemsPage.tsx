@@ -58,25 +58,15 @@ const FoodItemsPage = () => {
   };
   return (
     <div>
-      {/* <div className="mx-3 mt-3 flex justify-between">
-        <div className="">
-          <CreateStorageArea />
-        </div>
-        <div className="">
-          <CreateNewItem />
-        </div>
-      </div> */}
-      {/* <HorizontalAddItemMenu /> */}
       {showingBarcodeScanner ? (
         <div className="">
-          <p className="">{barcode?.toString()}</p>
+          {/* <p className="">{barcode?.toString()}</p> */}
           <BarcodeScanner />
         </div>
       ) : (
-        <div className="">
-          <HorizontalAddItemMenu />
-          <div className="">
-            <Searchbar />
+        <div className="w-full">
+          <div className="w-full ">
+            <Searchbar /> 
           </div>
           <div className="">
             {filterItemsCategory === "All" && (
