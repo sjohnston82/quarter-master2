@@ -66,7 +66,7 @@ const FoodItemsPage = () => {
           <CreateNewItem />
         </div>
       </div> */}
-      <HorizontalAddItemMenu />
+      {/* <HorizontalAddItemMenu /> */}
       {showingBarcodeScanner ? (
         <div className="">
           <p className="">{barcode?.toString()}</p>
@@ -74,6 +74,7 @@ const FoodItemsPage = () => {
         </div>
       ) : (
         <div className="">
+          <HorizontalAddItemMenu />
           <div className="">
             <Searchbar />
           </div>

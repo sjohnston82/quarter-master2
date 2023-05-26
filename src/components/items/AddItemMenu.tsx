@@ -5,10 +5,15 @@ import { IoAddCircleSharp } from "react-icons/io5";
 import { BsHouseAdd } from "react-icons/bs";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import AddItemForm from "./AddItemForm";
+import CreateStorageArea from "../storageAreas/CreateStorageArea";
 
 const AddItemMenu = () => {
-  const { setShowingAddItemModal, setShowingBarcodeScanner, showingBarcodeScanner } =
-    useContext(GlobalContext);
+  const {
+    setShowingAddItemModal,
+    setShowingBarcodeScanner,
+    showingBarcodeScanner,
+    setShowingCreateStorageAreaModal,
+  } = useContext(GlobalContext);
   const [showingMenu, setShowingMenu] = useState(false);
 
   const handleAddItemManually = () => {
@@ -19,6 +24,11 @@ const AddItemMenu = () => {
   const handleAddItemByBarcode = () => {
     setShowingBarcodeScanner(!showingBarcodeScanner);
     setShowingMenu(false);
+  };
+
+  const handleAddStorageArea = () => {
+    setShowingMenu(false);
+    setShowingCreateStorageAreaModal(true);
   };
 
   return (
@@ -65,9 +75,11 @@ const AddItemMenu = () => {
             whiteSpace: "nowrap",
           }}
           FabProps={{ size: "large" }}
+          onClick={handleAddStorageArea}
         />
       </SpeedDial>
       <AddItemForm />
+      <CreateStorageArea />
     </div>
   );
 };

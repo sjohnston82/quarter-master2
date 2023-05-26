@@ -39,6 +39,10 @@ type GlobalContextType = {
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
   fetchingProductInfo: boolean;
   setFetchingProductInfo: React.Dispatch<React.SetStateAction<boolean>>;
+  showingCreateStorageAreaModal: boolean;
+  setShowingCreateStorageAreaModal: React.Dispatch<
+    React.SetStateAction<boolean>
+  >;
   debouncedValue: string;
 };
 
@@ -60,6 +64,8 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
   );
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [fetchingProductInfo, setFetchingProductInfo] = useState(false);
+  const [showingCreateStorageAreaModal, setShowingCreateStorageAreaModal] =
+    useState(false);
 
   const debouncedValue = useDebounce(searchTerm, 1000);
 
@@ -89,6 +95,8 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
         fetchingProductInfo,
         setFetchingProductInfo,
         debouncedValue,
+        showingCreateStorageAreaModal,
+        setShowingCreateStorageAreaModal
       }}
     >
       {children}

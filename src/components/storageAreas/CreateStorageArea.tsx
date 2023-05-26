@@ -12,10 +12,13 @@ interface CreateStorageProps {
 }
 
 const CreateStorageArea = () => {
-  const { householdId } = useContext(GlobalContext);
+  const {
+    householdId,
+    showingCreateStorageAreaModal,
+    setShowingCreateStorageAreaModal,
+  } = useContext(GlobalContext);
   const { register, handleSubmit, reset } = useForm<CreateStorageProps>();
-  const [showingCreateStorageAreaModal, setShowingCreateStorageAreaModal] =
-    useState(false);
+  
 
   const storageAreaRoute = api.useContext().storageAreas;
 
@@ -62,12 +65,12 @@ const CreateStorageArea = () => {
           </form>
         </div>
       </Modal>
-      <button
+      {/* <button
         className="rounded-xl border border-slate-700 p-1 disabled:border-slate-400 disabled:text-slate-400"
         onClick={() => setShowingCreateStorageAreaModal(true)}
       >
         Create Storage Area
-      </button>
+      </button> */}
     </div>
   );
 };
