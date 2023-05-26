@@ -30,6 +30,8 @@ const LandingTransitionContainer = () => {
       <LandingSectionSelectBar
         setShowingHowItWorks={setShowingHowItWorks}
         setShowingFeatures={setShowingFeatures}
+        showingHowItWorks={showingHowItWorks}
+        showingFeatures={showingFeatures}
       />
       <AnimatePresence mode="wait">
         {showingHowItWorks && (

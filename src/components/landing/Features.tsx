@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
+import FeatureListItem from "./FeatureListItem";
 
 const Features = () => {
   const pageTransitionSideVariants = {
@@ -32,61 +33,23 @@ const Features = () => {
         opacity: { duration: 0.5 },
       }}
     >
-      <div className="bg-snow pt-16 mb-20" id="features">
+      <div className="mb-20 bg-snow pt-16" id="features">
         <h1 className="mb-12 text-center text-3xl text-woodsmoke">Features</h1>
         <ul className="prose-sm flex  w-full flex-col items-start px-4  text-base text-woodsmoke">
-          <li className="flex w-full items-center gap-3">
-            <img
-              src="/img/fork-spoon-small.webp"
-              alt="forkspoon"
-              // width={30}
-              // height={30}
-              className=""
-            />
-            <span className="">
-              Store all your family&apos;s food items in one convenient location
-            </span>
-          </li>
+          <FeatureListItem text="Store all your family's food items in one convenient location" />
 
-          <li className="flex w-full items-center gap-3">
-            <img
-              src="/img/fork-spoon-small.webp"
-              alt="forkspoon"
-              // width={30}
-              // height={30}
-              className=""
-            />
-            <span className="">
-              Add items quickly by reading barcodes with your phone&apos;s
-              camera{" "}
-            </span>
-          </li>
-          <li className="flex w-full items-center gap-3">
-            <img
-              src="/img/fork-spoon-small.webp"
-              alt="forkspoon"
-              // width={30}
-              // height={30}
-              className=""
-            />
-            <span className="">
-              Track expiration dates so you always know when you need to throw
-              something out
-            </span>
-          </li>
-          <li className="flex w-full items-center gap-3">
-            <img
-              src="/img/fork-spoon-small.webp"
-              alt="forkspoon"
-              // width={30}
-              // height={30}
-              className=""
-            />
-            <span className="">
-              Easily send items to a shopping list so your entire family knows
-              what is needed when they go out
-            </span>
-          </li>
+          <FeatureListItem
+            text="Add items quickly by reading barcodes with your phone's
+              camera"
+          />
+          <FeatureListItem
+            text="Track expiration dates so you always know when you need to throw
+              something out"
+          />
+          <FeatureListItem
+            text="Easily send items to a shopping list so your entire family knows
+              what is needed when they go out"
+          />
         </ul>
         <button
           onClick={() => void signIn()}

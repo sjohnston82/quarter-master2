@@ -15,6 +15,7 @@ import Banner from "../ui/Banner";
 import { type RouterOutputs, api } from "~/utils/api";
 import BarcodeScanner from "../barcode/BarcodeScanner";
 import Searchbar from "../ui/Searchbar";
+import HorizontalAddItemMenu from "../items/HorizontalAddItemMenu";
 
 type FoodType = RouterOutputs["items"]["getFoodCategoryCount"][0];
 
@@ -57,14 +58,15 @@ const FoodItemsPage = () => {
   };
   return (
     <div>
-      <div className="mx-3 mt-3 flex justify-between">
+      {/* <div className="mx-3 mt-3 flex justify-between">
         <div className="">
           <CreateStorageArea />
         </div>
         <div className="">
           <CreateNewItem />
         </div>
-      </div>
+      </div> */}
+      <HorizontalAddItemMenu />
       {showingBarcodeScanner ? (
         <div className="">
           <p className="">{barcode?.toString()}</p>

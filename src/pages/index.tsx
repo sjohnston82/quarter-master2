@@ -20,7 +20,10 @@ const Home: NextPage = () => {
   const { householdId, setHouseholdId } = useContext(GlobalContext);
   const { data: sessionData, status } = useSession();
   // const [householdId, setHouseholdId] = useState<string | null>(null);
-  const getHouseholdId = api.household.getHouseholdId.useQuery();
+
+  const getHouseholdId = api.household.getHouseholdId.useQuery(undefined, {
+    enabled: sessionData?.user !== undefined,
+  });
 
   useEffect(() => {
     getHouseholdId.data &&
