@@ -57,7 +57,7 @@ const FoodItemsPage = () => {
     setFilterItemsCategory(event.target.value);
   };
   return (
-    <div>
+    <div className="bg-snow">
       {showingBarcodeScanner ? (
         <div className="">
           {/* <p className="">{barcode?.toString()}</p> */}
@@ -66,7 +66,7 @@ const FoodItemsPage = () => {
       ) : (
         <div className="w-full">
           <div className="w-full ">
-            <Searchbar /> 
+            <Searchbar />
           </div>
           <div className="">
             {filterItemsCategory === "All" && (
@@ -79,6 +79,7 @@ const FoodItemsPage = () => {
                     value={filterItemsCategory}
                     label="Filter By"
                     onChange={handleChange}
+                    className="bg-slate-50 text-woodsmoke"
                   >
                     <MenuItem value="All">All</MenuItem>
                     <MenuItem value="Storage Area">Storage Area</MenuItem>
