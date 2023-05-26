@@ -17,10 +17,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <SessionProvider session={session}>
       <Head>
-        <title>QuarterMaster</title>
+        <title>Quartermaster</title>
         <meta
           name="description"
-          content="QuarterMaster pantry inventory manager"
+          content="Quartermaster pantry inventory manager"
         />
         <link rel="icon" href="/favicon.ico" />
         
