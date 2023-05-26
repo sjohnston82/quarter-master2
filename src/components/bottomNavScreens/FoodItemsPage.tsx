@@ -15,7 +15,7 @@ import Banner from "../ui/Banner";
 import { type RouterOutputs, api } from "~/utils/api";
 import BarcodeScanner from "../barcode/BarcodeScanner";
 import Searchbar from "../ui/Searchbar";
-import HorizontalAddItemMenu from "../items/HorizontalAddItemMenu";
+import HorizontalAddItemMenu from "../items/AddItemMenu";
 
 type FoodType = RouterOutputs["items"]["getFoodCategoryCount"][0];
 

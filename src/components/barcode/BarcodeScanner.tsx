@@ -19,7 +19,12 @@ const BarcodeScanner = ({ onResult = () => {}, onError = () => {} }) => {
   //       console.error("Error accessing camera:", error);
   //     });
   // }, []);
-  return <video ref={ref} autoPlay={true} />;
+  return (
+    <div className="">
+      {" "}
+      <video ref={ref} autoPlay={true}  />
+    </div>
+  );
 };
 
 export default BarcodeScanner;

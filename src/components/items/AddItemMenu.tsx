@@ -1,28 +1,25 @@
-import {
-  KitchenOutlined,
-  SwapVerticalCircleOutlined,
-} from "@mui/icons-material";
-import { MdOutlineFoodBank } from "react-icons/md";
-import React, { useContext, useState } from "react";
-import {
-  SpeedDial,
-  SpeedDialAction,
-  SpeedDialIcon,
-  type Theme,
-  ThemeProvider,
-  createTheme,
-  styled,
-} from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { useContext, useState } from "react";
+import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
 import { AiOutlineBarcode } from "react-icons/ai";
 import { IoAddCircleSharp } from "react-icons/io5";
 import { BsHouseAdd } from "react-icons/bs";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import AddItemForm from "./AddItemForm";
 
-const HorizontalAddItemMenu = () => {
-  const { setShowingAddItemModal } = useContext(GlobalContext);
+const AddItemMenu = () => {
+  const { setShowingAddItemModal, setShowingBarcodeScanner, showingBarcodeScanner } =
+    useContext(GlobalContext);
   const [showingMenu, setShowingMenu] = useState(false);
+
+  const handleAddItemManually = () => {
+    setShowingAddItemModal(true);
+    setShowingMenu(false);
+  };
+
+  const handleAddItemByBarcode = () => {
+    setShowingBarcodeScanner(!showingBarcodeScanner);
+    setShowingMenu(false);
+  };
 
   return (
     <div className="">
@@ -48,6 +45,7 @@ const HorizontalAddItemMenu = () => {
             whiteSpace: "nowrap",
           }}
           FabProps={{ size: "large", color: "success" }}
+          onClick={handleAddItemByBarcode}
         />
         <SpeedDialAction
           icon={<IoAddCircleSharp size={40} />}
@@ -57,7 +55,7 @@ const HorizontalAddItemMenu = () => {
             whiteSpace: "nowrap",
           }}
           FabProps={{ size: "large" }}
-          onClick={() => setShowingAddItemModal(true)}
+          onClick={handleAddItemManually}
         />
         <SpeedDialAction
           icon={<BsHouseAdd size={40} />}
@@ -74,4 +72,4 @@ const HorizontalAddItemMenu = () => {
   );
 };
 
-export default HorizontalAddItemMenu;
+export default AddItemMenu;
