@@ -42,7 +42,7 @@ const AddItemMenu = () => {
           opacity: 1,
         }}
         icon={<SpeedDialIcon />}
-        onBlur={() => setShowingMenu(false)}
+        onClose={() => setShowingMenu(false)}
         onClick={() => setShowingMenu(true)}
         open={showingMenu}
         FabProps={{ size: "large" }}
