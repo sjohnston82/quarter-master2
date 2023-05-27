@@ -23,6 +23,8 @@ const server = z.object({
   GOOGLE_CLIENT_SECRET: z.string(),
   GMAIL_USERNAME: z.string(),
   GMAIL_PASSWORD: z.string(),
+  FACEBOOK_CLIENT_ID: z.string(),
+  FACEBOOK_CLIENT_SECRET: z.string(),
 });
 
 /**
@@ -48,6 +50,8 @@ const processEnv = {
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   GMAIL_USERNAME: process.env.GMAIL_USERNAME,
   GMAIL_PASSWORD: process.env.GMAIL_PASSWORD,
+  FACEBOOK_CLIENT_ID: process.env.FACEBOOK_CLIENT_ID,
+  FACEBOOK_CLIENT_SECRET: process.env.FACEBOOK_CLIENT_SECRET,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 

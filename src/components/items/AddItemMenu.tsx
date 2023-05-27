@@ -32,11 +32,30 @@ const AddItemMenu = () => {
     setShowingCreateStorageAreaModal(true);
   };
 
-  const handleClose = () => {
-    setTimeout(() => {
-      setShowingMenu(false);
-    }, 500);
-  };
+  const classes = {
+    opacity: 1
+  }
+  const actions = [
+    {
+      name: "Add Storage Area",
+      icon: <BsHouseAdd size={40} />,
+      action: handleAddStorageArea,
+      top: 60,
+    },
+    {
+      name: "Add By Barcode",
+      icon: <AiOutlineBarcode size={40} />,
+      action: handleAddItemByBarcode,
+      top: 120,
+    },
+    {
+      name: "Add Item Manually",
+      icon: <IoAddCircleSharp size={40} />,
+      action: handleAddItemManually,
+      top: 180,
+    },
+  ];
+
   return (
     <div className="mt-2  ">
       <SpeedDial
@@ -49,50 +68,30 @@ const AddItemMenu = () => {
           zIndex: showingAddItemModal ? 0 : 1,
         }}
         icon={<SpeedDialIcon />}
-        // onToggle={() => setShowingMenu(false)}
         onClick={() => setShowingMenu(!showingMenu)}
         open={showingMenu}
         FabProps={{ size: "large" }}
       >
-        <SpeedDialAction
-          icon={<AiOutlineBarcode size={40} />}
-          tooltipTitle="Add By Barcode"
-          tooltipOpen
-          sx={{
-            whiteSpace: "nowrap",
-            position: "absolute",
-            top: 60,
-            right: -8,
-          }}
-          FabProps={{ size: "large", color: "success" }}
-          onClick={handleAddItemByBarcode}
-        />
-        <SpeedDialAction
-          icon={<IoAddCircleSharp size={40} />}
-          tooltipTitle="Add Item Manually"
-          tooltipOpen
-          sx={{
-            whiteSpace: "nowrap",
-            position: "absolute",
-            top: 120,
-            right: -8,
-          }}
-          FabProps={{ size: "large" }}
-          onClick={handleAddItemManually}
-        />
-        <SpeedDialAction
-          icon={<BsHouseAdd size={40} />}
-          tooltipTitle="Add Storage Area"
-          tooltipOpen
-          sx={{
-            whiteSpace: "nowrap",
-            position: "absolute",
-            top: 180,
-            right: -8,
-          }}
-          FabProps={{ size: "large" }}
-          onClick={handleAddStorageArea}
-        />
+        {actions.map((action, index) => {
+          const icon = <span className="opacity-100">{action.icon}</span>;
+          return (
+            <SpeedDialAction
+              key={index}
+              icon={icon}
+              tooltipTitle={action.name}
+              tooltipOpen
+              sx={{
+                whiteSpace: "nowrap",
+                position: "absolute",
+                top: action.top,
+                right: -8,
+                opacity: 1,
+              }}
+              FabProps={{ size: "large", color: "success" }}
+              onClick={action.action}
+            />
+          );
+        })}
       </SpeedDial>
       <AddItemForm />
       <CreateStorageArea />
