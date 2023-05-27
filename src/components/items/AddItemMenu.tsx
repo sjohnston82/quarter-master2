@@ -64,6 +64,12 @@ const AddItemMenu = () => {
           }}
           FabProps={{ size: "large", color: "success" }}
           onClick={handleAddItemByBarcode}
+          onMouseEnter={(e) => {
+            e.stopPropagation();
+          }}
+          onMouseLeave={(e) => {
+            e.stopPropagation();
+          }}
         />
         <SpeedDialAction
           icon={<IoAddCircleSharp size={40} />}
