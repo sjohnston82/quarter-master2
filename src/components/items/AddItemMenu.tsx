@@ -47,16 +47,10 @@ const AddItemMenu = () => {
           opacity: 1,
         }}
         icon={<SpeedDialIcon />}
-        onClose={handleClose}
-        onClick={() => setShowingMenu(true)}
+        // onToggle={() => setShowingMenu(false)}
+        onClick={() => setShowingMenu(!showingMenu)}
         open={showingMenu}
         FabProps={{ size: "large" }}
-        onMouseEnter={(e) => {
-          e.stopPropagation();
-        }}
-        onMouseLeave={(e) => {
-          e.stopPropagation();
-        }}
       >
         <SpeedDialAction
           icon={<AiOutlineBarcode size={40} />}
@@ -70,12 +64,6 @@ const AddItemMenu = () => {
           }}
           FabProps={{ size: "large", color: "success" }}
           onClick={handleAddItemByBarcode}
-          onMouseEnter={(e) => {
-            e.stopPropagation();
-          }}
-          onMouseLeave={(e) => {
-            e.stopPropagation();
-          }}
         />
         <SpeedDialAction
           icon={<IoAddCircleSharp size={40} />}
