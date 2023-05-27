@@ -31,6 +31,11 @@ const AddItemMenu = () => {
     setShowingCreateStorageAreaModal(true);
   };
 
+  const handleClose = () => {
+    setTimeout(() => {
+      setShowingMenu(false);
+    }, 500);
+  };
   return (
     <div className="mt-2  ">
       <SpeedDial
@@ -42,7 +47,7 @@ const AddItemMenu = () => {
           opacity: 1,
         }}
         icon={<SpeedDialIcon />}
-        onClose={() => setShowingMenu(false)}
+        onClose={handleClose}
         onClick={() => setShowingMenu(true)}
         open={showingMenu}
         FabProps={{ size: "large" }}
