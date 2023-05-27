@@ -12,6 +12,7 @@ const AddItemMenu = () => {
     setShowingAddItemModal,
     setShowingBarcodeScanner,
     showingBarcodeScanner,
+    showingAddItemModal,
     setShowingCreateStorageAreaModal,
   } = useContext(GlobalContext);
   const [showingMenu, setShowingMenu] = useState(false);
@@ -45,6 +46,7 @@ const AddItemMenu = () => {
           position: "relative",
           // right: 8,
           opacity: 1,
+          zIndex: showingAddItemModal ? 0 : 1,
         }}
         icon={<SpeedDialIcon />}
         // onToggle={() => setShowingMenu(false)}
