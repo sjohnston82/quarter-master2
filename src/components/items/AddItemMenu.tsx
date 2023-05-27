@@ -51,6 +51,12 @@ const AddItemMenu = () => {
         onClick={() => setShowingMenu(true)}
         open={showingMenu}
         FabProps={{ size: "large" }}
+        onMouseEnter={(e) => {
+          e.stopPropagation();
+        }}
+        onMouseLeave={(e) => {
+          e.stopPropagation();
+        }}
       >
         <SpeedDialAction
           icon={<AiOutlineBarcode size={40} />}
