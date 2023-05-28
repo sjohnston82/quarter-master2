@@ -36,7 +36,7 @@ const JoinHouseholdByInviteForm = () => {
   });
 
   useEffect(() => {
-    if ((successfulLogin === true && householdId !== undefined) || null) {
+    if (successfulLogin === true && householdId !== null) {
       router.push(`/household/${householdId}`).catch((err) => {
         console.log(err);
       });
