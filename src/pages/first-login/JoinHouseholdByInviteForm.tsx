@@ -53,20 +53,27 @@ const JoinHouseholdByInviteForm = () => {
 
   return (
     <div className="">
-      <form
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        onSubmit={handleSubmit((data) => onSubmitByInvite(data))}
-      >
-        <TextField
-          type="text"
-          id="inviteCode"
-          {...register("inviteCode")}
-          className="my-2 w-full"
-        />
-        <div className="flex justify-center ">
-          <SubmitButton className="">Join</SubmitButton>
+      {successfulLogin ? (
+        <div className="">
+          <h1 className="">Joining Household...</h1>
+          <LoadingSpinner size={80} />
         </div>
-      </form>
+      ) : (
+        <form
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+          onSubmit={handleSubmit((data) => onSubmitByInvite(data))}
+        >
+          <TextField
+            type="text"
+            id="inviteCode"
+            {...register("inviteCode")}
+            className="my-2 w-full"
+          />
+          <div className="flex justify-center ">
+            <SubmitButton className="">Join</SubmitButton>
+          </div>
+        </form>
+      )}
     </div>
   );
 };
