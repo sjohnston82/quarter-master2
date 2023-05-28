@@ -25,8 +25,12 @@ const JoinHouseholdByInviteForm = () => {
   const { householdId } = useContext(GlobalContext);
 
   const joinByInviteCode = api.invite.joinByInviteCode.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("Successfully joined household!");
+      console.log(householdId);
+
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      await router.push(`/household/${joinByInviteCode?.data}`);
     },
   });
 
