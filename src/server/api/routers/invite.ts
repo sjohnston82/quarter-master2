@@ -88,6 +88,7 @@ export const inviteRouter = createTRPCRouter({
         await prisma.invite.delete({
           where: { email },
         });
+        return currUser.householdId;
       }
     ),
 

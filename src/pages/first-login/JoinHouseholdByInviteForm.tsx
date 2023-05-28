@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import LoadingSpinner from "~/components/ui/LoadingSpinner";
 import SubmitButton from "~/components/ui/SubmitButton";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import { api } from "~/utils/api";
@@ -24,10 +25,8 @@ const JoinHouseholdByInviteForm = () => {
   const { householdId } = useContext(GlobalContext);
 
   const joinByInviteCode = api.invite.joinByInviteCode.useMutation({
-    onSuccess: async () => {
+    onSuccess: () => {
       toast.success("Successfully joined household!");
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      await router.push(`/household/${householdId}`);
     },
   });
 
