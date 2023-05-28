@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import LoadingSpinner from "~/components/ui/LoadingSpinner";
@@ -16,6 +16,7 @@ interface JoinByInviteCodeProps {
 
 const JoinHouseholdByInviteForm = () => {
   const { data: sessionData } = useSession();
+  const [successfulLogin, setSuccessfulLogin] = useState(false);
   const {
     register,
     handleSubmit,
@@ -25,14 +26,22 @@ const JoinHouseholdByInviteForm = () => {
   const { householdId } = useContext(GlobalContext);
 
   const joinByInviteCode = api.invite.joinByInviteCode.useMutation({
-    onSuccess: async () => {
+    onSuccess: () => {
       toast.success("Successfully joined household!");
-      console.log(householdId);
+      setSuccessfulLogin(true);
 
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      await router.push(`/household/${joinByInviteCode?.data}`);
+      // await router.push(`/household/${joinByInviteCode?.data}`);
     },
   });
+
+  useEffect(() => {
+    if ((successfulLogin === true && householdId !== undefined) || null) {
+      router.push(`/household/${householdId}`).catch((err) => {
+        console.log(err);
+      });
+    }
+  }, [householdId, router, successfulLogin]);
 
   const onSubmitByInvite = (data: JoinByInviteCodeProps) => {
     const mutationData = {
