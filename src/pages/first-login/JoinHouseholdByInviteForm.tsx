@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import Button from "~/components/ui/Button";
 import LoadingSpinner from "~/components/ui/LoadingSpinner";
 import SubmitButton from "~/components/ui/SubmitButton";
 import { GlobalContext } from "~/context/GlobalContextProvider";
@@ -23,11 +24,20 @@ const JoinHouseholdByInviteForm = () => {
     formState: { errors },
   } = useForm<JoinByInviteCodeProps>();
   const router = useRouter();
-  const { householdId } = useContext(GlobalContext);
+  const { householdId, setHouseholdId } = useContext(GlobalContext);
+
+  const joinByInviteCodeRoute = api.useContext().household;
 
   const joinByInviteCode = api.invite.joinByInviteCode.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("Successfully joined household!");
+      joinByInviteCode.data !== undefined &&
+        setHouseholdId(joinByInviteCode.data);
+      await joinByInviteCodeRoute.getHouseholdId.invalidate();
+      await router.push(`/household/${householdId}`);
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      // await router.push(`/household/${joinByInviteCode.data}`);
+
       setSuccessfulLogin(true);
 
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
@@ -35,13 +45,21 @@ const JoinHouseholdByInviteForm = () => {
     },
   });
 
-  useEffect(() => {
-    if (successfulLogin === true && householdId !== null) {
-      router.push(`/household/${householdId}`).catch((err) => {
-        console.log(err);
-      });
-    }
-  }, [householdId, router, successfulLogin]);
+  // const handleSeeHousehold = async () => {
+  //   await router.push(`/household/${householdId}`);
+  // };
+
+  // useEffect(() => {
+  //   if (
+  //     successfulLogin === true &&
+  //     householdId !== null &&
+  //     householdId !== undefined
+  //   ) {
+  //     router.push(`/household/${householdId}`).catch((err) => {
+  //       console.log(err);
+  //     });
+  //   }
+  // }, [householdId, router, successfulLogin]);
 
   const onSubmitByInvite = (data: JoinByInviteCodeProps) => {
     const mutationData = {
@@ -54,15 +72,12 @@ const JoinHouseholdByInviteForm = () => {
   return (
     <div className="">
       {successfulLogin ? (
-        <div className="">
-          <h1 className="">Joining Household...</h1>
-          <LoadingSpinner size={80} />
+        <div className="flex flex-col items-center justify-center gap-2">
+          <h1 className="">Joining household...</h1>
+          <LoadingSpinner size={60} />
         </div>
       ) : (
-        <form
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
-          onSubmit={handleSubmit((data) => onSubmitByInvite(data))}
-        >
+        <form onSubmit={handleSubmit((data) => onSubmitByInvite(data))}>
           <TextField
             type="text"
             id="inviteCode"
