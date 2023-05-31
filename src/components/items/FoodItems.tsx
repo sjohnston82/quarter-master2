@@ -7,6 +7,9 @@ import Banner from "../ui/Banner";
 import ItemsByStorageArea from "./ItemsByStorageArea";
 import ItemsByFoodType from "./ItemsByFoodType";
 import InfiniteScroll from "react-infinite-scroll-component";
+import ItemsByExpiringSoon from "./ItemsByExpiringSoon";
+
+
 
 interface FoodItemsProps {
   sortType: string;
@@ -101,7 +104,7 @@ const FoodItems = ({
       )}
       {sortType === "Expiring Soon" && (
         <div className="flex flex-col gap-1">
-          <Banner>Expiring Soon</Banner>
+          <ItemsByExpiringSoon />
           {/* {itemsSortedByExpiringSoon
             ?.filter((item) => {
               if (debouncedValue === "") {

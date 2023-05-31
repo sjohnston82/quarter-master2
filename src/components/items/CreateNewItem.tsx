@@ -39,12 +39,6 @@ const CreateNewItem = () => {
 
   const { register, reset, handleSubmit } = useForm<NewItemInputProps>();
 
-  const getStorageAreas = api.storageAreas.getStorageAreas.useQuery({
-    householdId,
-  });
-
-  const createNewItem = api.items.createNewItem.useMutation();
-
   useEffect(() => {
     // const apiUrl = "https://proxy.cors.sh/https://brocade.io/api/items/";
     const apiUrl =

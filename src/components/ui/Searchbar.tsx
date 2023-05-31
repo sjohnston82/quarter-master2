@@ -13,7 +13,7 @@ const Searchbar = () => {
   };
 
   return (
-    <div className="flex w-4/5 justify-center mx-auto gap-4 ">
+    <div className="mx-auto flex w-4/5 justify-center gap-4 ">
       <form className="mx-auto mt-2 w-full  ">
         <label
           htmlFor="default-search"
@@ -34,7 +34,7 @@ const Searchbar = () => {
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                stroke-width="2"
+                strokeWidth="2"
                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
               ></path>
             </svg>

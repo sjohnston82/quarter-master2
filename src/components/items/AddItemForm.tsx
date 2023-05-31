@@ -93,7 +93,8 @@ const AddItemForm = () => {
 
   const createNewItem = api.items.createNewItem.useMutation({
     onSuccess: async () => {
-      await createItemRoute.getAllItems.invalidate();
+      await createItemRoute.getAllItemsInfinite.invalidate();
+      await createItemRoute.getExpiredItems.invalidate();
       toast.success("Item created!");
     },
   });

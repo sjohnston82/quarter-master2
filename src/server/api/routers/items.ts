@@ -53,6 +53,7 @@ export const itemsRouter = createTRPCRouter({
           }
         }
       });
+
       let nextCursor: typeof cursor | undefined = undefined;
       if (items.length > LIMIT) {
         const nextItem = items.pop(); // return the last item from the array
@@ -62,6 +63,23 @@ export const itemsRouter = createTRPCRouter({
         items,
         nextCursor,
       };
+    }),
+
+  getExpiredItems: protectedProcedure
+    .input(z.object({ householdId: z.string() }))
+    .query(async ({ ctx, input: { householdId } }) => {
+      const nearlyExpired = await ctx.prisma.item.findMany({
+        where: {
+          householdId,
+          daysUntilExpiry: {
+            lt: 8,
+          },
+        },
+        orderBy: {
+          daysUntilExpiry: "desc",
+        },
+      });
+      return nearlyExpired;
     }),
 
   getAllItems: protectedProcedure
