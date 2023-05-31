@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
-const LIMIT = 6;
+const LIMIT = 10;
 
 import {
   createTRPCRouter,
