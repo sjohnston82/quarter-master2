@@ -1,17 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
-import { RouterOutputs, api } from "~/utils/api";
+import { type RouterOutputs, api } from "~/utils/api";
 import Item from "./Item";
 import LoadingSpinner from "../ui/LoadingSpinner";
 
-type FoodType = RouterOutputs["items"]["getFoodCategoryCount"][0];
 
 interface ItemsByFoodTypeProps {
   foodTypeIds: React.RefObject<HTMLSelectElement> | undefined | null;
-  foodTypesList: FoodType[];
 }
 
-const ItemsByFoodType = ({ foodTypeIds, foodTypesList }: ItemsByFoodTypeProps) => {
+const ItemsByFoodType = ({ foodTypeIds }: ItemsByFoodTypeProps) => {
   const { debouncedValue } = useContext(GlobalContext)
 
   const idsToFind = foodTypeIds?.current?.value as unknown as string[];

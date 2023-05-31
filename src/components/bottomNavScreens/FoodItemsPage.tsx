@@ -28,7 +28,6 @@ const FoodItemsPage = () => {
   } = useContext(GlobalContext);
   const [filterItemsCategory, setFilterItemsCategory] = useState("All");
   const [foodTypesList, setFoodTypesList] = useState<FoodType[]>();
-  const [selectedIds, setSelectedIds] = useState<string[] | null>(null);
 
   const storageAreaRoute = api.useContext().storageAreas;
   const getAllStorageAreas = api.storageAreas.getStorageAreas.useQuery({
@@ -45,11 +44,7 @@ const FoodItemsPage = () => {
   }, [getFoodTypes.data]);
 
   const foodTypeRef = useRef<HTMLSelectElement>(null);
-  useEffect(() => {
-    if (foodTypeRef.current) {
-      setSelectedIds([foodTypeRef.current.value]);
-    }
-  }, [foodTypeRef]);
+
 
   const storageAreaRef = useRef<HTMLSelectElement>(null);
 
@@ -169,15 +164,18 @@ const FoodItemsPage = () => {
                   inputRef={foodTypeRef}
                   onChange={async () => {
                     await getFoodTypesRoute.invalidate();
+                    console.log(foodTypeRef);
                   }}
                   defaultValue=""
                 >
                   {foodTypesList !== null &&
-                    foodTypesList?.map((type, i) => (
-                      <MenuItem key={i} value={type.ids}>
-                        {type.name}({type.count})
-                      </MenuItem>
-                    ))}
+                    foodTypesList
+                      ?.sort((a, b) => (a.name > b.name ? 1 : -1))
+                      .map((type, i) => (
+                        <MenuItem key={i} value={type.ids}>
+                          {type.name}({type.count})
+                        </MenuItem>
+                      ))}
                 </TextField>
               </div>
             )}
@@ -190,8 +188,6 @@ const FoodItemsPage = () => {
                 storageAreaRef.current && storageAreaRef.current.value
               }
               foodTypeIds={foodTypeRef}
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              foodTypesList={foodTypesList!}
             />
           </div>
         </div>

@@ -23,7 +23,7 @@ const Item = ({ ...item }: Item) => {
       <div className="relative flex flex-col border-t-4">
         <div className="ml-2 mr-6 flex justify-between border-b py-2">
           <div className="w-2/5 flex-wrap">
-            <p className="text-sm">{item.name}</p>
+            <p className="text-sm font-semibold">{item.name}</p>
           </div>
           <div className=" flex-wrap">
             <p className="text-sm">
@@ -32,7 +32,9 @@ const Item = ({ ...item }: Item) => {
           </div>
           <div className="w-1/3 flex-wrap">
             <p className="text-sm">
-              {item.daysUntilExpiry === null ? "No date given" : item.daysUntilExpiry > 1 ? (
+              {item.daysUntilExpiry === null ? (
+                "No date given"
+              ) : item.daysUntilExpiry > 1 ? (
                 `Expires: ${item.daysUntilExpiry} days`
               ) : item.daysUntilExpiry === 1 ? (
                 "Expires tomorrow!"
@@ -60,11 +62,12 @@ const Item = ({ ...item }: Item) => {
           </div>
         </div>
         {showingMoreInfo ? (
-          <div className="flex justify-end mx-2">
+          <div className="mx-2 flex justify-end">
             <ExpandLessIcon onClick={() => setShowingMoreInfo(false)} />
           </div>
         ) : (
-          <div className="flex justify-between mx-2 items-center"><p className="text-sm">More Information</p>
+          <div className="mx-2 flex items-center justify-between">
+            <p className="text-sm py-2">More Information</p>
             <ExpandMoreIcon onClick={() => setShowingMoreInfo(true)} />
           </div>
         )}

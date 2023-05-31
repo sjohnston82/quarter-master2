@@ -1,6 +1,8 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
+const LIMIT = 6;
+
 import {
   createTRPCRouter,
   publicProcedure,
@@ -10,6 +12,58 @@ import { prisma } from "~/server/db";
 import { calculateDaysUntilExpiry } from "~/utils/calculateDaysUntilExpiry";
 
 export const itemsRouter = createTRPCRouter({
+  getAllItemsInfinite: protectedProcedure
+    .input(
+      z.object({
+        cursor: z.string().nullish(),
+        householdId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { cursor, householdId } = input;
+      const items = await ctx.prisma.item.findMany({
+        cursor: cursor ? { id: cursor } : undefined,
+        take: LIMIT + 1,
+        orderBy: {
+          name: "asc",
+        },
+        where: {
+          householdId,
+        },
+      });
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      items.forEach(async (item) => {
+        if (item.expirationDate !== null) {
+          const totalDays = calculateDaysUntilExpiry(item.expirationDate);
+
+          await ctx.prisma.item.update({
+            where: { id: item.id },
+            data: {
+              daysUntilExpiry: totalDays,
+            },
+          });
+
+          if (totalDays < 0 && item.expired === false) {
+            await ctx.prisma.item.update({
+              where: { id: item.id },
+              data: {
+                expired: true,
+              },
+            });
+          }
+        }
+      });
+      let nextCursor: typeof cursor | undefined = undefined;
+      if (items.length > LIMIT) {
+        const nextItem = items.pop(); // return the last item from the array
+        if (nextItem) nextCursor = nextItem?.id;
+      }
+      return {
+        items,
+        nextCursor,
+      };
+    }),
+
   getAllItems: protectedProcedure
     .input(z.object({ householdId: z.string() }))
     .query(async ({ ctx, input }) => {
