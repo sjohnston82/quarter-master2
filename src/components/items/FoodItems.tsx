@@ -8,8 +8,7 @@ import ItemsByStorageArea from "./ItemsByStorageArea";
 import ItemsByFoodType from "./ItemsByFoodType";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ItemsByExpiringSoon from "./ItemsByExpiringSoon";
-
-
+import LoadingSpinner from "../ui/LoadingSpinner";
 
 interface FoodItemsProps {
   sortType: string;
@@ -45,6 +44,12 @@ const FoodItems = ({
       {sortType === "All" && (
         <div className="flex flex-col gap-1">
           <Banner>All Food Items</Banner>
+          {getAllItemsInfinite.isLoading && (
+            <div className="flex flex-col items-center justify-center">
+              <p className="text-center text-lg">Loading items...</p>
+              <LoadingSpinner size={60} />
+            </div>
+          )}
           <InfiniteScroll
             dataLength={
               getAllItemsInfinite.data?.pages.flatMap((page) => page.items)
@@ -52,11 +57,13 @@ const FoodItems = ({
             }
             next={getAllItemsInfinite.fetchNextPage}
             hasMore={!!getAllItemsInfinite.hasNextPage}
-            loader={<h4>Loading...</h4>}
+            loader={<h4 style={{ textAlign: "center" }}>Loading...</h4>}
             endMessage={
-              <p style={{ textAlign: "center" }}>
-                <b>No more items.</b>
-              </p>
+              !getAllItemsInfinite.isLoading && (
+                <p style={{ textAlign: "center" }}>
+                  <b>No more items.</b>
+                </p>
+              )
             }
           >
             {getAllItemsInfinite.isSuccess &&
@@ -78,22 +85,6 @@ const FoodItems = ({
                 })
                 .map((item) => <Item key={item.id} {...item} />)}
           </InfiniteScroll>
-          {/* {itemsSortedAlphabetically
-            ?.filter((item) => {
-              if (debouncedValue === "") {
-                return item;
-              } else if (
-                item.name
-                  .toLowerCase()
-                  .includes(debouncedValue.toLowerCase()) ||
-                item.brand?.toLowerCase().includes(debouncedValue.toLowerCase())
-              ) {
-                return item;
-              }
-            })
-            .map((item) => (
-              <Item key={item.id} {...item} />
-            ))} */}
         </div>
       )}
       {sortType === "Storage Area" && (
@@ -105,20 +96,6 @@ const FoodItems = ({
       {sortType === "Expiring Soon" && (
         <div className="flex flex-col gap-1">
           <ItemsByExpiringSoon />
-          {/* {itemsSortedByExpiringSoon
-            ?.filter((item) => {
-              if (debouncedValue === "") {
-                return item;
-              } else if (
-                item.name.toLowerCase().includes(debouncedValue) ||
-                item.brand?.toLowerCase().includes(debouncedValue)
-              ) {
-                return item;
-              }
-            })
-            .map((item) => (
-              <Item key={item.id} {...item} />
-            ))} */}
         </div>
       )}
     </div>

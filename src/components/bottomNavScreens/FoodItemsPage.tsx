@@ -45,7 +45,6 @@ const FoodItemsPage = () => {
 
   const foodTypeRef = useRef<HTMLSelectElement>(null);
 
-
   const storageAreaRef = useRef<HTMLSelectElement>(null);
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -149,6 +148,7 @@ const FoodItemsPage = () => {
                     value={filterItemsCategory}
                     label="Filter By"
                     onChange={handleChange}
+                    className="shadow"
                   >
                     <MenuItem value="All">All</MenuItem>
                     <MenuItem value="Storage Area">Storage Area</MenuItem>
@@ -159,20 +159,20 @@ const FoodItemsPage = () => {
                 <TextField
                   select
                   label="Food Type"
-                  className="w-full"
+                  className="w-full shadow"
                   id="foodType"
                   inputRef={foodTypeRef}
                   onChange={async () => {
                     await getFoodTypesRoute.invalidate();
-                    console.log(foodTypeRef);
+                    console.log(foodTypeRef?.current?.value);
                   }}
                   defaultValue=""
                 >
                   {foodTypesList !== null &&
                     foodTypesList
                       ?.sort((a, b) => (a.name > b.name ? 1 : -1))
-                      .map((type, i) => (
-                        <MenuItem key={i} value={type.ids}>
+                      .map((type) => (
+                        <MenuItem key={type.name} value={type.ids}>
                           {type.name}({type.count})
                         </MenuItem>
                       ))}

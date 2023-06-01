@@ -44,7 +44,7 @@ const Searchbar = () => {
             value={searchTerm}
             id="default-search"
             onInput={(e) => handleChange(e)}
-            className="  flex w-full  rounded-lg border border-gray-300 bg-slate-50 p-4 pl-10 text-sm text-woodsmoke focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            className=" shadow flex w-full  rounded-lg border border-gray-300 bg-slate-50 p-4 pl-10 text-sm text-woodsmoke focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
             placeholder="Search for items..."
             required
           />
