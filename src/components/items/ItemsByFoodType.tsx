@@ -3,35 +3,40 @@ import { GlobalContext } from "~/context/GlobalContextProvider";
 import { type RouterOutputs, api } from "~/utils/api";
 import Item from "./Item";
 import LoadingSpinner from "../ui/LoadingSpinner";
+import Banner from "../ui/Banner";
 
-
+type FoodType = RouterOutputs["items"]["getFoodCategoryCount"][0];
 interface ItemsByFoodTypeProps {
-  foodTypeIds: React.RefObject<HTMLSelectElement> | undefined | null;
+  selectedFoodCategory: FoodType | null;
 }
 
-const ItemsByFoodType = ({ foodTypeIds }: ItemsByFoodTypeProps) => {
-  const { debouncedValue } = useContext(GlobalContext)
+const ItemsByFoodType = ({ selectedFoodCategory }: ItemsByFoodTypeProps) => {
+  const { debouncedValue } = useContext(GlobalContext);
 
-  const idsToFind = foodTypeIds?.current?.value as unknown as string[];
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const idsToFind = selectedFoodCategory?.ids ?? [];
+
   const shouldEnableQuery =
-    !!idsToFind && idsToFind !== null && idsToFind !== undefined;
+    idsToFind.length > 0;
 
-  const { data, isLoading } =
-    api.items.getItemsByFoodType.useQuery(
-      {
-        idsToFind,
-      },
-      {
-        enabled: shouldEnableQuery,
-      }
-    );
+  const { data, isLoading } = api.items.getItemsByFoodType.useQuery(
+    {
+      idsToFind,
+    },
+    {
+      enabled: shouldEnableQuery,
+    }
+  );
 
   // if this is not used, the isLoading will always be true before a category is selected
   const shouldShowLoading = shouldEnableQuery && isLoading;
 
   return (
     <div>
-      {!data && <p className="text-center">Select a food category to retrieve items.</p>}
+      <Banner>{selectedFoodCategory?.name}</Banner>
+      {!data && (
+        <p className="text-center">Select a food category to retrieve items.</p>
+      )}
       {shouldShowLoading && (
         <div className="relative mt-20 flex h-full flex-col items-center justify-center gap-2">
           <div className="absolute  top-1/2 flex h-full w-full flex-col items-center justify-center ">
@@ -40,16 +45,19 @@ const ItemsByFoodType = ({ foodTypeIds }: ItemsByFoodTypeProps) => {
           </div>
         </div>
       )}
-      {data && data.filter((item) => {
-              if (debouncedValue === "") {
-                return item;
-              } else if (
-                item.name.toLowerCase().includes(debouncedValue) ||
-                item.brand?.toLowerCase().includes(debouncedValue)
-              ) {
-                return item;
-              }
-            }).map((item) => <Item key={item.id} {...item} />)}
+      {data &&
+        data
+          .filter((item) => {
+            if (debouncedValue === "") {
+              return item;
+            } else if (
+              item.name.toLowerCase().includes(debouncedValue) ||
+              item.brand?.toLowerCase().includes(debouncedValue)
+            ) {
+              return item;
+            }
+          })
+          .map((item) => <Item key={item.id} {...item} />)}
     </div>
   );
 };

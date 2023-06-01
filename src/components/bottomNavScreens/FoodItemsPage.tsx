@@ -28,6 +28,9 @@ const FoodItemsPage = () => {
   } = useContext(GlobalContext);
   const [filterItemsCategory, setFilterItemsCategory] = useState("All");
   const [foodTypesList, setFoodTypesList] = useState<FoodType[]>();
+  const [selectedFoodCategory, setSelectedFoodCategory] = useState<
+    { name: string; count: number; ids: string[] } | null 
+  >(null);
 
   const storageAreaRoute = api.useContext().storageAreas;
   const getAllStorageAreas = api.storageAreas.getStorageAreas.useQuery({
@@ -49,6 +52,15 @@ const FoodItemsPage = () => {
 
   const handleChange = (event: SelectChangeEvent) => {
     setFilterItemsCategory(event.target.value);
+  };
+
+  const handleFoodCategoryChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setSelectedFoodCategory(
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      JSON.parse(event.target.value)
+    ) as unknown as FoodType;
   };
   return (
     <div className="bg-snow">
@@ -162,9 +174,9 @@ const FoodItemsPage = () => {
                   className="w-full shadow"
                   id="foodType"
                   inputRef={foodTypeRef}
-                  onChange={async () => {
+                  onChange={async (e) => {
                     await getFoodTypesRoute.invalidate();
-                    console.log(foodTypeRef?.current?.value);
+                    handleFoodCategoryChange(e);
                   }}
                   defaultValue=""
                 >
@@ -172,7 +184,7 @@ const FoodItemsPage = () => {
                     foodTypesList
                       ?.sort((a, b) => (a.name > b.name ? 1 : -1))
                       .map((type) => (
-                        <MenuItem key={type.name} value={type.ids}>
+                        <MenuItem key={type.name} value={JSON.stringify(type)}>
                           {type.name}({type.count})
                         </MenuItem>
                       ))}
@@ -187,7 +199,7 @@ const FoodItemsPage = () => {
               storageAreaId={
                 storageAreaRef.current && storageAreaRef.current.value
               }
-              foodTypeIds={foodTypeRef}
+              selectedFoodCategory={selectedFoodCategory}
             />
           </div>
         </div>

@@ -10,16 +10,17 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import ItemsByExpiringSoon from "./ItemsByExpiringSoon";
 import LoadingSpinner from "../ui/LoadingSpinner";
 
+type FoodType = RouterOutputs["items"]["getFoodCategoryCount"][0];
 interface FoodItemsProps {
   sortType: string;
   storageAreaId?: string | null;
-  foodTypeIds?: React.RefObject<HTMLSelectElement> | null;
+  selectedFoodCategory: FoodType | null;
 }
 
 const FoodItems = ({
   sortType,
   storageAreaId,
-  foodTypeIds,
+  selectedFoodCategory
 }: FoodItemsProps) => {
   const { householdId, debouncedValue } = useContext(GlobalContext);
   const getAllItemsInfinite = api.items.getAllItemsInfinite.useInfiniteQuery(
@@ -29,15 +30,6 @@ const FoodItems = ({
     }
   );
 
-  // const itemsSortedAlphabetically = data?.sort((a, b) =>
-  //   a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
-  // );
-  // const itemsExpiringSoon = data?.filter(
-  //   (item) => item.daysUntilExpiry !== null && item.daysUntilExpiry < 8
-  // );
-  // const itemsSortedByExpiringSoon = itemsExpiringSoon?.sort((a, b) =>
-  //   a.daysUntilExpiry! > b.daysUntilExpiry! ? 1 : -1
-  // );
   return (
     <div className="mt-2">
       {/* <div>{data?.length === 0 && <p>No Items</p>}</div> */}
@@ -91,7 +83,7 @@ const FoodItems = ({
         <ItemsByStorageArea storageAreaId={storageAreaId!} />
       )}
       {sortType === "Food Type" && (
-        <ItemsByFoodType foodTypeIds={foodTypeIds} />
+        <ItemsByFoodType selectedFoodCategory={selectedFoodCategory}/>
       )}
       {sortType === "Expiring Soon" && (
         <div className="flex flex-col gap-1">
