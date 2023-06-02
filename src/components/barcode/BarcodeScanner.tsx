@@ -27,12 +27,13 @@ const BarcodeScanner = ({ onResult = () => {}, onError = () => {} }) => {
         <Button
           fontSize="text-sm"
           onClick={() => setShowingBarcodeScanner(false)}
-          className=""
+          className="my-2"
         >
           Close Camera
         </Button>
       </div>
       <video ref={ref} autoPlay={true} className="w-full" />
+
     </div>
   );
 };

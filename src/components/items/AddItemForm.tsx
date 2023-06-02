@@ -66,7 +66,7 @@ const AddItemForm = () => {
   } = useContext(GlobalContext);
 
   const [amount, setAmount] = useState("1");
-
+  const [showingMessage, setShowingMessage] = useState(false);
   const [error, setError] = React.useState<DateValidationError | null>(null);
 
   const {
@@ -296,6 +296,32 @@ const AddItemForm = () => {
             >
               Create Item
             </button>
+            <p
+              className="cursor-pointer text-sm underline"
+              onClick={() => setShowingMessage(!showingMessage)}
+            >
+              Having trouble with barcodes not being found?
+            </p>
+            {showingMessage && (
+              <p className="text-sm">
+                Quartermaster uses a free and open-source API to provide product
+                information from barcodes, and it doesn&apos;t have as many
+                products as some of it&apos;s for-profit competitors. If you
+                area looking to add to it so that is more robust and can add
+                more items you use by barcode, visit{" "}
+                <a
+                  href="https://brocade.io"
+                  className="text-blue-600 underline"
+                  target="_blank"
+                >
+                  brocade.io
+                </a>{" "}
+                and create a free account. With your account you can add products by
+                typing in their UPC code found at the bottom of your barcode and
+                a product name so that next time you go to scan it it will be
+                present in the API database.
+              </p>
+            )}
           </form>
         )
       )}

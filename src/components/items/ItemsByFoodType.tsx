@@ -15,9 +15,12 @@ const ItemsByFoodType = ({ selectedFoodCategory }: ItemsByFoodTypeProps) => {
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const idsToFind = selectedFoodCategory?.ids ?? [];
+  const capitalizedName = selectedFoodCategory?.name
+    ? selectedFoodCategory?.name.charAt(0).toUpperCase() +
+      selectedFoodCategory?.name.slice(1)
+    : "";
 
-  const shouldEnableQuery =
-    idsToFind.length > 0;
+  const shouldEnableQuery = idsToFind.length > 0;
 
   const { data, isLoading } = api.items.getItemsByFoodType.useQuery(
     {
@@ -33,7 +36,7 @@ const ItemsByFoodType = ({ selectedFoodCategory }: ItemsByFoodTypeProps) => {
 
   return (
     <div>
-      <Banner>{selectedFoodCategory?.name}</Banner>
+      <Banner>{capitalizedName}</Banner>
       {!data && (
         <p className="text-center">Select a food category to retrieve items.</p>
       )}
