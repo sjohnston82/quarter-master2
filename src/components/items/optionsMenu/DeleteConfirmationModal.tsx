@@ -16,7 +16,6 @@ interface DeleteConfirmationProps {
   setShowingAddToShoppingFromItemsModal: React.Dispatch<
     React.SetStateAction<boolean>
   >;
-
 }
 
 const DeleteConfirmationModal = ({
@@ -30,15 +29,14 @@ const DeleteConfirmationModal = ({
   const [checked, setChecked] = useState(false);
   const handleAddToShoppingList = () => {
     checked && setShowingAddToShoppingFromItemsModal(true);
-    setShowingDeleteConfirmationModal(false)
-  }
+    setShowingDeleteConfirmationModal(false);
+  };
   const deleteItemRoute = api.useContext().items;
   const deleteItem = api.items.deleteItem.useMutation({
     onSuccess: async () => {
       !checked && (await deleteItemRoute.invalidate());
       toast.success("Item deleted.");
       handleAddToShoppingList();
-      
     },
   });
 
@@ -52,22 +50,26 @@ const DeleteConfirmationModal = ({
       title="Are you sure you want to delete this item?"
       onClose={() => setShowingDeleteConfirmationModal(false)}
     >
-      <div className="mt-5 flex justify-center gap-4">
-        <button
-          className="rounded-2xl border border-slate-600 px-4 text-lg"
-          onClick={() => {
-            deleteItem.mutate({ id });
-            checked && setShowingAddToShoppingFromItemsModal(true);
-          }}
-        >
-          Yes
-        </button>
-        <button
-          className="rounded-2xl border border-slate-600 px-4 text-lg"
-          onClick={() => setShowingDeleteConfirmationModal(false)}
-        >
-          No
-        </button>
+      <div className="mt-5 flex flex-col justify-center gap-4">
+        <div className="flex justify-center gap-4">
+          <button
+            className="rounded-2xl border border-slate-600 px-4 text-lg"
+            onClick={() => {
+              deleteItem.mutate({ id });
+              checked && setShowingAddToShoppingFromItemsModal(true);
+            }}
+          >
+            Yes
+          </button>
+          <button
+            className="rounded-2xl border border-slate-600 px-4 text-lg"
+            onClick={() => setShowingDeleteConfirmationModal(false)}
+          >
+            No
+          </button>
+        </div>
+      </div>
+      <div className="flex justify-center mt-2">
         <FormControlLabel
           control={<Checkbox checked={checked} onChange={handleChange} />}
           label="Add to Shopping List"
