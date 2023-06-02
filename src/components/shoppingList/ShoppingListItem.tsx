@@ -21,7 +21,7 @@ const ShoppingListItem = ({ item }: ShoppingListItemProps) => {
   return (
     <div className="flex w-full items-center justify-between border-b last:border-none">
       <div
-        className="flex"
+        className="flex cursor-pointer"
         onClick={() => {
           toggleComplete.mutate({ id: item.id });
         }}

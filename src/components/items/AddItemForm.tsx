@@ -306,9 +306,9 @@ const AddItemForm = () => {
               <p className="text-sm">
                 Quartermaster uses a free and open-source API to provide product
                 information from barcodes, and it doesn&apos;t have as many
-                products as some of it&apos;s for-profit competitors. If you
-                area looking to add to it so that is more robust and can add
-                more items you use by barcode, visit{" "}
+                products as some of it&apos;s for-profit competitors. If you are
+                looking to contribute to it so that is more robust and so that
+                you can add more items you use by barcode, visit{" "}
                 <a
                   href="https://brocade.io"
                   className="text-blue-600 underline"
@@ -316,10 +316,10 @@ const AddItemForm = () => {
                 >
                   brocade.io
                 </a>{" "}
-                and create a free account. With your account you can add products by
-                typing in their UPC code found at the bottom of your barcode and
-                a product name so that next time you go to scan it it will be
-                present in the API database.
+                and create a free account. With your account you can add
+                products by typing in the UPC code found at the bottom of your
+                barcode and a product name so that next time you go to scan it
+                it will be present in the API database.
               </p>
             )}
           </form>

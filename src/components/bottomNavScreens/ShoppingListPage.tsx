@@ -72,9 +72,9 @@ const ShoppingListPage = () => {
       </div>
       <div className="flex w-full justify-center mb-1">
         <TextField
-          size="small"
+          // size="small"
           select
-          className=""
+          className="w-1/2"
           defaultValue="all"
           helperText="Choose a filter method"
           onChange={(e) => handleFilterChange(e)}

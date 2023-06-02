@@ -122,9 +122,11 @@ const AddShoppingListItemForm = ({
             </MenuItem>
           ))}
         </TextField>
-        <SubmitButton disabled={!isValid}>
+        <div className="flex justify-center">
+        <SubmitButton disabled={!isValid} className="">
           Add
         </SubmitButton>
+        </div>
       </form>
     </Modal>
   );
