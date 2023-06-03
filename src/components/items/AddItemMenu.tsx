@@ -32,9 +32,6 @@ const AddItemMenu = () => {
     setShowingCreateStorageAreaModal(true);
   };
 
-  const classes = {
-    opacity: 1
-  }
   const actions = [
     {
       name: "Add Storage Area",
@@ -63,7 +60,6 @@ const AddItemMenu = () => {
         sx={{
           flexDirection: "column",
           position: "relative",
-          // right: 8,
           opacity: 1,
           zIndex: showingAddItemModal ? 0 : 1,
         }}

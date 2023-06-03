@@ -37,14 +37,6 @@ const editItemSchema = z.object({
     .max(50, { message: "You have exceeded the characters amount." }),
   brand: z.string().optional(),
   flavor: z.string().optional(),
-  // .union([
-  //   z.string().length(0, {
-  //     message: "Flavor needs at least two characters or blank.",
-  //   }),
-  //   z.string().min(2),
-  // ])
-  // .optional()
-  // .transform((e) => (e === "" ? undefined : e)),
   storageAreaId: z.string(),
   foodCategories: z.string().array().optional(),
   expirationDate: z.coerce.date().optional(),
@@ -151,7 +143,6 @@ const EditItemModal = ({
           </p>
         )}
         <LocalizationProvider
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           dateAdapter={AdapterDayjs}
         >
           <Controller
@@ -186,7 +177,7 @@ const EditItemModal = ({
           ))}
         </TextField>
         <Controller
-          render={({ field: { onChange, value } }) => (
+          render={({ field: { onChange } }) => (
             <Autocomplete
               multiple
               filterSelectedOptions

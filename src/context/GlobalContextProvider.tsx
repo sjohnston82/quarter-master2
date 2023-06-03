@@ -1,10 +1,9 @@
 import React, {
   createContext,
   type SetStateAction,
-  useState,
-  useEffect,
+  useState
 } from "react";
-import { RouterOutputs } from "~/utils/api";
+import { type RouterOutputs } from "~/utils/api";
 import { type Result } from "@zxing/library";
 import useDebounce from "~/hooks/useDebounce";
 

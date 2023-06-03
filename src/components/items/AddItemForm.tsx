@@ -5,7 +5,6 @@ import { api } from "~/utils/api";
 import Modal from "../ui/Modal";
 import { Autocomplete, MenuItem, TextField } from "@mui/material";
 import { packageTypes, foodCategories } from "~/utils/helperLists";
-import { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -13,14 +12,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-hot-toast";
 import { type DateValidationError } from "@mui/x-date-pickers";
-import { type UPCInfo } from "~/context/GlobalContextProvider";
 import LoadingSpinner from "../ui/LoadingSpinner";
-interface AddItemManuallyFormProps {
-  showingAddByBarcodeModal: boolean;
-  setShowingAddByBarcodeModal: React.Dispatch<React.SetStateAction<boolean>>;
-  currentProductByUPC: UPCInfo;
-  setCurrentProductByUPC: React.Dispatch<React.SetStateAction<any>>;
-}
+
 
 interface AddItemManuallyInputProps {
   name: string;
@@ -61,7 +54,6 @@ const AddItemForm = () => {
     setShowingAddItemModal,
     showingAddItemModal,
     currentItemByUPC,
-    setCurrentItemByUPC,
     fetchingProductInfo,
   } = useContext(GlobalContext);
 
@@ -226,7 +218,6 @@ const AddItemForm = () => {
               </p>
             )}
             <LocalizationProvider
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
               dateAdapter={AdapterDayjs}
             >
               <Controller
@@ -268,7 +259,7 @@ const AddItemForm = () => {
               ))}
             </TextField>
             <Controller
-              render={({ field: { onChange, value } }) => (
+              render={({ field: { onChange } }) => (
                 <Autocomplete
                   multiple
                   filterSelectedOptions

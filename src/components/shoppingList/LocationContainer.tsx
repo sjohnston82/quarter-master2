@@ -14,21 +14,6 @@ interface LocationContainerProps {
 const LocationContainer = ({ location, items }: LocationContainerProps) => {
   const { householdId } = useContext(GlobalContext);
 
-  // useEffect(() => {
-  //   items.forEach((item) => {
-  //     if (item.completed) {
-  //       setIdsToDelete((prev) => [...prev, item.id]);
-  //     }
-  //   });
-  // }, [setIdsToDelete]);
-
-  // const toggleCompleteRoute = api.useContext().shoppingList;
-  // const toggleComplete = api.shoppingList.toggleComplete.useMutation({
-  //   onSuccess: async () => {
-  //     await toggleCompleteRoute.invalidate();
-  //   },
-  // });
-
   return (
     <div className="flex w-full flex-col items-center" role="dialog">
       <Banner fontSize="text-xl">

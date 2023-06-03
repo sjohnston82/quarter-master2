@@ -1,10 +1,9 @@
 import { TextField } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import Button from "~/components/ui/Button";
 import LoadingSpinner from "~/components/ui/LoadingSpinner";
 import SubmitButton from "~/components/ui/SubmitButton";
 import { GlobalContext } from "~/context/GlobalContextProvider";
@@ -21,10 +20,10 @@ const JoinHouseholdByInviteForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm<JoinByInviteCodeProps>();
   const router = useRouter();
   const { householdId, setHouseholdId } = useContext(GlobalContext);
+  const [badCode, setBadCode] = useState(false);
 
   const joinByInviteCodeRoute = api.useContext().household;
 
@@ -35,31 +34,12 @@ const JoinHouseholdByInviteForm = () => {
         setHouseholdId(joinByInviteCode.data);
       await joinByInviteCodeRoute.getHouseholdId.invalidate();
       await router.push(`/household/${householdId}`);
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      // await router.push(`/household/${joinByInviteCode.data}`);
-
       setSuccessfulLogin(true);
-
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      // await router.push(`/household/${joinByInviteCode?.data}`);
+    },
+    onError: () => {
+      setBadCode(true);
     },
   });
-
-  // const handleSeeHousehold = async () => {
-  //   await router.push(`/household/${householdId}`);
-  // };
-
-  // useEffect(() => {
-  //   if (
-  //     successfulLogin === true &&
-  //     householdId !== null &&
-  //     householdId !== undefined
-  //   ) {
-  //     router.push(`/household/${householdId}`).catch((err) => {
-  //       console.log(err);
-  //     });
-  //   }
-  // }, [householdId, router, successfulLogin]);
 
   const onSubmitByInvite = (data: JoinByInviteCodeProps) => {
     const mutationData = {
@@ -83,7 +63,13 @@ const JoinHouseholdByInviteForm = () => {
             id="inviteCode"
             {...register("inviteCode")}
             className="my-2 w-full"
+            onInput={() => setBadCode(false)}
           />
+          {badCode && (
+            <p className="text-sm italic text-red-500 text-center">
+              The invite code you entered is incorrect! Please try again.
+            </p>
+          )}
           <div className="flex justify-center ">
             <SubmitButton className="">Join</SubmitButton>
           </div>

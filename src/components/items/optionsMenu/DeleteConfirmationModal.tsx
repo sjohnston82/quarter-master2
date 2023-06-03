@@ -1,5 +1,5 @@
 import { Checkbox, FormControlLabel } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { toast } from "react-hot-toast";
 import Modal from "~/components/ui/Modal";
 import { type RouterOutputs, api } from "~/utils/api";
@@ -22,19 +22,19 @@ interface DeleteConfirmationProps {
 
 const DeleteConfirmationModal = ({
   id,
-  item,
   setShowingAddToShoppingFromItemsModal,
-  showingAddToShoppingFromItemsModal,
   showingDeleteConfirmationModal,
   setShowingDeleteConfirmationModal,
   checked,
   setChecked
 }: DeleteConfirmationProps) => {
+
   const handleAddToShoppingList = () => {
     checked && setShowingAddToShoppingFromItemsModal(true);
     setShowingDeleteConfirmationModal(false);
-    // await deleteItemRoute.invalidate();
+
   };
+
   const deleteItemRoute = api.useContext().items;
   const deleteItem = api.items.deleteItem.useMutation({
     onSuccess: async () => {

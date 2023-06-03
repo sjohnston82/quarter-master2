@@ -35,7 +35,6 @@ const ShoppingListPage = () => {
     api.shoppingList.deleteAllCompleteItems.useMutation({
       onSuccess: async () => {
         await toggleCompleteRoute.invalidate();
-        // setIdsToDelete([]);
       },
     });
 

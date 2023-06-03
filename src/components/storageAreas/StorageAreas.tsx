@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import { api } from "~/utils/api";
 import CreateStorageArea from "./CreateStorageArea";
@@ -10,21 +10,6 @@ const StorageAreas = () => {
   const { data } = api.storageAreas.getStorageAreas.useQuery({
     householdId,
   });
-
-  const getItemByStorageArea = api.items.getItemsByStorageArea.useQuery(
-    {
-      storageAreaId: currentStorageAreaId,
-    },
-    {
-      onSuccess: () => {
-        console.log(data);
-        // setCurrentStorageAreaId("");
-      },
-    }
-  );
-  // useEffect(() => {
-  //   }
-  // }, [currentStorageAreaId, data]);
 
   return (
     <div>

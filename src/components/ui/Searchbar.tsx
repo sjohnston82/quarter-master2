@@ -1,8 +1,5 @@
-import { TextField } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
-import useDebounce from "~/hooks/useDebounce";
-import AddItemForm from "../items/AddItemForm";
 import AddItemMenu from "../items/AddItemMenu";
 
 const Searchbar = () => {

@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useContext } from "react";
+import { useForm } from "react-hook-form";
 import Modal from "../ui/Modal";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import { api } from "~/utils/api";
@@ -18,7 +18,6 @@ const CreateStorageArea = () => {
     setShowingCreateStorageAreaModal,
   } = useContext(GlobalContext);
   const { register, handleSubmit, reset } = useForm<CreateStorageProps>();
-  
 
   const storageAreaRoute = api.useContext().storageAreas;
 
@@ -45,7 +44,6 @@ const CreateStorageArea = () => {
       <Modal
         isOpen={showingCreateStorageAreaModal}
         title="Enter your storage area name "
-        // secondaryTitle="(ex: 'Pantry', 'Garage Freezer', 'Spice Rack', etc.)"
         onClose={() => setShowingCreateStorageAreaModal(false)}
       >
         <div className="w=full flex flex-col">
@@ -65,12 +63,6 @@ const CreateStorageArea = () => {
           </form>
         </div>
       </Modal>
-      {/* <button
-        className="rounded-xl border border-slate-700 p-1 disabled:border-slate-400 disabled:text-slate-400"
-        onClick={() => setShowingCreateStorageAreaModal(true)}
-      >
-        Create Storage Area
-      </button> */}
     </div>
   );
 };

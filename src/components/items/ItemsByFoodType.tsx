@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import { type RouterOutputs, api } from "~/utils/api";
 import Item from "./Item";

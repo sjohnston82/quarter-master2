@@ -4,11 +4,8 @@ import { z } from "zod";
 const LIMIT = 10;
 
 import {
-  createTRPCRouter,
-  publicProcedure,
-  protectedProcedure,
+  createTRPCRouter, protectedProcedure
 } from "~/server/api/trpc";
-import { prisma } from "~/server/db";
 import { calculateDaysUntilExpiry } from "~/utils/calculateDaysUntilExpiry";
 
 export const itemsRouter = createTRPCRouter({
@@ -286,13 +283,6 @@ export const itemsRouter = createTRPCRouter({
   getFoodCategoryCount: protectedProcedure
     .input(z.object({ householdId: z.string() }))
     .query(async ({ ctx, input }) => {
-      // const categoryCount = await ctx.prisma.item.groupBy({
-      //   by: ["foodCategories"],
-      //   where: { householdId: input.householdId },
-      //   _count: {
-      //     foodCategories: true,
-      //   },
-      // });
       const allItems = await ctx.prisma.item.findMany({
         where: { householdId: input.householdId },
       });

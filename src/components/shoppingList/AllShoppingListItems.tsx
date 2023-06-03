@@ -1,8 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { GlobalContext } from "~/context/GlobalContextProvider";
-import { type RouterOutputs, api } from "~/utils/api";
+import { type RouterOutputs } from "~/utils/api";
 import ShoppingListItem from "./ShoppingListItem";
-import Button from "../ui/Button";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import Banner from "../ui/Banner";
 

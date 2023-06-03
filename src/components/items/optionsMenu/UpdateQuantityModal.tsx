@@ -25,8 +25,10 @@ const UpdateQuantityModal = ({
   setShowingUpdateQuantityModal,
 }: UpdateQuantityModalProps) => {
   const { register, handleSubmit } = useForm<QuantityUpdateInput>({
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    defaultValues: { amount: item.amount!, amountType: item.amountType ?? "" },
+    defaultValues: {
+      amount: item.amount ?? 1,
+      amountType: item.amountType ?? "",
+    },
   });
 
   const [amount, setAmount] = useState("");

@@ -9,7 +9,6 @@ const HouseholdMembersPage = () => {
   const { householdId, householdName } = useContext(GlobalContext);
   const getInviteList = api.household.getInviteList.useQuery({ householdId });
  
-
   return (
     <div className="mt-3 flex w-full flex-col space-y-4">
       <div className="">

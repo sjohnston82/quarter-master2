@@ -85,16 +85,19 @@ const ItemOptionsMenu = ({
           <span className="ml-3">Add to Shopping List</span>
         </MenuItem>
       </Menu>
+
       <UpdateQuantityModal
         item={item}
         showingUpdateQuantityModal={showingUpdateQuantityModal}
         setShowingUpdateQuantityModal={setShowingUpdateQuantityModal}
       />
+
       <EditItemModal
         showingEditItemModal={showingEditItemModal}
         setShowingEditItemModal={setShowingEditItemModal}
         item={item}
       />
+
       <DeleteConfirmationModal
         showingDeleteConfirmationModal={showingDeleteConfirmationModal}
         setShowingDeleteConfirmationModal={setShowingDeleteConfirmationModal}
@@ -107,6 +110,7 @@ const ItemOptionsMenu = ({
         checked={checked}
         setChecked={setChecked}
       />
+
       <AddToShoppingFromItems
         showingAddToShoppingFromItemsModal={showingAddToShoppingFromItemsModal}
         setShowingAddToShoppingFromItemsModal={
@@ -115,6 +119,7 @@ const ItemOptionsMenu = ({
         item={item}
         checked={checked}
       />
+      
     </div>
   );
 };

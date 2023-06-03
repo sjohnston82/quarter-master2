@@ -19,7 +19,6 @@ type NewItemInputProps = {
 
 const CreateNewItem = () => {
   const {
-    householdId,
     showingBarcodeScanner,
     setShowingBarcodeScanner,
     barcode,
@@ -27,20 +26,12 @@ const CreateNewItem = () => {
     currentItemByUPC,
     setCurrentItemByUPC,
     setShowingAddItemModal,
-    showingAddItemModal,
-    fetchingProductInfo,
     setFetchingProductInfo,
   } = useContext(GlobalContext);
-  // const [showingAddItemModal, setShowingAddItemModal] = useState(false);
-  // const [showingAddByBarcodeModal, setShowingAddByBarcodeModal] =
-  //   useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  // const [currentProductByUPC, setCurrentProductByUPC] = useState<any>(null);
 
-  const { register, reset, handleSubmit } = useForm<NewItemInputProps>();
+  const { reset} = useForm<NewItemInputProps>();
 
   useEffect(() => {
-    // const apiUrl = "https://proxy.cors.sh/https://brocade.io/api/items/";
     const apiUrl =
       "https://api.codetabs.com/v1/proxy?quest=https://brocade.io/api/items/";
     function getUPCInfo() {
@@ -99,7 +90,6 @@ const CreateNewItem = () => {
           </Button>
         </div>
       </div>
-      {/* {showingBarcodeScanner && <BarcodeScanner />} */}
 
       <AddItemForm />
     </div>

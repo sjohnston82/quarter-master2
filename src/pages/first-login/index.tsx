@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import { useEffect, useState, useContext } from "react";
 import { api } from "~/utils/api";
 import Modal from "~/components/ui/Modal";

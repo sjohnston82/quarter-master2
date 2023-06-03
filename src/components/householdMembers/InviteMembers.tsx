@@ -69,7 +69,6 @@ const InviteMembers = () => {
           <form
             action=""
             className="flex w-full items-center gap-2"
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onSubmit={handleSubmit((data) => addNameToInviteQueue(data))}
           >
             <div className="flex w-full flex-col">

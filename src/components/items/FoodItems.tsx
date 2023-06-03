@@ -32,7 +32,6 @@ const FoodItems = ({
 
   return (
     <div className="mt-2">
-      {/* <div>{data?.length === 0 && <p>No Items</p>}</div> */}
       {sortType === "All" && (
         <div className="flex flex-col gap-1">
           <Banner>All Food Items</Banner>

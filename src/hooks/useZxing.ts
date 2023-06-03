@@ -31,9 +31,7 @@ export const useZxing = ({
 }: ZxingOptions = {}) => {
   const ref = useRef<HTMLVideoElement>(null);
   const {
-    barcode,
     setBarcode,
-    setShowingAddItemModal,
     setShowingBarcodeScanner,
   } = useContext(GlobalContext);
   const reader = useMemo<BrowserMultiFormatReader>(() => {
@@ -49,7 +47,6 @@ export const useZxing = ({
       if (result !== null) {
         toast.success("Barcode found!")
         setBarcode(result);
-        // setShowingAddByBarcodeModal(true);
         setShowingBarcodeScanner(false);
       }
       if (error) onError(error);

@@ -1,9 +1,7 @@
-import { string, z } from "zod";
+import { z } from "zod";
 
 import {
-  createTRPCRouter,
-  publicProcedure,
-  protectedProcedure,
+  createTRPCRouter, protectedProcedure
 } from "~/server/api/trpc";
 
 export const householdRouter = createTRPCRouter({
@@ -43,7 +41,6 @@ export const householdRouter = createTRPCRouter({
   getHouseholdInfo: protectedProcedure
     .input(z.object({ householdId: z.string() }))
     .query(async ({ ctx, input }) => {
-      const userId = ctx.session.user.id;
 
       return ctx.prisma.household.findUnique({
         where: {
@@ -61,7 +58,7 @@ export const householdRouter = createTRPCRouter({
 
   getHouseholdMembers: protectedProcedure
     .input(z.object({ householdId: z.string() }))
-    .query(async ({ ctx: { prisma, session }, input }) => {
+    .query(async ({ ctx: { prisma }, input }) => {
       const membersList = await prisma.household.findMany({
         where: {
           householdId: input.householdId,
@@ -80,7 +77,7 @@ export const householdRouter = createTRPCRouter({
 
   getInviteList: protectedProcedure
     .input(z.object({ householdId: z.string() }))
-    .query(async ({ ctx: { prisma, session }, input }) => {
+    .query(async ({ ctx: { prisma }, input }) => {
       const inviteList = await prisma.household.findMany({
         where: {
           householdId: input.householdId,

@@ -1,10 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
-import { GlobalContext } from "~/context/GlobalContextProvider";
 import LocationContainer from "./LocationContainer";
-import { RouterOutputs, api } from "~/utils/api";
+import { RouterOutputs } from "~/utils/api";
 import LoadingSpinner from "../ui/LoadingSpinner";
-import { type ShoppingList } from "@prisma/client";
-import Button from "../ui/Button";
 
 type Item = RouterOutputs["shoppingList"]["getAllShoppingListItems"][0];
 
@@ -14,33 +10,6 @@ interface ShoppingListByLocationProps {
 }
 
 const ShoppingListByLocation = ({data, isLoading}: ShoppingListByLocationProps) => {
-  // const { householdId } = useContext(GlobalContext);
-  // const { data, isLoading } = api.shoppingList.getAllShoppingListItems.useQuery(
-  //   { householdId }
-  // );
-  // const [idsToDelete, setIdsToDelete] = useState<string[]>([]);
-
-  // const toggleCompleteRoute = api.useContext().shoppingList;
-  // const toggleComplete = api.shoppingList.toggleComplete.useMutation({
-  //   onSuccess: async () => {
-  //     await toggleCompleteRoute.invalidate();
-  //   },
-  // });
-
-  // const deleteShoppingListItem =
-  //   api.shoppingList.deleteItemFromShoppingList.useMutation({
-  //     onSuccess: async () => {
-  //       // await toggleCompleteRoute.invalidate();
-  //     },
-  //   });
-
-  // const deleteAllCompletedItems =
-  //   api.shoppingList.deleteAllCompleteItems.useMutation({
-  //     onSuccess: async () => {
-  //       await toggleCompleteRoute.invalidate();
-  //       // setIdsToDelete([]);
-  //     },
-  //   });
 
   const produceItems = data?.filter((item) => item.location === "Produce");
   const meatItems = data?.filter((item) => item.location === "Meats");
@@ -62,22 +31,6 @@ const ShoppingListByLocation = ({data, isLoading}: ShoppingListByLocationProps) 
   const bakeryItems = data?.filter((item) => item.location === "Bakery");
   const otherItems = data?.filter((item) => item.location === "Other");
   const uncategorized = data?.filter((item) => item.location === "");
-
-  // const deleteAllComplete = () => {
-  //   data?.forEach((item) => {
-  //     if (item.completed) {
-  //       setIdsToDelete((prev) => [...prev, item.id]);
-  //     }
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   if (idsToDelete.length > 0) {
-  //     deleteAllCompletedItems.mutate(idsToDelete);
-  //     setIdsToDelete([]);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [deleteAllCompletedItems]);
 
   return (
     <div className="flex w-full flex-col">

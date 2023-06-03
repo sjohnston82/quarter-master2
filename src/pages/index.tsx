@@ -1,26 +1,16 @@
 import { type NextPage } from "next";
-import Head from "next/head";
-import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/react";
-
+import { signIn, useSession } from "next-auth/react";
 import { api } from "~/utils/api";
 import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
-import { redirect } from "next/navigation";
 import { GlobalContext } from "~/context/GlobalContextProvider";
-import Button from "~/components/ui/Button";
-import Features from "~/components/landing/Features";
-import HowItWorks from "~/components/landing/HowItWorks";
 import LandingTransitionContainer from "~/components/landing/LandingTransitionContainer";
-import { Divider } from "@mui/material";
 import { motion } from "framer-motion";
 
 const Home: NextPage = () => {
   const router = useRouter();
   const { householdId, setHouseholdId } = useContext(GlobalContext);
   const { data: sessionData, status } = useSession();
-  const [loading, setLoading] = useState(false);
-  // const [householdId, setHouseholdId] = useState<string | null>(null);
 
   const getHouseholdId = api.household.getHouseholdId.useQuery(undefined, {
     enabled: sessionData?.user !== undefined,
@@ -30,7 +20,6 @@ const Home: NextPage = () => {
     getHouseholdId.data &&
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       setHouseholdId(getHouseholdId.data.householdId!);
-    // if (!sessionData) return redirect("/");
     if (status !== "loading" && sessionData !== undefined && householdId) {
       void router.push(`/household/${householdId}`);
     }
@@ -48,13 +37,9 @@ const Home: NextPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getHouseholdId.data, householdId, sessionData, status]);
 
-  // const redirectToHousehold = async () => {
-  //   householdId && sessionData && (await router.push(`/household/${householdId}`));
-  // };
-
   return (
     <>
-      <main className="flex min-h-screen flex-col scroll-smooth bg-snow">
+      <main className="flex min-h-screen flex-col scroll-smooth bg-snow text-woodsmoke">
         <div className="w-full">
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
@@ -92,11 +77,6 @@ const Home: NextPage = () => {
               ></path>
             </svg>
           </button>
-          {/* <a href="#learnmore" className="">
-            <button className="mx-auto flex w-3/5 items-center justify-center rounded-lg bg-buttonblue px-2 py-1 text-xl text-snow transition hover:bg-mango">
-              Learn More
-            </button>
-          </a> */}
         </div>
         <div className="my-12">
           <p className="px-8 text-center text-lg text-woodsmoke">
@@ -105,8 +85,6 @@ const Home: NextPage = () => {
         </div>
 
         <LandingTransitionContainer />
-        {/* <HowItWorks />
-        <Features /> */}
       </main>
     </>
   );

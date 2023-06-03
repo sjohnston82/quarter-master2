@@ -1,9 +1,7 @@
 import { z } from "zod";
 
 import {
-  createTRPCRouter,
-  publicProcedure,
-  protectedProcedure,
+  createTRPCRouter, protectedProcedure
 } from "~/server/api/trpc";
 
 export const storageAreasRouter = createTRPCRouter({

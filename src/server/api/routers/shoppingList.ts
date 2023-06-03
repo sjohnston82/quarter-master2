@@ -2,9 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import {
-  createTRPCRouter,
-  publicProcedure,
-  protectedProcedure,
+  createTRPCRouter, protectedProcedure
 } from "~/server/api/trpc";
 
 export const shoppingListRouter = createTRPCRouter({

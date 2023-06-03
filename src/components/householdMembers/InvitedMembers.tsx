@@ -1,4 +1,3 @@
-import { type Invite } from "@prisma/client";
 import { api, type RouterOutputs } from "~/utils/api";
 import { RiCloseCircleFill } from "react-icons/ri";
 

@@ -1,8 +1,6 @@
 import React, { type SetStateAction, useContext, useState } from "react";
-
 import Modal from "../ui/Modal";
-import { api, type RouterOutputs } from "~/utils/api";
-import { type User } from "@prisma/client";
+import { api } from "~/utils/api";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import Image from "next/image";
 import dayjs from "dayjs";

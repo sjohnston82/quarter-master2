@@ -8,19 +8,6 @@ const BarcodeScanner = ({ onResult = () => {}, onError = () => {} }) => {
   const { ref } = useZxing({ onResult, onError });
   const { setShowingBarcodeScanner } = useContext(GlobalContext);
 
-  // useEffect(() => {
-  //   navigator.mediaDevices
-  //     .getUserMedia({ video: true })
-  //     .then((stream: MediaStream) => {
-  //       if (videoRef.current) {
-  //         videoRef.current.srcObject = stream;
-  //       }
-  //       // startBarcodeScanning();
-  //     })
-  //     .catch((error: Error) => {
-  //       console.error("Error accessing camera:", error);
-  //     });
-  // }, []);
   return (
     <div className="">
       <div className="flex justify-end w-full my-2 mr-4 ">

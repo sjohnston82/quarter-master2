@@ -1,17 +1,10 @@
-import { string, z } from "zod";
+import { z } from "zod";
 import crypto from "crypto";
-import nodemailer from "nodemailer";
 
 import {
-  createTRPCRouter,
-  publicProcedure,
-  protectedProcedure,
+  createTRPCRouter, protectedProcedure
 } from "~/server/api/trpc";
 import { sendEmail } from "~/server/helpers/email";
-
-const inviteSchema = z.object({
-  email: z.string(),
-});
 
 export const inviteRouter = createTRPCRouter({
   addNewInvites: protectedProcedure

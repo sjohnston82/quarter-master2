@@ -1,10 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import Modal from "../ui/Modal";
 import { api, type RouterOutputs } from "~/utils/api";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { GlobalContext } from "~/context/GlobalContextProvider";
 import { MenuItem, TextField } from "@mui/material";
 import {
   groceryStoreAreas,
@@ -69,6 +68,7 @@ const EditShoppingItemModal = ({
     const mutationData = {
       id: shoppingItem.id,
       name: data.name,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       amount: data.amount === 0 ? null : +data.amount!,
       amountType: data.amount === 0 ? null : data.amountType,
       location: data.location,

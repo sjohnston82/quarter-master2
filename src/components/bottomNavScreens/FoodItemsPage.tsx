@@ -2,15 +2,12 @@ import { type SelectChangeEvent } from "@mui/material";
 import { useState, useContext, useRef } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import FoodItems from "../items/FoodItems";
-import { type RouterOutputs } from "~/utils/api";
 import BarcodeScanner from "../barcode/BarcodeScanner";
 import Searchbar from "../ui/Searchbar";
 import FilterByAll from "../items/filters/FilterByAll";
 import FilterByExpiringSoon from "../items/filters/FilterByExpiringSoon";
 import FilterByStorageArea from "../items/filters/FilterByStorageArea";
 import FilterByFoodType from "../items/filters/FilterByFoodType";
-
-type FoodType = RouterOutputs["items"]["getFoodCategoryCount"][0];
 
 const FoodItemsPage = () => {
   const { showingBarcodeScanner } = useContext(GlobalContext);
@@ -23,7 +20,6 @@ const FoodItemsPage = () => {
   
 
   const foodTypeRef = useRef<HTMLSelectElement>(null);
-
   const storageAreaRef = useRef<HTMLSelectElement>(null);
 
   const handleChange = (event: SelectChangeEvent) => {

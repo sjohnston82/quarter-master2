@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { type RouterOutputs, api } from "~/utils/api";
 import EditIcon from "@mui/icons-material/Edit";
-import EditItemModal from "../items/optionsMenu/EditItemModal";
 import EditShoppingItemModal from "./EditShoppingItemModal";
 
 interface ShoppingListItemProps {
