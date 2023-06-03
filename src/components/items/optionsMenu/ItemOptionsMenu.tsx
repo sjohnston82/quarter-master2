@@ -38,6 +38,7 @@ const ItemOptionsMenu = ({
     showingAddToShoppingFromItemsModal,
     setShowingAddToShoppingFromItemsModal,
   ] = useState(false);
+  const [checked, setChecked] = useState(false);
 
   const handleUpdateQuantity = () => {
     handleClose();
@@ -103,7 +104,8 @@ const ItemOptionsMenu = ({
         setShowingAddToShoppingFromItemsModal={
           setShowingAddToShoppingFromItemsModal
         }
-
+        checked={checked}
+        setChecked={setChecked}
       />
       <AddToShoppingFromItems
         showingAddToShoppingFromItemsModal={showingAddToShoppingFromItemsModal}
@@ -111,6 +113,7 @@ const ItemOptionsMenu = ({
           setShowingAddToShoppingFromItemsModal
         }
         item={item}
+        checked={checked}
       />
     </div>
   );

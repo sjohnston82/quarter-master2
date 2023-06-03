@@ -16,11 +16,6 @@ type FoodType = RouterOutputs["items"]["getFoodCategoryCount"][0];
 const FilterByFoodType = ({filterItemsCategory, handleChange, foodTypeRef, selectedFoodCategory, setSelectedFoodCategory}: FilterByFoodTypeProps) =>{
   const { householdId } = useContext(GlobalContext)
   const [foodTypesList, setFoodTypesList] = useState<FoodType[]>();
-  // const [selectedFoodCategory, setSelectedFoodCategory] = useState<{
-  //   name: string;
-  //   count: number;
-  //   ids: string[];
-  // } | null>(null);
 
   const getFoodTypesRoute = api.useContext().items;
   const getFoodTypes = api.items.getFoodCategoryCount.useQuery({

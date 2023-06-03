@@ -20,6 +20,7 @@ const FoodItemsPage = () => {
     count: number;
     ids: string[];
   } | null>(null);
+  
 
   const foodTypeRef = useRef<HTMLSelectElement>(null);
 

@@ -16,6 +16,8 @@ interface DeleteConfirmationProps {
   setShowingAddToShoppingFromItemsModal: React.Dispatch<
     React.SetStateAction<boolean>
   >;
+  checked: boolean;
+  setChecked: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const DeleteConfirmationModal = ({
@@ -25,11 +27,13 @@ const DeleteConfirmationModal = ({
   showingAddToShoppingFromItemsModal,
   showingDeleteConfirmationModal,
   setShowingDeleteConfirmationModal,
+  checked,
+  setChecked
 }: DeleteConfirmationProps) => {
-  const [checked, setChecked] = useState(false);
   const handleAddToShoppingList = () => {
     checked && setShowingAddToShoppingFromItemsModal(true);
     setShowingDeleteConfirmationModal(false);
+    // await deleteItemRoute.invalidate();
   };
   const deleteItemRoute = api.useContext().items;
   const deleteItem = api.items.deleteItem.useMutation({
@@ -69,7 +73,7 @@ const DeleteConfirmationModal = ({
           </button>
         </div>
       </div>
-      <div className="flex justify-center mt-2">
+      <div className="mt-2 flex justify-center">
         <FormControlLabel
           control={<Checkbox checked={checked} onChange={handleChange} />}
           label="Add to Shopping List"

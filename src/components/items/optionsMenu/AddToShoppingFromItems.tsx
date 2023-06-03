@@ -19,6 +19,7 @@ interface AddToShoppingFromItemsProps {
     React.SetStateAction<boolean>
   >;
   item: Item;
+  checked: boolean;
 }
 
 interface ShoppingListInputProps {
@@ -32,6 +33,7 @@ const AddToShoppingFromItems = ({
   showingAddToShoppingFromItemsModal,
   setShowingAddToShoppingFromItemsModal,
   item,
+  checked,
 }: AddToShoppingFromItemsProps) => {
   const { householdId } = useContext(GlobalContext);
   const {
@@ -46,10 +48,12 @@ const AddToShoppingFromItems = ({
     },
   });
   const addToShoppingListRoute = api.useContext().shoppingList;
+  const deleteItemRoute = api.useContext().items;
   const addToShoppingList = api.shoppingList.addToShoppingList.useMutation({
     onSuccess: async () => {
       toast.success("Item added to shopping list.");
       await addToShoppingListRoute.getAllShoppingListItems.invalidate();
+      checked && (await deleteItemRoute.invalidate());
     },
   });
 
