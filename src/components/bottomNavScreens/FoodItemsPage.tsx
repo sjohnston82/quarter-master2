@@ -37,7 +37,7 @@ const FoodItemsPage = () => {
           <div className="w-full ">
             <Searchbar />
           </div>
-          <div className="">
+          <div className="-mt-2">
             {filterItemsCategory === "All" && (
               <FilterByAll
                 filterItemsCategory={filterItemsCategory}

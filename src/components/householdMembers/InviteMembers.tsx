@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import SubmitButton from "../ui/SubmitButton";
 
 interface InviteInputProps {
   email: string;
@@ -74,13 +75,13 @@ const InviteMembers = () => {
             <div className="flex w-full flex-col">
               <div className="flex w-full gap-2">
                 <input
-                  type="email"
+                  type="text"
                   id="email"
                   className="w-full rounded-lg border border-slate-300 p-1 pl-3 placeholder:text-slate-600"
                   {...register("email")}
                   placeholder="Enter email..."
                 />
-                <button className="font-semibold ">Invite</button>
+                <SubmitButton className="font-semibold ">Invite</SubmitButton>
               </div>
               {errors.email?.message && (
                 <p className="text-sm italic text-red-500">
@@ -89,7 +90,9 @@ const InviteMembers = () => {
               )}
             </div>
           </form>
-          <div className="flex flex-col"></div>
+          <div className="flex flex-col">
+            <p className="text-xs"><span className="font-semibold">Note:</span>  If you are inviting a member who intends to log in with Facebook authentication, (not a gmail address), ensure you send the invite to the email that they log into Facebook with.</p>
+          </div>
         </div>
         <div className=""></div>
       </Modal>

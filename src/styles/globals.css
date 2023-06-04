@@ -1,13 +1,13 @@
 @tailwind base;
 html {
   scroll-behavior: smooth;
+  background-color: "#f2f6f9";
 }
 @tailwind components;
 @tailwind utilities;
 
 body {
   font-family: "Roboto";
-  background-color: "#f2f6f9";
 }
 
 @layer base {

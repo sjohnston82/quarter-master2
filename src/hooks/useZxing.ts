@@ -10,7 +10,7 @@ import { toast } from "react-hot-toast";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 
 interface ZxingOptions {
-  hints?: Map<DecodeHintType, any>;
+  hints?: Map<DecodeHintType, unknown>;
   constraints?: MediaStreamConstraints;
   timeBetweenDecodingAttempts?: number;
   onResult?: (result: Result) => void;
