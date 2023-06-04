@@ -31,9 +31,9 @@ const FoodItems = ({
   );
 
   return (
-    <div className="mt-2">
+    <div className="mt-2 sm:bg-schooner sm:flex sm:flex-col">
       {sortType === "All" && (
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col ">
           <Banner>All Food Items</Banner>
           {getAllItemsInfinite.isLoading && (
             <div className="flex flex-col items-center justify-center">
