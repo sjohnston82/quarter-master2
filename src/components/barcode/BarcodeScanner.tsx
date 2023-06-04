@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext } from "react";
 import { useZxing } from "../../hooks/useZxing";
 import Button from "../ui/Button";
 import { GlobalContext } from "~/context/GlobalContextProvider";

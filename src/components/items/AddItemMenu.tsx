@@ -1,4 +1,5 @@
-import { useContext, useState } from "react";
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+import { useContext, useEffect, useState } from "react";
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
 import { AiOutlineBarcode } from "react-icons/ai";
 import { IoAddCircleSharp } from "react-icons/io5";
@@ -6,6 +7,16 @@ import { BsHouseAdd } from "react-icons/bs";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import AddItemForm from "./AddItemForm";
 import CreateStorageArea from "../storageAreas/CreateStorageArea";
+import { useForm } from "react-hook-form";
+import { type UPCInfo } from "~/context/GlobalContextProvider";
+import { toast } from "react-hot-toast";
+
+type NewItemInputProps = {
+  name: string;
+  amount: string;
+  amountType: string;
+  storageAreaId: string;
+};
 
 const AddItemMenu = () => {
   const {
@@ -14,8 +25,59 @@ const AddItemMenu = () => {
     showingBarcodeScanner,
     showingAddItemModal,
     setShowingCreateStorageAreaModal,
+
+    barcode,
+    setBarcode,
+    currentItemByUPC,
+    setCurrentItemByUPC,
+    setFetchingProductInfo,
   } = useContext(GlobalContext);
+
+  const { reset } = useForm<NewItemInputProps>();
   const [showingMenu, setShowingMenu] = useState(false);
+
+  useEffect(() => {
+    const apiUrl =
+      "https://api.codetabs.com/v1/proxy?quest=https://brocade.io/api/items/";
+    function getUPCInfo() {
+      if (barcode !== null) {
+        setFetchingProductInfo(true);
+        fetch(`${apiUrl}${barcode}`)
+          .then((response) => {
+            if (!response.ok) {
+              toast.error("Produce info not found.  Please add manually.");
+              throw new Error("Request failed");
+            }
+            return response;
+          })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            setCurrentItemByUPC(data as UPCInfo);
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            if (data.error) {
+              toast.error(
+                "Unable to obtain product info.  Please add item manually."
+              );
+            }
+            setBarcode(null);
+          })
+
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
+      }
+    }
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    getUPCInfo();
+  }, [barcode, setBarcode, setCurrentItemByUPC, setFetchingProductInfo]);
+  useEffect(() => {
+    if (currentItemByUPC !== null) {
+      setFetchingProductInfo(false);
+      reset(currentItemByUPC);
+      setShowingAddItemModal(true);
+    }
+  }, [currentItemByUPC, reset, setShowingAddItemModal, setFetchingProductInfo]);
 
   const handleAddItemManually = () => {
     setShowingAddItemModal(true);

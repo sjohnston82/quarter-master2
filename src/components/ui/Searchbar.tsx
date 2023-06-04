@@ -29,8 +29,8 @@ const Searchbar = () => {
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 strokeWidth="2"
                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
               ></path>
@@ -41,7 +41,7 @@ const Searchbar = () => {
             value={searchTerm}
             id="default-search"
             onInput={(e) => handleChange(e)}
-            className=" shadow flex w-full  rounded-lg border border-gray-300 bg-slate-50 p-4 pl-10 text-sm text-woodsmoke focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            className=" flex w-full rounded-lg  border border-gray-300 bg-slate-50 p-4 pl-10 text-sm text-woodsmoke shadow focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
             placeholder="Search for items..."
             required
           />
