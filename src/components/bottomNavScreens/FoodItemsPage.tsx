@@ -27,7 +27,7 @@ const FoodItemsPage = () => {
   };
 
   return (
-    <div className="bg-snow">
+    <div className="bg-snow text-woodsmoke">
       {showingBarcodeScanner ? (
         <div className="">
           <BarcodeScanner />

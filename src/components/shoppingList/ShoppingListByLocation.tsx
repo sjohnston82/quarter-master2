@@ -9,8 +9,10 @@ interface ShoppingListByLocationProps {
   isLoading: boolean;
 }
 
-const ShoppingListByLocation = ({data, isLoading}: ShoppingListByLocationProps) => {
-
+const ShoppingListByLocation = ({
+  data,
+  isLoading,
+}: ShoppingListByLocationProps) => {
   const produceItems = data?.filter((item) => item.location === "Produce");
   const meatItems = data?.filter((item) => item.location === "Meats");
   const dryGoodsItems = data?.filter(
@@ -25,16 +27,13 @@ const ShoppingListByLocation = ({data, isLoading}: ShoppingListByLocationProps) 
   const personalCareItems = data?.filter(
     (item) => item.location === "Personal Care"
   );
-  const deliItems = data?.filter(
-    (item) => item.location === "Deli"
-  );
+  const deliItems = data?.filter((item) => item.location === "Deli");
   const bakeryItems = data?.filter((item) => item.location === "Bakery");
   const otherItems = data?.filter((item) => item.location === "Other");
   const uncategorized = data?.filter((item) => item.location === "");
 
   return (
-    <div className="flex w-full flex-col">
-
+    <div className="flex w-full flex-col bg-snow text-woodsmoke">
       {isLoading && <LoadingSpinner size={40} />}
       {/* this div renders first if the lists are not empty */}
       <div className="">

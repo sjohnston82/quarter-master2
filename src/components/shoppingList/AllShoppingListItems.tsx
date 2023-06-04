@@ -15,7 +15,7 @@ const AllShoppingListItems = ({
   isLoading,
 }: AllShoppingListItemsProps) => {
   return (
-    <div className="relative h-full w-full">
+    <div className="relative h-full w-full bg-snow text-woodsmoke">
       <Banner fontSize="text-xl">
         All Shopping List Items
       </Banner>

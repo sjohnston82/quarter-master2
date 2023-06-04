@@ -55,7 +55,7 @@ const ShoppingListPage = () => {
   }, [deleteAllCompletedItems]);
 
   return (
-    <div>
+    <div className="bg-snow text-woodsmoke">
       <div className="m-4 flex justify-between">
         <Button
           fontSize="text-lg"
@@ -73,7 +73,7 @@ const ShoppingListPage = () => {
         <TextField
           // size="small"
           select
-          className="w-1/2"
+          className="w-1/2 bg-snow"
           defaultValue="all"
           helperText="Choose a filter method"
           onChange={(e) => handleFilterChange(e)}
