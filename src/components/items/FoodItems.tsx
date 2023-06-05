@@ -20,9 +20,10 @@ interface FoodItemsProps {
 const FoodItems = ({
   sortType,
   storageAreaId,
-  selectedFoodCategory
+  selectedFoodCategory,
 }: FoodItemsProps) => {
-  const { householdId, debouncedValue, searchingForProduct } = useContext(GlobalContext);
+  const { householdId, debouncedValue, searchingForProduct } =
+    useContext(GlobalContext);
   const getAllItemsInfinite = api.items.getAllItemsInfinite.useInfiniteQuery(
     { householdId },
     {
@@ -31,9 +32,13 @@ const FoodItems = ({
   );
 
   return (
-    <div className="mt-2 sm:bg-schooner sm:flex sm:flex-col">
-      {searchingForProduct ? (<div className="flex flex-col"><p className="text-center">Searching for product info...</p><LoadingSpinner size={60} /></div>) : 
-      sortType === "All" ? (
+    <div className="mt-2 sm:flex sm:flex-col sm:bg-schooner">
+      {searchingForProduct ? (
+        <div className="flex w-full flex-col items-center justify-center">
+          <p className="text-center">Searching for product info...</p>
+          <LoadingSpinner size={60} />
+        </div>
+      ) : sortType === "All" ? (
         <div className="flex flex-col ">
           <Banner>All Food Items</Banner>
           {getAllItemsInfinite.isLoading && (
@@ -78,17 +83,16 @@ const FoodItems = ({
                 .map((item) => <Item key={item.id} {...item} />)}
           </InfiniteScroll>
         </div>
-      ) :
-      sortType === "Storage Area" ? (
+      ) : sortType === "Storage Area" ? (
         <ItemsByStorageArea storageAreaId={storageAreaId!} />
-      ) :
-      sortType === "Food Type" ? (
-        <ItemsByFoodType selectedFoodCategory={selectedFoodCategory}/>
-      ) :
-      sortType === "Expiring Soon" && (
-        <div className="flex flex-col gap-1">
-          <ItemsByExpiringSoon />
-        </div>
+      ) : sortType === "Food Type" ? (
+        <ItemsByFoodType selectedFoodCategory={selectedFoodCategory} />
+      ) : (
+        sortType === "Expiring Soon" && (
+          <div className="flex flex-col gap-1">
+            <ItemsByExpiringSoon />
+          </div>
+        )
       )}
     </div>
   );
