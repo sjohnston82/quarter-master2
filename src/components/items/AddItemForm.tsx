@@ -14,7 +14,6 @@ import { toast } from "react-hot-toast";
 import { type DateValidationError } from "@mui/x-date-pickers";
 import LoadingSpinner from "../ui/LoadingSpinner";
 
-
 interface AddItemManuallyInputProps {
   name: string;
   brand_name: string;
@@ -54,7 +53,6 @@ const AddItemForm = () => {
     setShowingAddItemModal,
     showingAddItemModal,
     currentItemByUPC,
-    fetchingProductInfo,
   } = useContext(GlobalContext);
 
   const [amount, setAmount] = useState("1");
@@ -124,197 +122,188 @@ const AddItemForm = () => {
       onClose={() => setShowingAddItemModal(false)}
       title="Add Item"
     >
-      {fetchingProductInfo ? (
-        <div className="flex h-80 flex-col items-center justify-center">
-          <p className="font-semibold">Retrieving product info...</p>
-          <LoadingSpinner size={60} />
-        </div>
-      ) : (
-        getStorageAreas.data && (
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="mt-2 flex flex-col space-y-2"
-          >
+      {getStorageAreas.data && (
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="mt-2 flex flex-col space-y-2"
+        >
+          <TextField
+            variant="outlined"
+            {...register("name")}
+            required
+            fullWidth
+            name="name"
+            label="Item Name"
+            type="text"
+            id="name"
+          />
+          {errors.name?.message && (
+            <p className="text-sm italic text-red-500">
+              {errors.name?.message}
+            </p>
+          )}
+          <div className="flex gap-1">
+            <div className="flex flex-col">
+              <TextField
+                variant="outlined"
+                {...register("brand_name")}
+                name="brand"
+                label="Brand"
+                type="text"
+                id="brand"
+              />
+            </div>
             <TextField
               variant="outlined"
-              {...register("name")}
-              required
-              fullWidth
-              name="name"
-              label="Item Name"
+              {...register("flavor")}
+              name="flavor"
+              label="Flavor"
               type="text"
-              id="name"
+              id="flavor"
             />
-            {errors.name?.message && (
+            {errors.flavor?.message && (
               <p className="text-sm italic text-red-500">
-                {errors.name?.message}
+                {errors.flavor?.message}
               </p>
             )}
-            <div className="flex gap-1">
-              <div className="flex flex-col">
-                <TextField
-                  variant="outlined"
-                  {...register("brand_name")}
-                  name="brand"
-                  label="Brand"
-                  type="text"
-                  id="brand"
-                />
-              </div>
-              <TextField
-                variant="outlined"
-                {...register("flavor")}
-                name="flavor"
-                label="Flavor"
-                type="text"
-                id="flavor"
-              />
-              {errors.flavor?.message && (
-                <p className="text-sm italic text-red-500">
-                  {errors.flavor?.message}
-                </p>
-              )}
-            </div>
-            {errors.brand_name?.message && (
-              <p className="text-sm italic text-red-500">
-                {errors.brand_name?.message}
-              </p>
-            )}
-            <div className="flex items-center justify-between">
-              <TextField
-                variant="outlined"
-                {...register("amount")}
-                name="amount"
-                id="amount"
-                type="number"
-                label="Amount"
-                defaultValue={parseInt(amount)}
-                required
-                className="w-2/5"
-                onChange={(e) => setAmount(e.target.value)}
-              />
-
-              <TextField
-                className="w-[59%]"
-                id="amountType"
-                select
-                label="Amount Type"
-                defaultValue=""
-                {...register("amountType")}
-              >
-                {packageTypes.map((type, i) => (
-                  <MenuItem
-                    key={i}
-                    value={amount === "1" ? type.singular : type.plural}
-                  >
-                    {amount === "1" ? type.singular : type.plural}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div>
-            {errors.amount?.message && (
-              <p className="text-sm italic text-red-500">
-                {errors.amount?.message}
-              </p>
-            )}
-            <LocalizationProvider
-              dateAdapter={AdapterDayjs}
-            >
-              <Controller
-                name="expirationDate"
-                defaultValue={undefined}
-                control={control}
-                render={({ field: { ref, onChange } }) => (
-                  <DatePicker
-                    inputRef={ref}
-                    className="mb-1 mt-2"
-                    disablePast
-                    label="Expiration Date"
-                    onChange={(event) => {
-                      onChange(event);
-                    }}
-                    onError={(newError) => setError(newError)}
-                    slotProps={{
-                      textField: {
-                        helperText: error,
-                      },
-                    }}
-                  />
-                )}
-              />
-            </LocalizationProvider>
+          </div>
+          {errors.brand_name?.message && (
+            <p className="text-sm italic text-red-500">
+              {errors.brand_name?.message}
+            </p>
+          )}
+          <div className="flex items-center justify-between">
             <TextField
-              className=""
+              variant="outlined"
+              {...register("amount")}
+              name="amount"
+              id="amount"
+              type="number"
+              label="Amount"
+              defaultValue={parseInt(amount)}
               required
+              className="w-2/5"
+              onChange={(e) => setAmount(e.target.value)}
+            />
+
+            <TextField
+              className="w-[59%]"
+              id="amountType"
               select
-              id="storageArea"
-              label="Storage Area"
-              {...register("storageAreaId")}
+              label="Amount Type"
               defaultValue=""
+              {...register("amountType")}
             >
-              {getStorageAreas.data.map((area) => (
-                <MenuItem key={area.id} value={area.id}>
-                  {area.name}
+              {packageTypes.map((type, i) => (
+                <MenuItem
+                  key={i}
+                  value={amount === "1" ? type.singular : type.plural}
+                >
+                  {amount === "1" ? type.singular : type.plural}
                 </MenuItem>
               ))}
             </TextField>
+          </div>
+          {errors.amount?.message && (
+            <p className="text-sm italic text-red-500">
+              {errors.amount?.message}
+            </p>
+          )}
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Controller
-              render={({ field: { onChange } }) => (
-                <Autocomplete
-                  multiple
-                  filterSelectedOptions
-                  options={foodCategories}
-                  getOptionLabel={(option) => option}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Food categories"
-                      variant="outlined"
-                    />
-                  )}
-                  onChange={(_, data) => {
-                    onChange(data);
-                    return data;
+              name="expirationDate"
+              defaultValue={undefined}
+              control={control}
+              render={({ field: { ref, onChange } }) => (
+                <DatePicker
+                  inputRef={ref}
+                  className="mb-1 mt-2"
+                  disablePast
+                  label="Expiration Date"
+                  onChange={(event) => {
+                    onChange(event);
+                  }}
+                  onError={(newError) => setError(newError)}
+                  slotProps={{
+                    textField: {
+                      helperText: error,
+                    },
                   }}
                 />
               )}
-              name="foodCategories"
-              control={control}
             />
-            <button
-              type="submit"
-              className="mt-3 rounded-xl border border-slate-700 p-1 disabled:border-slate-400 disabled:text-slate-400"
-            >
-              Create Item
-            </button>
-            <p
-              className="cursor-pointer text-sm underline"
-              onClick={() => setShowingMessage(!showingMessage)}
-            >
-              Having trouble with barcodes not being found?
-            </p>
-            {showingMessage && (
-              <p className="text-sm">
-                Quartermaster uses a free and open-source API to provide product
-                information from barcodes, and it doesn&apos;t have as many
-                products as some of it&apos;s for-profit competitors. If you are
-                looking to contribute to it so that is more robust and so that
-                you can add more items you use by barcode, visit{" "}
-                <a
-                  href="https://brocade.io"
-                  className="text-blue-600 underline"
-                  target="_blank"
-                >
-                  brocade.io
-                </a>{" "}
-                and create a free account. With your account you can add
-                products by typing in the UPC code found at the bottom of your
-                barcode and a product name so that next time you go to scan it
-                it will be present in the API database.
-              </p>
+          </LocalizationProvider>
+          <TextField
+            className=""
+            required
+            select
+            id="storageArea"
+            label="Storage Area"
+            {...register("storageAreaId")}
+            defaultValue=""
+          >
+            {getStorageAreas.data.map((area) => (
+              <MenuItem key={area.id} value={area.id}>
+                {area.name}
+              </MenuItem>
+            ))}
+          </TextField>
+          <Controller
+            render={({ field: { onChange } }) => (
+              <Autocomplete
+                multiple
+                filterSelectedOptions
+                options={foodCategories}
+                getOptionLabel={(option) => option}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Food categories"
+                    variant="outlined"
+                  />
+                )}
+                onChange={(_, data) => {
+                  onChange(data);
+                  return data;
+                }}
+              />
             )}
-          </form>
-        )
+            name="foodCategories"
+            control={control}
+          />
+          <button
+            type="submit"
+            className="mt-3 rounded-xl border border-slate-700 p-1 disabled:border-slate-400 disabled:text-slate-400"
+          >
+            Create Item
+          </button>
+          <p
+            className="cursor-pointer text-sm underline"
+            onClick={() => setShowingMessage(!showingMessage)}
+          >
+            Having trouble with barcodes not being found?
+          </p>
+          {showingMessage && (
+            <p className="text-sm">
+              Quartermaster uses a free and open-source API to provide product
+              information from barcodes, and it doesn&apos;t have as many
+              products as some of it&apos;s for-profit competitors. If you are
+              looking to contribute to it so that is more robust and so that you
+              can add more items you use by barcode, visit{" "}
+              <a
+                href="https://brocade.io"
+                className="text-blue-600 underline"
+                target="_blank"
+              >
+                brocade.io
+              </a>{" "}
+              and create a free account. With your account you can add products
+              by typing in the UPC code found at the bottom of your barcode and
+              a product name so that next time you go to scan it it will be
+              present in the API database.
+            </p>
+          )}
+        </form>
       )}
     </Modal>
   );
