@@ -45,14 +45,13 @@ const AddItemMenu = () => {
       "https://api.codetabs.com/v1/proxy?quest=https://brocade.io/api/items/";
     function getUPCInfo() {
       if (barcode !== null) {
-        setFetchingProductInfo(true);
+        setSearchingForProduct(true);
         fetch(`${apiUrl}${barcode}`)
           .then((response) => {
             if (!response.ok) {
               toast.error("Produce info not found.  Please add manually.");
               throw new Error("Request failed");
             }
-            setSearchingForProduct(true);
             return response;
           })
           .then((response) => response.json())
@@ -76,7 +75,7 @@ const AddItemMenu = () => {
     }
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getUPCInfo();
-  }, [barcode, setBarcode, setCurrentItemByUPC, setFetchingProductInfo]);
+  }, [barcode, setBarcode, setCurrentItemByUPC, setSearchingForProduct]);
   useEffect(() => {
     if (currentItemByUPC !== null) {
       setFetchingProductInfo(false);
