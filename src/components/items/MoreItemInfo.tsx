@@ -15,25 +15,37 @@ const MoreItemInfo = ({ ...item }: Item) => {
 
   return (
     <div className="">
-      <div className="flex w-full">
-        <div className="flex  w-1/3 flex-col ">
-          <p className="text-center font-semibold">Expiration Date</p>
-          <p className="text-center ">
-            {item.expirationDate !== undefined && item.expirationDate !== null && dayjs(item.expirationDate).format("MM/DD/YYYY")}
-          </p>
+      <div className="flex w-full flex-col gap-5 sm:flex-row">
+        <div className="mx-auto flex w-4/5 sm:w-full justify-center">
+          <div className="flex  w-1/2 flex-col sm:w-full  ">
+            <p className="text-center font-semibold">Expiration Date</p>
+            <p className="text-center ">
+              {item.expirationDate !== undefined && item.expirationDate !== null
+                ? dayjs(item.expirationDate).format("MM/DD/YYYY")
+                : "No date given"}
+            </p>
+          </div>
+          <div className="flex  w-1/2 flex-col sm:w-full ">
+            <p className="text-center font-semibold">Storage Area</p>
+            <p className="text-center ">{item.storageAreaName}</p>
+          </div>
         </div>
-        <div className="flex  w-1/3 flex-col ">
-          <p className="text-center font-semibold">Brand</p>
-          <p className="text-center ">{item.brand}</p>
-        </div>
-        <div className="flex  w-1/3 flex-col ">
-          <p className="text-center font-semibold">Flavor</p>
-          <p className="text-center ">{item.flavor}</p>
+        <div className="mx-auto flex w-4/5 sm:w-full justify-center">
+          <div className="flex w-1/2  flex-col  sm:w-full ">
+            <p className="text-center font-semibold">Brand</p>
+            <p className="text-center ">{item.brand}</p>
+          </div>
+          <div className="flex w-1/2  flex-col sm:w-full ">
+            <p className="text-center font-semibold">Flavor</p>
+            <p className="text-center ">{item.flavor}</p>
+          </div>
         </div>
       </div>
 
-      <div className="flex gap-2 flex-wrap justify-center my-4 mx-2">
-        {item.foodCategories.map((category, i) => <Chip key={i} label={category} />)}
+      <div className="mx-2 my-4 flex flex-wrap justify-center gap-2">
+        {item.foodCategories.map((category, i) => (
+          <Chip key={i} label={category} />
+        ))}
       </div>
     </div>
   );

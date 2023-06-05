@@ -22,7 +22,7 @@ const FoodItems = ({
   storageAreaId,
   selectedFoodCategory
 }: FoodItemsProps) => {
-  const { householdId, debouncedValue } = useContext(GlobalContext);
+  const { householdId, debouncedValue, searchingForProduct } = useContext(GlobalContext);
   const getAllItemsInfinite = api.items.getAllItemsInfinite.useInfiniteQuery(
     { householdId },
     {
@@ -32,7 +32,8 @@ const FoodItems = ({
 
   return (
     <div className="mt-2 sm:bg-schooner sm:flex sm:flex-col">
-      {sortType === "All" && (
+      {searchingForProduct ? (<div className="flex flex-col"><p className="text-center">Searching for product info...</p><LoadingSpinner size={60} /></div>) : 
+      sortType === "All" ? (
         <div className="flex flex-col ">
           <Banner>All Food Items</Banner>
           {getAllItemsInfinite.isLoading && (
@@ -52,7 +53,7 @@ const FoodItems = ({
             endMessage={
               !getAllItemsInfinite.isLoading && (
                 <p style={{ textAlign: "center" }}>
-                  <b>No more items.</b>
+                  <b>End of items.</b>
                 </p>
               )
             }
@@ -77,14 +78,14 @@ const FoodItems = ({
                 .map((item) => <Item key={item.id} {...item} />)}
           </InfiniteScroll>
         </div>
-      )}
-      {sortType === "Storage Area" && (
+      ) :
+      sortType === "Storage Area" ? (
         <ItemsByStorageArea storageAreaId={storageAreaId!} />
-      )}
-      {sortType === "Food Type" && (
+      ) :
+      sortType === "Food Type" ? (
         <ItemsByFoodType selectedFoodCategory={selectedFoodCategory}/>
-      )}
-      {sortType === "Expiring Soon" && (
+      ) :
+      sortType === "Expiring Soon" && (
         <div className="flex flex-col gap-1">
           <ItemsByExpiringSoon />
         </div>

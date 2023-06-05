@@ -19,7 +19,7 @@ const Item = ({ ...item }: Item) => {
   };
 
   return (
-    <div className="flex w-full sm:w-[90%] sm:mx-auto sm:bg-snow sm:rounded sm:my-2 flex-col overflow-hidden">
+    <div className="flex sm:shadow-lg w-full sm:w-[90%] sm:mx-auto sm:bg-snow sm:rounded sm:my-2 flex-col overflow-hidden">
       <div className="relative flex flex-col border-t-4 sm:border-none">
         <div className="ml-2 mr-6 flex justify-between border-b border-woodsmoke py-2">
           <div className="w-2/5 flex-wrap">
@@ -43,7 +43,7 @@ const Item = ({ ...item }: Item) => {
               )}
             </p>
           </div>
-          <div className="absolute -right-4 top-0">
+          <div className="absolute -right-3 top-0">
             <Button
               id="basic-button"
               aria-controls={open ? "basic-menu" : undefined}
@@ -63,6 +63,7 @@ const Item = ({ ...item }: Item) => {
         </div>
         {showingMoreInfo ? (
           <div className="mx-2 flex justify-end">
+            
             <ExpandLessIcon onClick={() => setShowingMoreInfo(false)} />
           </div>
         ) : (

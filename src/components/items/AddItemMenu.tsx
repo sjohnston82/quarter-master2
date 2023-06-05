@@ -10,6 +10,7 @@ import CreateStorageArea from "../storageAreas/CreateStorageArea";
 import { useForm } from "react-hook-form";
 import { type UPCInfo } from "~/context/GlobalContextProvider";
 import { toast } from "react-hot-toast";
+import { TooltipClasses } from "@mui/material";
 
 type NewItemInputProps = {
   name: string;
@@ -31,10 +32,13 @@ const AddItemMenu = () => {
     currentItemByUPC,
     setCurrentItemByUPC,
     setFetchingProductInfo,
+    searchingForProduct,
+    setSearchingForProduct,
   } = useContext(GlobalContext);
 
   const { reset } = useForm<NewItemInputProps>();
   const [showingMenu, setShowingMenu] = useState(false);
+  // const [searchingForProduct, setSearchingForProduct] = useState(false)
 
   useEffect(() => {
     const apiUrl =
@@ -48,12 +52,14 @@ const AddItemMenu = () => {
               toast.error("Produce info not found.  Please add manually.");
               throw new Error("Request failed");
             }
+            setSearchingForProduct(true);
             return response;
           })
           .then((response) => response.json())
           .then((data) => {
             console.log(data);
             setCurrentItemByUPC(data as UPCInfo);
+            setSearchingForProduct(false);
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             if (data.error) {
               toast.error(
@@ -115,6 +121,9 @@ const AddItemMenu = () => {
     },
   ];
 
+  const tooltipClasses: Partial<TooltipClasses> = {
+    tooltip: "custom-tooltip-class",
+  };
   return (
     <div className="mt-2  ">
       <SpeedDial
@@ -144,9 +153,13 @@ const AddItemMenu = () => {
                 top: action.top,
                 right: -8,
                 opacity: 1,
+                tooltip: {
+                  backgroundColor: "red",
+                },
               }}
               FabProps={{ size: "large", color: "success" }}
               onClick={action.action}
+              TooltipClasses={tooltipClasses}
             />
           );
         })}
