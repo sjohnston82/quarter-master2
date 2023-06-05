@@ -32,7 +32,7 @@ const FoodItems = ({
   );
 
   return (
-    <div className="mt-2 sm:flex sm:flex-col sm:bg-schooner">
+    <div className="mt-2 sm:flex sm:flex-col bg-schooner">
       {searchingForProduct ? (
         <div className="flex w-full flex-col items-center justify-center">
           <p className="text-center">Searching for product info...</p>

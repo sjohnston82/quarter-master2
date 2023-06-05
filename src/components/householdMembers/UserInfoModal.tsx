@@ -66,9 +66,9 @@ const UserInfoModal = ({
 
             {sessionData?.user.role === "ADMIN" && (
               <div className="">
-                <div className="mt-3 flex gap-4">
+                <div className="mt-3 flex gap-4 justify-center">
                   <button
-                    className="rounded-3xl border border-slate-800 text-sm font-semibold disabled:border-slate-300 disabled:text-slate-400"
+                    className="rounded-3xl px-2 py-1 border border-slate-800 text-sm font-semibold disabled:border-slate-300 disabled:text-slate-400"
                     disabled={
                       currUser?.role === "ADMIN" ||
                       currUser?.id === sessionData.user.id
@@ -77,7 +77,7 @@ const UserInfoModal = ({
                     Promote to Admin
                   </button>
                   <button
-                    className="rounded-3xl border border-slate-800 text-sm font-semibold disabled:border-slate-300 disabled:text-slate-400"
+                    className="rounded-3xl px-2 border border-slate-800 text-sm font-semibold disabled:border-slate-300 disabled:text-slate-400"
                     onClick={() => setShowConfirmationModal(true)}
                     disabled={currUser?.role === "ADMIN"}
                   >

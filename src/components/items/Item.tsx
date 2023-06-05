@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { type RouterOutputs } from "~/utils/api";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import { Button, Chip } from "@mui/material";
-import dayjs from "dayjs";
+import { Button } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ItemOptionsMenu from "./optionsMenu/ItemOptionsMenu";
 import MoreItemInfo from "./MoreItemInfo";
@@ -19,7 +18,7 @@ const Item = ({ ...item }: Item) => {
   };
 
   return (
-    <div className="flex sm:shadow-lg w-full sm:w-[90%] sm:mx-auto sm:bg-snow sm:rounded sm:my-2 flex-col overflow-hidden">
+    <div className="mx-auto my-2 flex w-[95%] flex-col overflow-hidden rounded bg-snow shadow-lg sm:w-[90%]">
       <div className="relative flex flex-col border-t-4 sm:border-none">
         <div className="ml-2 mr-6 flex justify-between border-b border-woodsmoke py-2">
           <div className="w-2/5 flex-wrap">
@@ -63,13 +62,18 @@ const Item = ({ ...item }: Item) => {
         </div>
         {showingMoreInfo ? (
           <div className="mx-2 flex justify-end">
-            
-            <ExpandLessIcon onClick={() => setShowingMoreInfo(false)} />
+            <ExpandLessIcon
+              className="cursor-pointer"
+              onClick={() => setShowingMoreInfo(false)}
+            />
           </div>
         ) : (
           <div className="mx-2 flex items-center justify-between">
-            <p className="text-sm py-2">More Information</p>
-            <ExpandMoreIcon onClick={() => setShowingMoreInfo(true)} />
+            <p className="py-2 text-sm">More Information</p>
+            <ExpandMoreIcon
+              className="cursor-pointer"
+              onClick={() => setShowingMoreInfo(true)}
+            />
           </div>
         )}
         {showingMoreInfo && <MoreItemInfo {...item} />}
