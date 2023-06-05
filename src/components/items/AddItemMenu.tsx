@@ -79,7 +79,7 @@ const AddItemMenu = () => {
       reset(currentItemByUPC);
       setShowingAddItemModal(true);
     }
-  }, [currentItemByUPC, reset, setShowingAddItemModal, setFetchingProductInfo]);
+  }, [currentItemByUPC, reset, setShowingAddItemModal, setSearchingForProduct]);
 
   const handleAddItemManually = () => {
     setShowingAddItemModal(true);
