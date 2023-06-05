@@ -26,12 +26,10 @@ const AddItemMenu = () => {
     showingBarcodeScanner,
     showingAddItemModal,
     setShowingCreateStorageAreaModal,
-
     barcode,
     setBarcode,
     currentItemByUPC,
     setCurrentItemByUPC,
-    setFetchingProductInfo,
     searchingForProduct,
     setSearchingForProduct,
   } = useContext(GlobalContext);
@@ -78,7 +76,6 @@ const AddItemMenu = () => {
   }, [barcode, setBarcode, setCurrentItemByUPC, setSearchingForProduct]);
   useEffect(() => {
     if (currentItemByUPC !== null) {
-      setFetchingProductInfo(false);
       reset(currentItemByUPC);
       setShowingAddItemModal(true);
     }
