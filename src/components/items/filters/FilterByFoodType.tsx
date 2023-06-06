@@ -36,7 +36,7 @@ const FilterByFoodType = ({filterItemsCategory, handleChange, foodTypeRef, selec
    };
 
   return (
-    <div className="mt-2 flex w-full gap-1 px-2">
+    <div className="mt-2 flex w-full gap-1 px-2 sm:mx-auto sm:w-4/5">
       <FormControl className="w-full">
         <InputLabel id="filterItemsBy">Filter By:</InputLabel>
         <Select
@@ -45,7 +45,7 @@ const FilterByFoodType = ({filterItemsCategory, handleChange, foodTypeRef, selec
           value={filterItemsCategory}
           label="Filter By"
           onChange={handleChange}
-          className="shadow"
+          className="shadow sm:w-4/5"
         >
           <MenuItem value="All">All</MenuItem>
           <MenuItem value="Storage Area">Storage Area</MenuItem>
@@ -55,8 +55,8 @@ const FilterByFoodType = ({filterItemsCategory, handleChange, foodTypeRef, selec
       </FormControl>
       <TextField
         select
-        label="Food Type"
-        className="w-full shadow"
+        label="Category"
+        className="w-full shadow sm:w-4/5"
         id="foodType"
         inputRef={foodTypeRef}
         onChange={async (e) => {

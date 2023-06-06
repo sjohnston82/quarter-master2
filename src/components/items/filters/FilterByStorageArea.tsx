@@ -16,7 +16,7 @@ const FilterByStorageArea = ({storageAreaRef, filterItemsCategory, handleChange}
     householdId,
   });
   return (
-    <div className="mt-2 flex w-full gap-1 px-2">
+    <div className="mt-2 flex w-full sm:mx-auto sm:w-4/5 gap-1 px-2">
       <FormControl className="w-full">
         <InputLabel id="filterItemsBy">Filter By:</InputLabel>
         <Select
@@ -25,6 +25,7 @@ const FilterByStorageArea = ({storageAreaRef, filterItemsCategory, handleChange}
           value={filterItemsCategory}
           label="Filter By"
           onChange={handleChange}
+          className="sm:w-4/5 "
         >
           <MenuItem value="All">All</MenuItem>
           <MenuItem value="Storage Area">Storage Area</MenuItem>
@@ -35,7 +36,7 @@ const FilterByStorageArea = ({storageAreaRef, filterItemsCategory, handleChange}
       <TextField
         select
         label="Storage area"
-        className="w-full"
+        className="w-full sm:w-4/5"
         id="storageArea"
         inputRef={storageAreaRef}
         onChange={async () => await storageAreaRoute.invalidate()}

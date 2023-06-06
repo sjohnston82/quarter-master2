@@ -8,7 +8,7 @@ interface FilterByExpiringSoonProps {
 
 const FilterByExpiringSoon = ({ filterItemsCategory, handleChange}: FilterByExpiringSoonProps) => {
   return (
-    <div className="mx-auto mt-2 w-4/5">
+    <div className="mx-auto mt-2 w-4/5 sm:w-1/2">
       <FormControl  fullWidth>
         <InputLabel id="filterItemsBy">Filter By:</InputLabel>
         <Select
