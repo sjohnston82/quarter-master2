@@ -8,7 +8,7 @@ import { GlobalContext } from "~/context/GlobalContextProvider";
 const MainLayout = () => {
   const { data: sessionData } = useSession();
   const router = useRouter();
-  const { householdName, setBottomNavValue } = useContext(GlobalContext);
+  const { householdName, setNavValue } = useContext(GlobalContext);
 
   const signOutWithRedirect = () => {
     void signOut();
@@ -26,7 +26,7 @@ const MainLayout = () => {
         <div className="">
           <p
             className="w-full cursor-pointer p-1 text-sm text-snow "
-            onClick={() => setBottomNavValue(2)}
+            onClick={() => setNavValue(2)}
           >
             {householdName && `${householdName} Household`}
           </p>

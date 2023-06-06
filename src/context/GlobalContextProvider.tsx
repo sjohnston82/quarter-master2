@@ -1,11 +1,13 @@
 import React, {
   createContext,
   type SetStateAction,
-  useState
+  useState,
+  useEffect,
 } from "react";
 import { type RouterOutputs } from "~/utils/api";
 import { type Result } from "@zxing/library";
 import useDebounce from "~/hooks/useDebounce";
+import getWindowSize from "~/utils/getWindowSize";
 
 type StorageArea = RouterOutputs["storageAreas"]["getStorageAreas"][0];
 export type UPCInfo = {
@@ -22,8 +24,8 @@ type GlobalContextType = {
   setHouseholdId: React.Dispatch<SetStateAction<string>>;
   householdName: string;
   setHouseholdName: React.Dispatch<SetStateAction<string>>;
-  bottomNavValue: number;
-  setBottomNavValue: React.Dispatch<SetStateAction<number>>;
+  navValue: number;
+  setNavValue: React.Dispatch<SetStateAction<number>>;
   storageAreas: StorageArea[];
   setStorageAreas: React.Dispatch<SetStateAction<StorageArea[]>>;
   showingBarcodeScanner: boolean;
@@ -43,6 +45,12 @@ type GlobalContextType = {
   debouncedValue: string;
   searchingForProduct: boolean;
   setSearchingForProduct: React.Dispatch<React.SetStateAction<boolean>>;
+  windowSize: { innerWidth: number; innerHeight: number };
+  setWindowSize: React.Dispatch<
+    React.SetStateAction<{ innerWidth: number; innerHeight: number }>
+  >;
+  showingSideNav: boolean;
+  setShowingSideNav: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const GlobalContext = createContext<GlobalContextType>(
@@ -53,7 +61,7 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
   const [userRole, setUserRole] = useState("");
   const [householdId, setHouseholdId] = useState<string>("");
   const [householdName, setHouseholdName] = useState<string>("");
-  const [bottomNavValue, setBottomNavValue] = useState(0);
+  const [navValue, setNavValue] = useState(0);
   const [storageAreas, setStorageAreas] = useState<StorageArea[]>([]);
   const [showingBarcodeScanner, setShowingBarcodeScanner] = useState(false);
   const [barcode, setBarcode] = useState<Result | null>(null);
@@ -64,8 +72,22 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [showingCreateStorageAreaModal, setShowingCreateStorageAreaModal] =
     useState(false);
-const [searchingForProduct, setSearchingForProduct] = useState(false);
-  const debouncedValue = useDebounce(searchTerm, 1000);
+  const [searchingForProduct, setSearchingForProduct] = useState(false);
+  const debouncedValue = useDebounce(searchTerm, 750);
+  const [windowSize, setWindowSize] = useState(getWindowSize());
+  const [showingSideNav, setShowingSideNav] = useState(false);
+
+  useEffect(() => {
+    function handleWindowResize() {
+      setWindowSize(getWindowSize());
+    }
+
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, []);
 
   return (
     <GlobalContext.Provider
@@ -76,8 +98,8 @@ const [searchingForProduct, setSearchingForProduct] = useState(false);
         setHouseholdId,
         householdName,
         setHouseholdName,
-        bottomNavValue,
-        setBottomNavValue,
+        navValue,
+        setNavValue,
         storageAreas,
         setStorageAreas,
         showingBarcodeScanner,
@@ -94,7 +116,11 @@ const [searchingForProduct, setSearchingForProduct] = useState(false);
         showingCreateStorageAreaModal,
         setShowingCreateStorageAreaModal,
         searchingForProduct,
-        setSearchingForProduct
+        setSearchingForProduct,
+        windowSize,
+        setWindowSize,
+        showingSideNav,
+        setShowingSideNav
       }}
     >
       {children}
