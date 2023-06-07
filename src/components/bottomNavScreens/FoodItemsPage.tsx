@@ -17,7 +17,6 @@ const FoodItemsPage = () => {
     count: number;
     ids: string[];
   } | null>(null);
-  
 
   const foodTypeRef = useRef<HTMLSelectElement>(null);
   const storageAreaRef = useRef<HTMLSelectElement>(null);
@@ -27,7 +26,7 @@ const FoodItemsPage = () => {
   };
 
   return (
-    <div className="bg-snow text-woodsmoke flex-1 h-full">
+    <div className="h-full flex-1 bg-snow text-woodsmoke">
       {showingBarcodeScanner ? (
         <div className="">
           <BarcodeScanner />
@@ -69,7 +68,7 @@ const FoodItemsPage = () => {
             )}
           </div>
 
-          <div className="mt-2 h-screen flex flex-col">
+          <div className="mt-2 flex min-h-[100vh-172px] flex-col">
             <FoodItems
               sortType={filterItemsCategory}
               storageAreaId={
