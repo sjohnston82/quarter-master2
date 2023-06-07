@@ -27,7 +27,7 @@ const FoodItemsPage = () => {
   };
 
   return (
-    <div className="bg-snow text-woodsmoke">
+    <div className="bg-snow text-woodsmoke flex-1 h-full">
       {showingBarcodeScanner ? (
         <div className="">
           <BarcodeScanner />
@@ -69,7 +69,7 @@ const FoodItemsPage = () => {
             )}
           </div>
 
-          <div className="mt-2">
+          <div className="mt-2 h-screen flex flex-col">
             <FoodItems
               sortType={filterItemsCategory}
               storageAreaId={
