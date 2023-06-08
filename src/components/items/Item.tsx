@@ -18,7 +18,7 @@ const Item = ({ ...item }: Item) => {
   };
 
   return (
-    <div className="mx-auto my-2 flex w-[95%] flex-col overflow-hidden rounded bg-snow shadow-lg sm:w-[90%]">
+    <div className="mx-auto my-2 flex w-[95%] flex-col overflow-hidden rounded bg-snow shadow-lg shadow-black sm:w-[90%]">
       <div className="relative flex flex-col border-t-4 sm:border-none">
         <div className="ml-2 mr-6 flex justify-between border-b border-woodsmoke py-2">
           <div className="w-2/5 flex-wrap">

@@ -10,7 +10,7 @@ interface ItemsByStorageAreaProps {
 }
 
 const ItemsByStorageArea = ({ storageAreaId }: ItemsByStorageAreaProps) => {
-  const { debouncedValue } = useContext(GlobalContext)
+  const { debouncedValue } = useContext(GlobalContext);
   const shouldEnableQuery =
     !!storageAreaId && storageAreaId !== undefined && storageAreaId !== null;
 
@@ -22,7 +22,7 @@ const ItemsByStorageArea = ({ storageAreaId }: ItemsByStorageAreaProps) => {
       enabled: !!storageAreaId,
     }
   );
-  const { data, isLoading } = api.items.getItemsByStorageArea.useQuery(
+  const { data, isLoading, isError } = api.items.getItemsByStorageArea.useQuery(
     {
       storageAreaId,
     },
@@ -33,23 +33,30 @@ const ItemsByStorageArea = ({ storageAreaId }: ItemsByStorageAreaProps) => {
 
   const shouldShowLoading = shouldEnableQuery && isLoading;
   return (
-    <div>
+    <div className="min-h-[calc(100vh-312px)]">
       <Banner>
         {getCurrentStorageArea.data && getCurrentStorageArea.data.name}
       </Banner>
-      {!data && (
-        <p className="text-center bg-snow">Select a storage area to see its items.</p>
+      {isError && (
+        <p className="pt-8 text-center text-lg">
+          There was a problem fetching storage area information.
+        </p>
+      )}
+      {!data && !isLoading && (
+        <p className="pt-8 text-center text-lg">
+          Select a storage area to see its items.
+        </p>
       )}
       {shouldShowLoading && (
         <div className="relative mt-20 flex h-full flex-col items-center justify-center gap-2">
           <div className="absolute  top-1/2 flex h-full w-full flex-col items-center justify-center ">
-            <p className="font-semibold ">Fetching items...</p>
+            <p className="font-semibold text-lg">Fetching items...</p>
             <LoadingSpinner size={60} />
           </div>
         </div>
       )}
       {data?.length === 0 ? (
-        <p className="mx-2 mt-5 text-center">
+        <p className="mx-2 mt-5 text-center text-lg">
           There are no items currently saved in this storage area.
         </p>
       ) : (

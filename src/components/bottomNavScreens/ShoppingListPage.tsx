@@ -56,7 +56,7 @@ const ShoppingListPage = () => {
 
   return (
     <div className="bg-snow text-woodsmoke">
-      <div className="m-4 flex justify-between">
+      <div className="p-4 flex justify-between">
         <Button
           fontSize="text-lg"
           onClick={() => setShowingAddToShoppingListModal(true)}

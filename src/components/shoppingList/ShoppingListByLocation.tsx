@@ -35,6 +35,9 @@ const ShoppingListByLocation = ({
   return (
     <div className="flex w-full flex-col bg-snow text-woodsmoke">
       {isLoading && <LoadingSpinner size={40} />}
+      {data?.length === 0 && (
+        <p className="text-center pt-8 text-lg">Your shopping list is currently empty.</p>
+      )}
       {/* this div renders first if the lists are not empty */}
       <div className="">
         {produceItems && produceItems.length > 0 && (

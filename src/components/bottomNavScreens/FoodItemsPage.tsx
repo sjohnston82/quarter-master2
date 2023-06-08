@@ -26,13 +26,13 @@ const FoodItemsPage = () => {
   };
 
   return (
-    <div className="h-full flex-1 bg-snow text-woodsmoke">
+    <div className="min-h-full flex-1 bg-snow text-woodsmoke">
       {showingBarcodeScanner ? (
         <div className="">
           <BarcodeScanner />
         </div>
       ) : (
-        <div className="w-full">
+        <div className="min-h-[calc(100vh-312px)] w-full">
           <div className="w-full ">
             <Searchbar />
           </div>
@@ -68,7 +68,7 @@ const FoodItemsPage = () => {
             )}
           </div>
 
-          <div className="mt-2 flex min-h-[100vh-172px] flex-col">
+          <div className="mt-2 flex h-full flex-1 flex-col ">
             <FoodItems
               sortType={filterItemsCategory}
               storageAreaId={

@@ -22,7 +22,7 @@ const FoodItems = ({
   storageAreaId,
   selectedFoodCategory,
 }: FoodItemsProps) => {
-  const { householdId, debouncedValue, searchingForProduct } =
+  const { householdId, debouncedValue, searchingForProduct, storageAreas } =
     useContext(GlobalContext);
   const getAllItemsInfinite = api.items.getAllItemsInfinite.useInfiniteQuery(
     { householdId },
@@ -31,57 +31,84 @@ const FoodItems = ({
     }
   );
 
+
   return (
-    <div className="mt-2 sm:flex sm:flex-col h-full flex-1  bg-schooner">
+    <div className="mt-2 min-h-[calc(100vh-312px)] flex-1 bg-slate-400 sm:flex sm:flex-col ">
       {searchingForProduct ? (
         <div className="flex w-full flex-col items-center justify-center">
-          <p className="text-center">Searching for product info...</p>
+          <p className="text-center text-lg font-semibold">
+            Searching for product info...
+          </p>
           <LoadingSpinner size={60} />
         </div>
       ) : sortType === "All" ? (
-        <div className="flex flex-col ">
+        <div className="flex h-full flex-col">
+          {getAllItemsInfinite.isError && (
+            <p className="pt-8 text-center text-lg">
+              There was a problem loading items.
+            </p>
+          )}
           <Banner>All Food Items</Banner>
           {getAllItemsInfinite.isLoading && (
             <div className="flex flex-col items-center justify-center">
-              <p className="text-center text-lg">Loading items...</p>
+              <p className="text-center text-lg font-semibold">
+                Loading items...
+              </p>
               <LoadingSpinner size={60} />
             </div>
           )}
-          <InfiniteScroll
-            dataLength={
-              getAllItemsInfinite.data?.pages.flatMap((page) => page.items)
-                .length ?? 0
-            }
-            next={getAllItemsInfinite.fetchNextPage}
-            hasMore={!!getAllItemsInfinite.hasNextPage}
-            loader={<h4 style={{ textAlign: "center" }}>Loading...</h4>}
-            endMessage={
-              !getAllItemsInfinite.isLoading && (
-                <p style={{ textAlign: "center" }}>
-                  <b>End of items.</b>
-                </p>
-              )
-            }
-          >
-            {getAllItemsInfinite.isSuccess &&
-              getAllItemsInfinite.data?.pages
-                .flatMap((page) => page.items)
-                .filter((item) => {
-                  if (debouncedValue === "") {
-                    return item;
-                  } else if (
-                    item.name
-                      .toLowerCase()
-                      .includes(debouncedValue.toLowerCase()) ||
-                    item.brand
-                      ?.toLowerCase()
-                      .includes(debouncedValue.toLowerCase())
-                  ) {
-                    return item;
-                  }
-                })
-                .map((item) => <Item key={item.id} {...item} />)}
-          </InfiniteScroll>
+          {storageAreas.length === 0 && (
+            <p className="text-center text-lg font-semibold">
+              You must add a storage area before you can add items!
+            </p>
+          )}
+          {getAllItemsInfinite.data?.pages[0] &&
+          getAllItemsInfinite.data?.pages[0].items.length === 0 ? (
+            <p className="text-center text-lg font-semibold">
+              There are not currently any items added.
+            </p>
+          ) : (
+            <InfiniteScroll
+              dataLength={
+                getAllItemsInfinite.data?.pages.flatMap((page) => page.items)
+                  .length ?? 0
+              }
+              next={getAllItemsInfinite.fetchNextPage}
+              hasMore={!!getAllItemsInfinite.hasNextPage}
+              loader={
+                <h4 style={{ textAlign: "center", marginTop: "1rem" }}>
+                  Loading...
+                </h4>
+              }
+              endMessage={
+                getAllItemsInfinite.data?.pages[0]?.items.length !== 0 &&
+                !getAllItemsInfinite.isLoading && (
+                  <p style={{ textAlign: "center" }}>
+                    <b>End of items.</b>
+                  </p>
+                )
+              }
+            >
+              {getAllItemsInfinite.isSuccess &&
+                getAllItemsInfinite.data?.pages
+                  .flatMap((page) => page.items)
+                  .filter((item) => {
+                    if (debouncedValue === "") {
+                      return item;
+                    } else if (
+                      item.name
+                        .toLowerCase()
+                        .includes(debouncedValue.toLowerCase()) ||
+                      item.brand
+                        ?.toLowerCase()
+                        .includes(debouncedValue.toLowerCase())
+                    ) {
+                      return item;
+                    }
+                  })
+                  .map((item) => <Item key={item.id} {...item} />)}
+            </InfiniteScroll>
+          )}
         </div>
       ) : sortType === "Storage Area" ? (
         <ItemsByStorageArea storageAreaId={storageAreaId!} />

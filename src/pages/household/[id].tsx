@@ -80,7 +80,7 @@ const HouseholdPage = () => {
   return (
     <div
       className={`h-full w-full ${
-        windowSize.innerWidth < 1024 ? "pb-16" : ""
+        windowSize.innerWidth < 1024 ? "pb-[56px]" : ""
       } `}
     >
       {windowSize.innerWidth > 1023 && (
