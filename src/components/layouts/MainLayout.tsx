@@ -27,6 +27,7 @@ const MainLayout = () => {
           <p
             className="w-full cursor-pointer p-1 text-sm text-snow "
             onClick={() => setNavValue(2)}
+            role="dialog"
           >
             {householdName && `${householdName} Household`}
           </p>
@@ -62,7 +63,6 @@ const MainLayout = () => {
         </div>
       </div>
     </div>
-    
   );
 };
 
