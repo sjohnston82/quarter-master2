@@ -27,8 +27,8 @@ const ItemsByExpiringSoon = () => {
           </div>
         </div>
       )}
-      {!getItemsByExpiryDate.data && !getItemsByExpiryDate.isLoading && (
-        <p className="pt-8 text-center text-lg">
+      {getItemsByExpiryDate.data?.length === 0 && !getItemsByExpiryDate.isLoading && (
+        <p className="pt-8 px-2 text-center text-lg">
           There are no items that are expired or about to expire.
         </p>
       )}

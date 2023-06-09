@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { api } from "~/utils/api";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -28,7 +28,7 @@ const HouseholdPage = () => {
   } = useContext(GlobalContext);
   const { data: sessionData, status } = useSession();
   const getHouseholdId = api.household.getHouseholdId.useQuery();
-
+  const [domLoaded, setDomLoaded] = useState(false);
   const getHouseholdInfo = api.household.getHouseholdInfo.useQuery({
     householdId,
   });
@@ -38,6 +38,7 @@ const HouseholdPage = () => {
   });
 
   useEffect(() => {
+    setDomLoaded(true);
     if (status === "unauthenticated" && sessionData == undefined)
       void router.push("/");
 
@@ -78,7 +79,7 @@ const HouseholdPage = () => {
   ]);
 
   return (
-    <div
+    domLoaded && <div
       className={`h-full w-full ${
         windowSize.innerWidth < 1024 ? "pb-[56px]" : ""
       } `}

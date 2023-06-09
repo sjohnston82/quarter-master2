@@ -10,7 +10,8 @@ interface ItemsByStorageAreaProps {
 }
 
 const ItemsByStorageArea = ({ storageAreaId }: ItemsByStorageAreaProps) => {
-  const { debouncedValue, selectedStorageArea } = useContext(GlobalContext);
+  const { debouncedValue, selectedStorageArea, householdId } =
+    useContext(GlobalContext);
   const shouldEnableQuery =
     !!storageAreaId && storageAreaId !== undefined && storageAreaId !== null;
 
@@ -30,6 +31,7 @@ const ItemsByStorageArea = ({ storageAreaId }: ItemsByStorageAreaProps) => {
       enabled: !!storageAreaId,
     }
   );
+  const { data: allItems } = api.items.getAllItems.useQuery({ householdId });
 
   const shouldShowLoading = shouldEnableQuery && isLoading;
   return (
@@ -42,11 +44,6 @@ const ItemsByStorageArea = ({ storageAreaId }: ItemsByStorageAreaProps) => {
           There was a problem fetching storage area information.
         </p>
       )}
-      {!data && storageAreaId === "" && (
-        <p className="pt-8 text-center text-lg">
-          Select a storage area to see its items.
-        </p>
-      )}
       {shouldShowLoading && (
         <div className="relative mt-20 flex h-full flex-col items-center justify-center gap-2">
           <div className="absolute  top-1/2 flex h-full w-full flex-col items-center justify-center ">
@@ -55,9 +52,17 @@ const ItemsByStorageArea = ({ storageAreaId }: ItemsByStorageAreaProps) => {
           </div>
         </div>
       )}
-      {data?.length === 0 ? (
+      {allItems?.length === 0  ? (
         <p className="mx-2 mt-5 text-center text-lg">
-          There are no items currently saved in this storage area.
+          There are no items currently saved in this household.
+        </p>
+      ) : !data ? (
+        <p className="pt-8 text-center text-lg">
+          Select a storage area to see its items.
+        </p>
+      ) : data.length === 0 ? (
+        <p className="pt-8 text-center text-lg">
+          There are no items stored in this storage area.
         </p>
       ) : (
         data

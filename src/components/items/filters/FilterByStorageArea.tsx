@@ -24,6 +24,7 @@ const FilterByStorageArea = ({
   const { householdId } = useContext(GlobalContext);
   const storageAreaRoute = api.useContext().storageAreas;
   const getItemsByStorageAreaRoute = api.useContext().items;
+  const { data } = api.items.getAllItems.useQuery({ householdId });
   const getAllStorageAreas = api.storageAreas.getStorageAreas.useQuery({
     householdId,
   });
@@ -53,9 +54,10 @@ const FilterByStorageArea = ({
         inputRef={storageAreaRef}
         onChange={async () => {
           await storageAreaRoute.invalidate();
-          await getItemsByStorageAreaRoute.invalidate();
+          // await getItemsByStorageAreaRoute.invalidate();
         }}
         defaultValue=""
+        disabled={data?.length === 0}
       >
         {getAllStorageAreas.data &&
           getAllStorageAreas.data.map((area) => (
