@@ -10,7 +10,7 @@ interface ItemsByStorageAreaProps {
 }
 
 const ItemsByStorageArea = ({ storageAreaId }: ItemsByStorageAreaProps) => {
-  const { debouncedValue } = useContext(GlobalContext);
+  const { debouncedValue, selectedStorageArea } = useContext(GlobalContext);
   const shouldEnableQuery =
     !!storageAreaId && storageAreaId !== undefined && storageAreaId !== null;
 
@@ -42,7 +42,7 @@ const ItemsByStorageArea = ({ storageAreaId }: ItemsByStorageAreaProps) => {
           There was a problem fetching storage area information.
         </p>
       )}
-      {!data && !isLoading && (
+      {!data && storageAreaId === "" && (
         <p className="pt-8 text-center text-lg">
           Select a storage area to see its items.
         </p>
@@ -50,7 +50,7 @@ const ItemsByStorageArea = ({ storageAreaId }: ItemsByStorageAreaProps) => {
       {shouldShowLoading && (
         <div className="relative mt-20 flex h-full flex-col items-center justify-center gap-2">
           <div className="absolute  top-1/2 flex h-full w-full flex-col items-center justify-center ">
-            <p className="font-semibold text-lg">Fetching items...</p>
+            <p className="text-lg font-semibold">Fetching items...</p>
             <LoadingSpinner size={60} />
           </div>
         </div>

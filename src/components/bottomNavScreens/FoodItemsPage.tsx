@@ -1,5 +1,5 @@
 import { type SelectChangeEvent } from "@mui/material";
-import { useState, useContext, useRef } from "react";
+import { useState, useContext, useRef, useEffect } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import FoodItems from "../items/FoodItems";
 import BarcodeScanner from "../barcode/BarcodeScanner";
@@ -10,7 +10,8 @@ import FilterByStorageArea from "../items/filters/FilterByStorageArea";
 import FilterByFoodType from "../items/filters/FilterByFoodType";
 
 const FoodItemsPage = () => {
-  const { showingBarcodeScanner } = useContext(GlobalContext);
+  const { showingBarcodeScanner, setSelectedStorageArea } =
+    useContext(GlobalContext);
   const [filterItemsCategory, setFilterItemsCategory] = useState("All");
   const [selectedFoodCategory, setSelectedFoodCategory] = useState<{
     name: string;
@@ -24,6 +25,13 @@ const FoodItemsPage = () => {
   const handleChange = (event: SelectChangeEvent) => {
     setFilterItemsCategory(event.target.value);
   };
+
+  useEffect(() => {
+
+    storageAreaRef.current?.value &&
+      setSelectedStorageArea(storageAreaRef.current.value);
+      console.log(storageAreaRef.current?.value);
+  }, [setSelectedStorageArea]);
 
   return (
     <div className="min-h-full flex-1 bg-snow text-woodsmoke">

@@ -42,7 +42,7 @@ const ItemsByFoodType = ({ selectedFoodCategory }: ItemsByFoodTypeProps) => {
           There was an error fetching items.
         </p>
       )}
-      {!data && !isLoading && (
+      {idsToFind.length === 0 && (
         <p className="pt-8 text-center text-lg">
           Select a food category to retrieve items.
         </p>

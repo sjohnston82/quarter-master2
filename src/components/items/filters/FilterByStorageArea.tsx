@@ -1,7 +1,14 @@
-import { FormControl, InputLabel, MenuItem, Select, type SelectChangeEvent, TextField } from '@mui/material';
-import React, { useContext } from 'react'
-import { GlobalContext } from '~/context/GlobalContextProvider';
-import { api } from '~/utils/api';
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  type SelectChangeEvent,
+  TextField,
+} from "@mui/material";
+import React, { useContext } from "react";
+import { GlobalContext } from "~/context/GlobalContextProvider";
+import { api } from "~/utils/api";
 
 interface FilterByStorageAreaProps {
   storageAreaRef: React.RefObject<HTMLSelectElement>;
@@ -9,14 +16,19 @@ interface FilterByStorageAreaProps {
   handleChange: (event: SelectChangeEvent) => void;
 }
 
-const FilterByStorageArea = ({storageAreaRef, filterItemsCategory, handleChange}: FilterByStorageAreaProps) => {
-  const { householdId } = useContext(GlobalContext)
+const FilterByStorageArea = ({
+  storageAreaRef,
+  filterItemsCategory,
+  handleChange,
+}: FilterByStorageAreaProps) => {
+  const { householdId } = useContext(GlobalContext);
   const storageAreaRoute = api.useContext().storageAreas;
+  const getItemsByStorageAreaRoute = api.useContext().items;
   const getAllStorageAreas = api.storageAreas.getStorageAreas.useQuery({
     householdId,
   });
   return (
-    <div className="mt-2 flex w-full sm:mx-auto sm:w-4/5 gap-1 px-2">
+    <div className="mt-2 flex w-full gap-1 px-2 sm:mx-auto sm:w-4/5">
       <FormControl className="w-full">
         <InputLabel id="filterItemsBy">Filter By:</InputLabel>
         <Select
@@ -39,7 +51,10 @@ const FilterByStorageArea = ({storageAreaRef, filterItemsCategory, handleChange}
         className="w-full sm:w-4/5"
         id="storageArea"
         inputRef={storageAreaRef}
-        onChange={async () => await storageAreaRoute.invalidate()}
+        onChange={async () => {
+          await storageAreaRoute.invalidate();
+          await getItemsByStorageAreaRoute.invalidate();
+        }}
         defaultValue=""
       >
         {getAllStorageAreas.data &&
@@ -51,6 +66,6 @@ const FilterByStorageArea = ({storageAreaRef, filterItemsCategory, handleChange}
       </TextField>
     </div>
   );
-}
+};
 
-export default FilterByStorageArea
+export default FilterByStorageArea;

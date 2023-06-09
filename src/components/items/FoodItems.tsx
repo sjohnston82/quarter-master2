@@ -31,7 +31,6 @@ const FoodItems = ({
     }
   );
 
-
   return (
     <div className="mt-2 min-h-[calc(100vh-312px)] flex-1 bg-slate-400 sm:flex sm:flex-col ">
       {searchingForProduct ? (
@@ -57,13 +56,14 @@ const FoodItems = ({
               <LoadingSpinner size={60} />
             </div>
           )}
-          {storageAreas.length === 0 && (
-            <p className="text-center text-lg font-semibold">
-              You must add a storage area before you can add items!
-            </p>
-          )}
+          {storageAreas.length === 0 &&
+            !getAllItemsInfinite.isInitialLoading && (
+              <p className="text-center text-lg font-semibold px-2">
+                You must add a storage area before you can add items!
+              </p>
+            )}
           {getAllItemsInfinite.data?.pages[0] &&
-          getAllItemsInfinite.data?.pages[0].items.length === 0 ? (
+          getAllItemsInfinite.data?.pages[0].items.length === 0 && storageAreas.length > 0 ? (
             <p className="text-center text-lg font-semibold">
               There are not currently any items added.
             </p>
