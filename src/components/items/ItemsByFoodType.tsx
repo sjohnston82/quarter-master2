@@ -4,6 +4,8 @@ import { type RouterOutputs, api } from "~/utils/api";
 import Item from "./Item";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import Banner from "../ui/Banner";
+import ItemCard from "./ItemCard";
+import { cn } from "~/utils/cn";
 
 type FoodType = RouterOutputs["items"]["getFoodCategoryCount"][0];
 interface ItemsByFoodTypeProps {
@@ -11,7 +13,7 @@ interface ItemsByFoodTypeProps {
 }
 
 const ItemsByFoodType = ({ selectedFoodCategory }: ItemsByFoodTypeProps) => {
-  const { debouncedValue } = useContext(GlobalContext);
+  const { debouncedValue, showingItemCards } = useContext(GlobalContext);
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const idsToFind = selectedFoodCategory?.ids ?? [];
@@ -55,19 +57,31 @@ const ItemsByFoodType = ({ selectedFoodCategory }: ItemsByFoodTypeProps) => {
           </div>
         </div>
       )}
-      {data &&
-        data
-          .filter((item) => {
-            if (debouncedValue === "") {
-              return item;
-            } else if (
-              item.name.toLowerCase().includes(debouncedValue) ||
-              item.brand?.toLowerCase().includes(debouncedValue)
-            ) {
-              return item;
-            }
-          })
-          .map((item) => <Item key={item.id} {...item} />)}
+      <div
+        className={cn("m-2 flex flex-wrap justify-center gap-1", {
+          "m-4 gap-4": showingItemCards,
+        })}
+      >
+        {data &&
+          data
+            .filter((item) => {
+              if (debouncedValue === "") {
+                return item;
+              } else if (
+                item.name.toLowerCase().includes(debouncedValue) ||
+                item.brand?.toLowerCase().includes(debouncedValue)
+              ) {
+                return item;
+              }
+            })
+            .map((item) =>
+              showingItemCards ? (
+                <ItemCard key={item.id} {...item} />
+              ) : (
+                <Item key={item.id} {...item} />
+              )
+            )}
+      </div>
     </div>
   );
 };

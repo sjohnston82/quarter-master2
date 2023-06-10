@@ -4,9 +4,11 @@ import { api } from "~/utils/api";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import Item from "./Item";
 import LoadingSpinner from "../ui/LoadingSpinner";
+import ItemCard from "./ItemCard";
+import { cn } from "~/utils/cn";
 
 const ItemsByExpiringSoon = () => {
-  const { householdId, debouncedValue } = useContext(GlobalContext);
+  const { householdId, debouncedValue, showingItemCards } = useContext(GlobalContext);
 
   const getItemsByExpiryDate = api.items.getExpiredItems.useQuery({
     householdId,
@@ -27,11 +29,15 @@ const ItemsByExpiringSoon = () => {
           </div>
         </div>
       )}
-      {getItemsByExpiryDate.data?.length === 0 && !getItemsByExpiryDate.isLoading && (
-        <p className="pt-8 px-2 text-center text-lg">
-          There are no items that are expired or about to expire.
-        </p>
-      )}
+      {getItemsByExpiryDate.data?.length === 0 &&
+        !getItemsByExpiryDate.isLoading && (
+          <p className="px-2 pt-8 text-center text-lg">
+            There are no items that are expired or about to expire.
+          </p>
+        )}
+        <div className={cn("m-2 flex flex-wrap justify-center gap-1", {
+                "gap-4 m-4": showingItemCards
+              })}>
       {getItemsByExpiryDate.isSuccess &&
         getItemsByExpiryDate.data
           ?.filter((item) => {
@@ -44,7 +50,14 @@ const ItemsByExpiringSoon = () => {
               return item;
             }
           })
-          .map((item) => <Item key={item.id} {...item} />)}
+          .map((item) =>
+            showingItemCards ? (
+              <ItemCard key={item.id} {...item} />
+            ) : (
+              <Item key={item.id} {...item} />
+            )
+          )}
+          </div>
     </div>
   );
 };

@@ -4,13 +4,15 @@ import { api } from "~/utils/api";
 import Item from "./Item";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import { GlobalContext } from "~/context/GlobalContextProvider";
+import ItemCard from "./ItemCard";
+import { cn } from "~/utils/cn";
 
 interface ItemsByStorageAreaProps {
   storageAreaId: string;
 }
 
 const ItemsByStorageArea = ({ storageAreaId }: ItemsByStorageAreaProps) => {
-  const { debouncedValue, selectedStorageArea, householdId } =
+  const { debouncedValue, showingItemCards, householdId } =
     useContext(GlobalContext);
   const shouldEnableQuery =
     !!storageAreaId && storageAreaId !== undefined && storageAreaId !== null;
@@ -52,7 +54,7 @@ const ItemsByStorageArea = ({ storageAreaId }: ItemsByStorageAreaProps) => {
           </div>
         </div>
       )}
-      {allItems?.length === 0  ? (
+      {allItems?.length === 0 ? (
         <p className="mx-2 mt-5 text-center text-lg">
           There are no items currently saved in this household.
         </p>
@@ -65,18 +67,30 @@ const ItemsByStorageArea = ({ storageAreaId }: ItemsByStorageAreaProps) => {
           There are no items stored in this storage area.
         </p>
       ) : (
-        data
-          ?.filter((item) => {
-            if (debouncedValue === "") {
-              return item;
-            } else if (
-              item.name.toLowerCase().includes(debouncedValue) ||
-              item.brand?.toLowerCase().includes(debouncedValue)
-            ) {
-              return item;
-            }
-          })
-          .map((item) => <Item key={item.id} {...item} />)
+        <div
+          className={cn("m-2 flex flex-wrap justify-center gap-1", {
+            "m-4 gap-4": showingItemCards,
+          })}
+        >
+          {data
+            ?.filter((item) => {
+              if (debouncedValue === "") {
+                return item;
+              } else if (
+                item.name.toLowerCase().includes(debouncedValue) ||
+                item.brand?.toLowerCase().includes(debouncedValue)
+              ) {
+                return item;
+              }
+            })
+            .map((item) =>
+              showingItemCards ? (
+                <ItemCard key={item.id} {...item} />
+              ) : (
+                <Item key={item.id} {...item} />
+              )
+            )}
+        </div>
       )}
     </div>
   );
