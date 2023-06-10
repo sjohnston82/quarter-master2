@@ -53,6 +53,10 @@ type GlobalContextType = {
   setShowingSideNav: React.Dispatch<React.SetStateAction<boolean>>;
   selectedStorageArea: string | null;
   setSelectedStorageArea: React.Dispatch<React.SetStateAction<string | null>>;
+  showingItemCards: boolean;
+  setShowingItemCards: React.Dispatch<React.SetStateAction<boolean>>;
+  limit: number;
+  setLimit: React.Dispatch<React.SetStateAction<number>>
 };
 
 export const GlobalContext = createContext<GlobalContextType>(
@@ -78,7 +82,11 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
   const debouncedValue = useDebounce(searchTerm, 750);
   const [windowSize, setWindowSize] = useState(getWindowSize());
   const [showingSideNav, setShowingSideNav] = useState(false);
-  const [selectedStorageArea, setSelectedStorageArea] = useState<string | null>(null);
+  const [selectedStorageArea, setSelectedStorageArea] = useState<string | null>(
+    null
+  );
+  const [showingItemCards, setShowingItemCards] = useState(false);
+  const [limit, setLimit] = useState(10);
 
   useEffect(() => {
     function handleWindowResize() {
@@ -126,6 +134,10 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
         setShowingSideNav,
         selectedStorageArea,
         setSelectedStorageArea,
+        showingItemCards,
+        setShowingItemCards,
+        limit,
+        setLimit
       }}
     >
       {children}

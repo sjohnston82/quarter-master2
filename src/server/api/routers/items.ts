@@ -1,11 +1,9 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
-const LIMIT = 10;
+// const LIMIT = 10;
 
-import {
-  createTRPCRouter, protectedProcedure
-} from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { calculateDaysUntilExpiry } from "~/utils/calculateDaysUntilExpiry";
 
 export const itemsRouter = createTRPCRouter({
@@ -14,13 +12,14 @@ export const itemsRouter = createTRPCRouter({
       z.object({
         cursor: z.string().nullish(),
         householdId: z.string(),
+        limit: z.number(),
       })
     )
     .query(async ({ ctx, input }) => {
-      const { cursor, householdId } = input;
+      const { cursor, householdId, limit } = input;
       const items = await ctx.prisma.item.findMany({
         cursor: cursor ? { id: cursor } : undefined,
-        take: LIMIT + 1,
+        take: limit + 1,
         orderBy: {
           name: "asc",
         },
@@ -52,7 +51,7 @@ export const itemsRouter = createTRPCRouter({
       });
 
       let nextCursor: typeof cursor | undefined = undefined;
-      if (items.length > LIMIT) {
+      if (items.length > limit) {
         const nextItem = items.pop(); // return the last item from the array
         if (nextItem) nextCursor = nextItem?.id;
       }

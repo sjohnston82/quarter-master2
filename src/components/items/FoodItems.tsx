@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { type RouterOutputs, api } from "~/utils/api";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import Item from "./Item";
@@ -9,6 +9,8 @@ import ItemsByFoodType from "./ItemsByFoodType";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ItemsByExpiringSoon from "./ItemsByExpiringSoon";
 import LoadingSpinner from "../ui/LoadingSpinner";
+import ItemCard from "./ItemCard";
+import { cn } from "~/utils/cn";
 
 type FoodType = RouterOutputs["items"]["getFoodCategoryCount"][0];
 interface FoodItemsProps {
@@ -22,10 +24,38 @@ const FoodItems = ({
   storageAreaId,
   selectedFoodCategory,
 }: FoodItemsProps) => {
-  const { householdId, debouncedValue, searchingForProduct, storageAreas } =
-    useContext(GlobalContext);
+  const {
+    householdId,
+    debouncedValue,
+    searchingForProduct,
+    storageAreas,
+    setLimit,
+    showingItemCards,
+    windowSize,
+    limit,
+  } = useContext(GlobalContext);
+
+  useEffect(() => {
+    function setLimitSize() {
+      if (windowSize.innerWidth < 927 || !showingItemCards) {
+        setLimit(10);
+      }
+      if (windowSize.innerWidth > 927 && showingItemCards) {
+        setLimit(12);
+      }
+      if (windowSize.innerWidth > 1231 && showingItemCards) {
+        setLimit(16);
+      }
+
+      if (windowSize.innerWidth > 1535 && showingItemCards) {
+        setLimit(20);
+      }
+    }
+    setLimitSize();
+  }, [setLimit, showingItemCards, windowSize.innerWidth]);
+
   const getAllItemsInfinite = api.items.getAllItemsInfinite.useInfiniteQuery(
-    { householdId },
+    { householdId, limit },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
@@ -58,12 +88,13 @@ const FoodItems = ({
           )}
           {storageAreas.length === 0 &&
             !getAllItemsInfinite.isInitialLoading && (
-              <p className="text-center text-lg font-semibold px-2">
+              <p className="px-2 text-center text-lg font-semibold">
                 You must add a storage area before you can add items!
               </p>
             )}
           {getAllItemsInfinite.data?.pages[0] &&
-          getAllItemsInfinite.data?.pages[0].items.length === 0 && storageAreas.length > 0 ? (
+          getAllItemsInfinite.data?.pages[0].items.length === 0 &&
+          storageAreas.length > 0 ? (
             <p className="text-center text-lg font-semibold">
               There are not currently any items added.
             </p>
@@ -89,24 +120,28 @@ const FoodItems = ({
                 )
               }
             >
-              {getAllItemsInfinite.isSuccess &&
-                getAllItemsInfinite.data?.pages
-                  .flatMap((page) => page.items)
-                  .filter((item) => {
-                    if (debouncedValue === "") {
-                      return item;
-                    } else if (
-                      item.name
-                        .toLowerCase()
-                        .includes(debouncedValue.toLowerCase()) ||
-                      item.brand
-                        ?.toLowerCase()
-                        .includes(debouncedValue.toLowerCase())
-                    ) {
-                      return item;
-                    }
-                  })
-                  .map((item) => <Item key={item.id} {...item} />)}
+              <div className={cn("m-2 flex flex-wrap justify-center gap-1", {
+                "gap-4 m-4": showingItemCards
+              })}>
+                {getAllItemsInfinite.isSuccess &&
+                  getAllItemsInfinite.data?.pages
+                    .flatMap((page) => page.items)
+                    .filter((item) => {
+                      if (debouncedValue === "") {
+                        return item;
+                      } else if (
+                        item.name
+                          .toLowerCase()
+                          .includes(debouncedValue.toLowerCase()) ||
+                        item.brand
+                          ?.toLowerCase()
+                          .includes(debouncedValue.toLowerCase())
+                      ) {
+                        return item;
+                      }
+                    })
+                    .map((item) => showingItemCards ? <ItemCard key={item.id} {...item} /> : <Item key={item.id} {...item} /> )}
+              </div>
             </InfiniteScroll>
           )}
         </div>
