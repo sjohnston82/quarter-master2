@@ -4,9 +4,10 @@ import React from 'react'
 
 interface FeatureListItemProps {
   text: string;
+  secondaryText: string;
 }
 
-const FeatureListItem = ({ text }: FeatureListItemProps) => {
+const FeatureListItem = ({ text, secondaryText }: FeatureListItemProps) => {
   return (
     <li className="flex w-full items-center   justify-center gap-3">
       <Image
@@ -16,7 +17,10 @@ const FeatureListItem = ({ text }: FeatureListItemProps) => {
         height={40}
         className=""
       />
-      <span className="w-4/5 sm:w-3/5">{text}</span>
+      <div className="w-4/5 sm:w-3/5 ">
+        <span className="font-semibold">{text}</span>
+        <span className="">{secondaryText}</span>
+      </div>
       {/* <Divider variant="middle" color="#000000" /> */}
     </li>
   );

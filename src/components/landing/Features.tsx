@@ -33,29 +33,33 @@ const Features = () => {
         opacity: { duration: 0.5 },
       }}
     >
-      <div className="mb-20 bg-snow pt-16" id="features">
-        <h1 className="mb-12 text-center text-3xl text-woodsmoke">Features</h1>
-        <ul className="prose-sm flex  w-full flex-col items-start px-4  text-base text-woodsmoke">
-          <FeatureListItem text="Store all your family's food items in one convenient location" />
-          <Divider variant="middle" />
+      <div className="mb-20 bg-snow pt-10 " id="features">
+        <h1 className="mb-12 text-center text-3xl text-woodsmoke font-semibold ">Features</h1>
+        <ul className="prose-sm flex  w-full flex-col items-start px-4   text-lg text-woodsmoke">
           <FeatureListItem
-            text="Add items quickly by reading barcodes with your phone's
-              camera"
-          />
-          
-          <FeatureListItem
-            text="Track expiration dates so you always know when you need to throw
-              something out"
+            text="Keep informed"
+            secondaryText=" - store all your family's food items in one convenient location"
           />
           <Divider variant="middle" />
           <FeatureListItem
-            text="Easily send items to a shopping list so your entire family knows
+            text="Barcode scanning "
+            secondaryText="- quickly add items to your household"
+          />
+
+          <FeatureListItem
+            text="Track expiration dates "
+            secondaryText="- so you always know when you need to use something or throw it out"
+          />
+          <Divider variant="middle" />
+          <FeatureListItem
+            text="Shopping List"
+            secondaryText=" - send items to a shopping list so your entire family knows
               what is needed when they go out"
           />
         </ul>
         <button
           onClick={() => void signIn()}
-          className="mx-auto mt-8 flex w-3/5 items-center justify-center rounded-lg bg-blue-600 px-2 py-1 text-xl text-snow transition hover:bg-mango"
+          className="mx-auto shadow shadow-black mt-8 flex w-3/5 items-center justify-center rounded-lg bg-blue-600 px-2 py-1 text-xl text-snow transition hover:bg-mango"
         >
           Create Account{" "}
           <svg
