@@ -47,11 +47,11 @@ const Home: NextPage = () => {
             transition={{ duration: 1 }}
             className=""
           >
-            <h1 className="mb-8 mt-8 text-center text-5xl font-extrabold leading-none tracking-tight text-woodsmoke">
+            <h1 className="mb-8 mt-8 text-center text-5xl font-extrabold leading-none tracking-tight text-woodsmoke lg:w-2/3 mx-auto lg:text-6xl">
               Take control of your family&apos;s pantry with ease
             </h1>
           </motion.div>
-          <p className="mx-auto px-4 text-xl text-schooner w-4/5 sm:w-3/4">
+          <p className="mx-auto px-4 text-xl text-schooner w-4/5 sm:w-3/4 lg:w-1/2 lg:text-2xl">
             Invite your whole family to effortlessly{" "}
             <span className="font-semibold text-mango">track</span>,{" "}
             <span className="font-semibold text-mango">organize</span>, and{" "}
@@ -59,10 +59,10 @@ const Home: NextPage = () => {
             pantry items, ensuring you never run out of essentials again.
           </p>
         </div>
-        <div className="flex flex-col  justify-center  ">
+        <div className="flex flex-col  justify-center lg:w-1/2 w-3/4 mx-auto  ">
           <button
             onClick={() => void signIn()}
-            className="mx-auto mt-8 flex w-3/5 items-center justify-center  rounded-lg bg-blue-600 px-2 py-1 text-xl text-snow transition hover:bg-mango sm:w-1/2"
+            className="shadow shadow-black mx-auto mt-8 flex w-3/5  items-center justify-center  rounded-lg bg-blue-600 px-2 py-1 text-xl text-snow transition hover:bg-mango sm:w-1/2"
           >
             Get Started{" "}
             <svg
@@ -82,7 +82,7 @@ const Home: NextPage = () => {
         </div>
         <div className="my-12">
           <p className="px-8 text-center text-lg text-woodsmoke">
-            Or learn more by clicking on of the buttons below!
+            Or learn more by clicking on one of the buttons below!
           </p>
         </div>
 

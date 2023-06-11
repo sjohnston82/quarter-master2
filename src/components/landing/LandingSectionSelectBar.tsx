@@ -12,7 +12,7 @@ const LandingSectionSelectBar = ({
   setShowingHowItWorks,
   setShowingFeatures,
   showingHowItWorks,
-  showingFeatures
+  showingFeatures,
 }: LandingSelectionSelectBarProps) => {
   const handleShowingHowItWorks = () => {
     setShowingFeatures(false);
@@ -25,11 +25,11 @@ const LandingSectionSelectBar = ({
   };
 
   return (
-    <div className="mx-2 flex justify-center pb-8 gap-4 sm:w-2/3 sm:mx-auto">
+    <div className="mx-2 flex justify-center gap-4 pb-8 sm:mx-auto sm:w-2/3 lg:w-1/2">
       <button
         onClick={handleShowingHowItWorks}
         className={cn(
-          "mx-auto flex w-full items-center justify-center rounded-lg bg-blue-600 px-2 py-1 text-xl text-snow transition hover:bg-mango sm:w-1/2",
+          "mx-auto flex w-full items-center justify-center rounded-lg bg-blue-600 px-2 py-1 text-xl text-snow shadow shadow-black transition hover:bg-mango sm:w-1/2",
           {
             "bg-mango": showingHowItWorks,
           }
@@ -41,7 +41,7 @@ const LandingSectionSelectBar = ({
       <button
         onClick={handleShowingFeatures}
         className={cn(
-          "mx-auto flex w-full items-center justify-center rounded-lg bg-blue-600 px-2 py-1 text-xl text-snow transition hover:bg-mango sm:w-1/2",
+          "mx-auto flex w-full items-center justify-center rounded-lg bg-blue-600 px-2 py-1 text-xl text-snow shadow shadow-black transition hover:bg-mango sm:w-1/2",
           {
             "bg-mango": showingFeatures,
           }

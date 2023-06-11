@@ -10,7 +10,6 @@ const cardVariants: Variants = {
     y: 50,
     transition: {
       type: "tween",
-      bounce: 0.4,
       duration: 0.5,
     },
   },
@@ -24,7 +23,7 @@ const HowItWorks = () => {
           How does Quartermaster work?
         </h2>
 
-        <div className="flex flex-col gap-5 ">
+        <div className="flex flex-col gap-8  ">
           <motion.div
             initial="offscreen"
             whileInView="onscreen"
@@ -32,7 +31,7 @@ const HowItWorks = () => {
           >
             <motion.div
               variants={cardVariants}
-              className="ml-4 flex w-4/5 items-center gap-2 rounded-lg bg-mango p-2 shadow shadow-black"
+              className="ml-4 flex w-4/5 items-center gap-2 rounded-lg bg-mango p-4 shadow shadow-black lg:ml-16 lg:w-1/2 lg:text-lg"
             >
               <span className="p-2 text-6xl text-snow">1</span>
               <p className="">
@@ -48,7 +47,7 @@ const HowItWorks = () => {
           >
             <motion.div
               variants={cardVariants}
-              className="ml-auto mr-4 flex w-4/5 items-center justify-end gap-2 rounded-lg bg-blue-600 p-2 shadow shadow-black"
+              className="ml-auto mr-4 flex w-4/5 items-center justify-end gap-2 rounded-lg bg-blue-600 p-4 shadow shadow-black lg:mr-16 lg:w-1/2 lg:text-lg"
             >
               <p className="">
                 Invite all your family members so you can all keep track of what
@@ -64,7 +63,7 @@ const HowItWorks = () => {
           >
             <motion.div
               variants={cardVariants}
-              className="ml-4 flex w-4/5 items-center gap-2 rounded-lg bg-mango p-2 shadow shadow-black"
+              className="ml-4 flex w-4/5 items-center gap-2 rounded-lg bg-mango p-4 shadow shadow-black lg:ml-16 lg:w-1/2 lg:text-lg"
             >
               <span className="p-2 text-6xl text-snow">3</span>
               <p className="">
@@ -82,7 +81,7 @@ const HowItWorks = () => {
           >
             <motion.div
               variants={cardVariants}
-              className="ml-auto mr-4 flex w-4/5 items-center justify-end gap-2 rounded-lg bg-blue-600 p-2 shadow shadow-black"
+              className="ml-auto mr-4 flex w-4/5 items-center justify-end gap-2 rounded-lg bg-blue-600 p-4 shadow shadow-black lg:mr-16 lg:w-1/2 lg:text-lg"
             >
               <p className="">
                 Add expiration dates to keep track of when things go bad so you
@@ -98,7 +97,7 @@ const HowItWorks = () => {
           >
             <motion.div
               variants={cardVariants}
-              className="ml-4 flex w-4/5 items-center gap-2 rounded-lg bg-mango p-2 shadow shadow-black"
+              className="ml-4 flex w-4/5 items-center gap-2 rounded-lg bg-mango p-4 shadow shadow-black lg:ml-16 lg:w-1/2 lg:text-lg"
             >
               <span className="p-2 text-6xl text-snow">5</span>
               <p className="">
@@ -110,7 +109,7 @@ const HowItWorks = () => {
         </div>
         <button
           onClick={() => void signIn()}
-          className="mx-auto mt-24 flex w-3/5 items-center justify-center rounded-lg bg-blue-600 px-2 py-1 text-xl text-snow shadow transition hover:bg-mango"
+          className="mx-auto mt-24 flex w-3/5 items-center justify-center rounded-lg bg-blue-600 px-2 py-1 text-xl text-snow shadow shadow-black transition hover:bg-mango lg:w-1/2 lg:w-1/3"
         >
           Create Account{" "}
           <svg

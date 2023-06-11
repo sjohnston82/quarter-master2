@@ -59,7 +59,7 @@ const Features = () => {
         </ul>
         <button
           onClick={() => void signIn()}
-          className="mx-auto shadow shadow-black mt-8 flex w-3/5 items-center justify-center rounded-lg bg-blue-600 px-2 py-1 text-xl text-snow transition hover:bg-mango"
+          className="mx-auto shadow lg:w-1/3 shadow-black mt-8 flex w-3/5 items-center justify-center rounded-lg bg-blue-600 px-2 py-1 text-xl text-snow transition hover:bg-mango"
         >
           Create Account{" "}
           <svg

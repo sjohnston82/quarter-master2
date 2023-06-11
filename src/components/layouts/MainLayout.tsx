@@ -17,9 +17,9 @@ const MainLayout = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex h-16 items-center justify-center bg-snow font-ALoveofThunder text-4xl text-woodsmoke underline  ">
+      <div className="flex h-16 items-center justify-center bg-snow font-ALoveofThunder text-4xl lg:text-5xl text-woodsmoke underline  ">
         <h1 className="">
-          <span className="text-[42px]">Q</span>uartermaster
+          <span className="text-[42px] lg:text-6xl">Q</span>uartermaster
         </h1>
       </div>
       <div className="flex h-10 items-center justify-between bg-mango px-2">
@@ -52,7 +52,7 @@ const MainLayout = () => {
           ) : (
             <div className="w-full">
               <span
-                className="cursor-pointer text-snow hover:text-indigo-600"
+                className="cursor-pointer text-snow hover:text-indigo-600 lg:text-lg"
                 onClick={() => void signIn()}
                 role="dialog"
               >
