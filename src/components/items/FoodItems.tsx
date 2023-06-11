@@ -33,9 +33,12 @@ const FoodItems = ({
     showingItemCards,
     windowSize,
     limit,
+    setShowingItemCards
   } = useContext(GlobalContext);
 
   useEffect(() => {
+    windowSize.innerWidth < 640 && setShowingItemCards(false);
+
     function setLimitSize() {
       if (windowSize.innerWidth < 927 || !showingItemCards) {
         setLimit(10);
@@ -120,9 +123,11 @@ const FoodItems = ({
                 )
               }
             >
-              <div className={cn("m-2 flex flex-wrap justify-center gap-1", {
-                "gap-4 m-4": showingItemCards
-              })}>
+              <div
+                className={cn("m-2 flex flex-wrap justify-center gap-1", {
+                  "m-4 gap-4": showingItemCards,
+                })}
+              >
                 {getAllItemsInfinite.isSuccess &&
                   getAllItemsInfinite.data?.pages
                     .flatMap((page) => page.items)
@@ -140,7 +145,13 @@ const FoodItems = ({
                         return item;
                       }
                     })
-                    .map((item) => showingItemCards ? <ItemCard key={item.id} {...item} /> : <Item key={item.id} {...item} /> )}
+                    .map((item) =>
+                      showingItemCards ? (
+                        <ItemCard key={item.id} {...item} />
+                      ) : (
+                        <Item key={item.id} {...item} />
+                      )
+                    )}
               </div>
             </InfiniteScroll>
           )}

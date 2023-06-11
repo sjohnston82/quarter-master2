@@ -51,16 +51,16 @@ const Home: NextPage = () => {
               Take control of your family&apos;s pantry with ease
             </h1>
           </motion.div>
-          <p className="px-4 text-xl text-schooner">
+          <p className="sm:w-3/4 px-4 text-xl text-schooner mx-auto">
             Invite your whole family to effortlessly track, organize, and manage
             all your pantry items, ensuring you never run out of essentials
             again.
           </p>
         </div>
-        <div className="flex flex-col justify-center  ">
+        <div className="flex flex-col  justify-center  ">
           <button
             onClick={() => void signIn()}
-            className="mx-auto mt-8 flex w-3/5 items-center justify-center rounded-lg bg-blue-600 px-2 py-1 text-xl text-snow transition hover:bg-mango"
+            className="mx-auto mt-8 flex w-3/5 sm:w-1/2 items-center  justify-center rounded-lg bg-blue-600 px-2 py-1 text-xl text-snow transition hover:bg-mango"
           >
             Get Started{" "}
             <svg

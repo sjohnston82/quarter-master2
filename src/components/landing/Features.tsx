@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { signIn } from "next-auth/react";
 import FeatureListItem from "./FeatureListItem";
+import { Divider } from "@mui/material";
 
 const Features = () => {
   const pageTransitionSideVariants = {
@@ -36,15 +37,17 @@ const Features = () => {
         <h1 className="mb-12 text-center text-3xl text-woodsmoke">Features</h1>
         <ul className="prose-sm flex  w-full flex-col items-start px-4  text-base text-woodsmoke">
           <FeatureListItem text="Store all your family's food items in one convenient location" />
-
+          <Divider variant="middle" />
           <FeatureListItem
             text="Add items quickly by reading barcodes with your phone's
               camera"
           />
+          
           <FeatureListItem
             text="Track expiration dates so you always know when you need to throw
               something out"
           />
+          <Divider variant="middle" />
           <FeatureListItem
             text="Easily send items to a shopping list so your entire family knows
               what is needed when they go out"

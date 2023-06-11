@@ -1,3 +1,4 @@
+import { Divider } from '@mui/material';
 import Image from 'next/image';
 import React from 'react'
 
@@ -7,17 +8,16 @@ interface FeatureListItemProps {
 
 const FeatureListItem = ({ text }: FeatureListItemProps) => {
   return (
-    <li className="flex w-full items-center gap-3">
+    <li className="flex w-full items-center   justify-center gap-3">
       <Image
         src="/img/fork-spoon.webp"
         alt="forkspoon"
-        width={80}
-        height={80}
-        className="w-1/5"
+        width={40}
+        height={40}
+        className=""
       />
-      <span className="w-4/5">
-        {text}
-      </span>
+      <span className="w-4/5 sm:w-3/5">{text}</span>
+      {/* <Divider variant="middle" color="#000000" /> */}
     </li>
   );
 }

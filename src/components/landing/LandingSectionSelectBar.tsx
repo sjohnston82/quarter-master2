@@ -1,4 +1,5 @@
 import React from "react";
+import { cn } from "~/utils/cn";
 
 interface LandingSelectionSelectBarProps {
   setShowingHowItWorks: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,21 +25,27 @@ const LandingSectionSelectBar = ({
   };
 
   return (
-    <div className="mx-2 flex justify-center gap-4">
+    <div className="mx-2 flex justify-center pb-8 gap-4 sm:w-2/3 sm:mx-auto">
       <button
         onClick={handleShowingHowItWorks}
-        className={`mx-auto flex w-full items-center justify-center rounded-lg ${
-          showingHowItWorks ? "bg-mango" : "bg-blue-600"
-        } px-2 py-1 text-xl text-snow transition hover:bg-mango`}
+        className={cn(
+          "mx-auto flex w-full items-center justify-center rounded-lg bg-blue-600 px-2 py-1 text-xl text-snow transition hover:bg-mango sm:w-1/2",
+          {
+            "bg-mango": showingHowItWorks,
+          }
+        )}
       >
         How it Works
       </button>
 
       <button
         onClick={handleShowingFeatures}
-        className={`mx-auto flex w-full items-center justify-center rounded-lg ${
-          showingFeatures ? "bg-mango" : "bg-blue-600"
-        } px-2 py-1 text-xl text-snow transition hover:bg-mango`}
+        className={cn(
+          "mx-auto flex w-full items-center justify-center rounded-lg bg-blue-600 px-2 py-1 text-xl text-snow transition hover:bg-mango sm:w-1/2",
+          {
+            "bg-mango": showingFeatures,
+          }
+        )}
       >
         Features
       </button>

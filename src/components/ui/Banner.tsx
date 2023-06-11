@@ -26,6 +26,7 @@ const Banner = ({ children, fontSize }: BannerProps) => {
             <ReorderIcon
               className={cn("text-snow", {
                 "text-mango": !showingItemCards,
+                // "hidden": windowSize.innerWidth < 640
               })}
             />
           </button>
