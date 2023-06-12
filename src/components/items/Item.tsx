@@ -18,19 +18,19 @@ const Item = ({ ...item }: Item) => {
   };
 
   return (
-    <div className="mx-auto my-2 flex w-[95%] flex-col overflow-hidden rounded bg-snow shadow-lg shadow-black sm:w-[90%]">
-      <div className="relative flex flex-col border-t-4 sm:border-none">
-        <div className="ml-2 mr-6 flex justify-between border-b border-woodsmoke py-2">
+    <div className="mx-auto my-2 flex w-[95%] flex-col overflow-hidden rounded bg-snow  shadow-lg shadow-black sm:w-[90%] md:w-3/4 lg:w-2/3 xl:w-1/2 2xl:w-1/2">
+      <div className="relative flex flex-col ">
+        <div className="ml-2 mr-6 flex justify-between border-b border-woodsmoke py-2 xl:text-3xl">
           <div className="w-2/5 flex-wrap">
-            <p className="text-sm font-semibold">{item.name}</p>
+            <p className="text-sm font-semibold xl:text-xl">{item.name}</p>
           </div>
           <div className=" flex-wrap">
-            <p className="text-sm">
+            <p className="text-sm xl:text-xl">
               {item.amount} {item.amountType}
             </p>
           </div>
           <div className="w-1/3 flex-wrap">
-            <p className="text-sm">
+            <p className="text-sm xl:text-xl">
               {item.daysUntilExpiry === null ? (
                 "No date given"
               ) : item.daysUntilExpiry > 1 ? (
@@ -69,7 +69,7 @@ const Item = ({ ...item }: Item) => {
           </div>
         ) : (
           <div className="mx-2 flex items-center justify-between">
-            <p className="py-2 text-sm">More Information</p>
+            <p className="py-2 text-sm xl:text-xl">More Information</p>
             <ExpandMoreIcon
               className="cursor-pointer"
               onClick={() => setShowingMoreInfo(true)}

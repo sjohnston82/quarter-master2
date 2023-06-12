@@ -35,7 +35,8 @@ const HouseholdPage = () => {
 
   const getStorageAreas = api.storageAreas.getStorageAreas.useQuery({
     householdId,
-  });
+  },
+  {enabled: sessionData !== undefined});
 
   useEffect(() => {
     setDomLoaded(true);

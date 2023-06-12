@@ -23,6 +23,9 @@ export default {
         forkSpoon: 'url("/img/fork-spoon.webp")',
         forkSpoonSmall: 'url("/img/fork-spoon-small.webp")',
       },
+      screens: {
+        "3xl": "1700px",
+      },
     },
   },
   plugins: [
