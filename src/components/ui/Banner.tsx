@@ -12,7 +12,7 @@ const Banner = ({ children, fontSize }: BannerProps) => {
   const { navValue, windowSize, setShowingItemCards, showingItemCards } =
     useContext(GlobalContext);
   return (
-    <div className="relative flex h-12 items-center justify-center bg-woodsmoke">
+    <div className="relative flex h-12 items-center justify-center w-full bg-woodsmoke">
       <h1 className={`${fontSize} w-full text-center text-slate-200`}>
         {children}
       </h1>

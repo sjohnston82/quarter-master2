@@ -15,8 +15,8 @@ const LocationContainer = ({ location, items }: LocationContainerProps) => {
   const { householdId } = useContext(GlobalContext);
 
   return (
-    <div className="flex w-full flex-col items-center" role="dialog">
-      <Banner fontSize="text-xl">
+    <div className="flex w-full flex-col items-center " role="dialog">
+      <Banner fontSize="text-xl" >
         {location}
       </Banner>
       {items &&

@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Button, Chip } from "@mui/material";
+import { Avatar, Button, Chip } from "@mui/material";
 import dayjs from "dayjs";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { type RouterOutputs } from "~/utils/api";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ItemOptionsMenu from "./optionsMenu/ItemOptionsMenu";
+import { chipIcons } from "~/utils/helperLists";
+import { GlobalContext } from "~/context/GlobalContextProvider";
 
 
 type Item = RouterOutputs["items"]["getAllItems"][0];
@@ -15,8 +17,9 @@ const ItemCard = ({ ...item }: Item) => {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+  const { windowSize } = useContext(GlobalContext)
   return (
-    <div className="w-72 relative rounded bg-snow p-2 shadow-lg shadow-black">
+    <div className="relative w-72 rounded bg-snow p-2 shadow-lg shadow-black">
       <div className="flex flex-col space-y-1">
         <h1 className="text-center text-xl font-semibold">{item.name}</h1>
         <div className="text-center">
@@ -70,7 +73,14 @@ const ItemCard = ({ ...item }: Item) => {
       </div>
       <div className="mx-2 my-4 flex flex-wrap justify-center gap-2">
         {item.foodCategories.map((category, i) => (
-          <Chip key={i} label={category} />
+          <Chip
+            key={i}
+            label={category}
+            size={windowSize.innerWidth > 1279 ? "medium" : "small"}
+            avatar={
+              <Avatar src={chipIcons[category as keyof typeof chipIcons]} />
+            }
+          />
         ))}
       </div>
       <div className="absolute -right-3 top-1">

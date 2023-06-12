@@ -53,8 +53,9 @@ const MoreItemInfo = ({ ...item }: Item) => {
             key={i}
             label={category}
             size={windowSize.innerWidth > 1279 ? "medium" : "small"}
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            avatar={<Avatar src={String(chipIcons[category as keyof typeof chipIcons])} />}
+            avatar={
+              <Avatar src={chipIcons[category as keyof typeof chipIcons]} />
+            }
           />
         ))}
       </div>
