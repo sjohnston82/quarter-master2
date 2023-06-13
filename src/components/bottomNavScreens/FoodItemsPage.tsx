@@ -27,20 +27,19 @@ const FoodItemsPage = () => {
   };
 
   useEffect(() => {
-
     storageAreaRef.current?.value &&
       setSelectedStorageArea(storageAreaRef.current.value);
-      console.log(storageAreaRef.current?.value);
+    console.log(storageAreaRef.current?.value);
   }, [setSelectedStorageArea]);
 
   return (
-    <div className="min-h-full flex-1 bg-snow text-woodsmoke">
+    <div className=" flex-1 bg-snow text-woodsmoke">
       {showingBarcodeScanner ? (
         <div className="">
           <BarcodeScanner />
         </div>
       ) : (
-        <div className="min-h-[calc(100vh-312px)] w-full">
+        <div className=" w-full">
           <div className="w-full ">
             <Searchbar />
           </div>
@@ -76,7 +75,7 @@ const FoodItemsPage = () => {
             )}
           </div>
 
-          <div className="mt-2 flex h-full flex-1 flex-col ">
+          <div className="mt-2 flex h-[calc(100vh-304px)]  flex-col overflow-y-scroll lg:h-[calc(100vh-248px)]">
             <FoodItems
               sortType={filterItemsCategory}
               storageAreaId={

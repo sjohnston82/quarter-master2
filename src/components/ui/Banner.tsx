@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import { cn } from "~/utils/cn";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
@@ -11,8 +11,12 @@ interface BannerProps {
 const Banner = ({ children, fontSize }: BannerProps) => {
   const { navValue, windowSize, setShowingItemCards, showingItemCards } =
     useContext(GlobalContext);
+  const [domLoaded, setDomLoaded] = useState(false);
+  useEffect(() => {
+    setDomLoaded(true);
+  }, []);
   return (
-    <div className="relative flex h-12 items-center justify-center w-full bg-woodsmoke">
+    <div className="relative flex h-12 w-full items-center justify-center bg-woodsmoke">
       <h1 className={`${fontSize} w-full text-center text-slate-200`}>
         {children}
       </h1>
@@ -43,7 +47,7 @@ const Banner = ({ children, fontSize }: BannerProps) => {
         </div>
       )}
     </div>
-  );
+  )
 };
 
 Banner.defaultProps = {

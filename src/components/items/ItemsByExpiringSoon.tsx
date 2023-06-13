@@ -14,7 +14,7 @@ const ItemsByExpiringSoon = () => {
     householdId,
   });
   return (
-    <div className="flex min-h-[calc(100vh-312px)] flex-col gap-1">
+    <div className="flex min-h-[calc(100vh-152px)] flex-col gap-1">
       <Banner>Expiring Soon</Banner>
       {getItemsByExpiryDate.isError && (
         <p className="pt-8 text-center text-lg">
@@ -35,29 +35,31 @@ const ItemsByExpiringSoon = () => {
             There are no items that are expired or about to expire.
           </p>
         )}
-        <div className={cn("m-2 flex flex-wrap justify-center gap-1", {
-                "gap-4 m-4": showingItemCards
-              })}>
-      {getItemsByExpiryDate.isSuccess &&
-        getItemsByExpiryDate.data
-          ?.filter((item) => {
-            if (debouncedValue === "") {
-              return item;
-            } else if (
-              item.name.toLowerCase().includes(debouncedValue) ||
-              item.brand?.toLowerCase().includes(debouncedValue)
-            ) {
-              return item;
-            }
-          })
-          .map((item) =>
-            showingItemCards ? (
-              <ItemCard key={item.id} {...item} />
-            ) : (
-              <Item key={item.id} {...item} />
-            )
-          )}
-          </div>
+      <div
+        className={cn("m-2 flex flex-wrap justify-center gap-1", {
+          "m-4 gap-4": showingItemCards,
+        })}
+      >
+        {getItemsByExpiryDate.isSuccess &&
+          getItemsByExpiryDate.data
+            ?.filter((item) => {
+              if (debouncedValue === "") {
+                return item;
+              } else if (
+                item.name.toLowerCase().includes(debouncedValue) ||
+                item.brand?.toLowerCase().includes(debouncedValue)
+              ) {
+                return item;
+              }
+            })
+            .map((item) =>
+              showingItemCards ? (
+                <ItemCard key={item.id} {...item} />
+              ) : (
+                <Item key={item.id} {...item} />
+              )
+            )}
+      </div>
     </div>
   );
 };

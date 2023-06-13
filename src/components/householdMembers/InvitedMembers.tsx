@@ -18,15 +18,15 @@ const InvitedMembers = ({ getInviteList }: InvitedMemberProps) => {
     },
   });
   return (
-    <div>
+    <div className="flex flex-col ">
       {!getInviteList && <LoadingSpinner />}
       {getInviteList &&
         getInviteList.invitedList.map((invite, i) => (
-          <div key={i} className="flex items-center gap-2">
-            <p className="text-lg">{invite.email}</p>
+          <div key={i} className="flex items-center justify-end gap-2 px-2 ">
+            <p className="text-lg lg:text-sm ">{invite.email}</p>
             {sessionData?.user.role === "ADMIN" && (
               <div onClick={() => deleteInvite.mutate({ email: invite.email })}>
-                <RiCloseCircleFill className="text-lg text-red-500" />
+                <RiCloseCircleFill className="text-lg text-red-500 cursor-pointer " />
               </div>
             )}
           </div>

@@ -37,7 +37,7 @@ const ItemsByFoodType = ({ selectedFoodCategory }: ItemsByFoodTypeProps) => {
   const shouldShowLoading = shouldEnableQuery && isLoading;
 
   return (
-    <div className="min-h-[calc(100vh-312px)]">
+    <div className="h-full">
       <Banner>{capitalizedName}</Banner>
       {isError && (
         <p className="pt-8 text-center text-lg">

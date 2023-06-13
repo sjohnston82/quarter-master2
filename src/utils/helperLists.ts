@@ -8,6 +8,7 @@ export const packageTypes = [
   { singular: "jar", plural: "jars" },
   { singular: "block", plural: "blocks" },
   { singular: "loaf", plural: "loaves" },
+  { singular: "bottle", plural: "bottles" },
 ];
 export const foodCategories = [
   "produce",

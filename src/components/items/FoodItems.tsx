@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { type RouterOutputs, api } from "~/utils/api";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import Item from "./Item";
@@ -36,6 +36,11 @@ const FoodItems = ({
     setShowingItemCards
   } = useContext(GlobalContext);
 
+  const [domLoaded, setDomLoaded] = useState(false);
+  useEffect(() => {
+    setDomLoaded(true);
+  }, []);
+
   useEffect(() => {
     windowSize.innerWidth < 640 && setShowingItemCards(false);
 
@@ -55,7 +60,7 @@ const FoodItems = ({
       }
     }
     setLimitSize();
-  }, [setLimit, showingItemCards, windowSize.innerWidth]);
+  }, [setLimit, setShowingItemCards, showingItemCards, windowSize.innerWidth]);
 
   const getAllItemsInfinite = api.items.getAllItemsInfinite.useInfiniteQuery(
     { householdId, limit },
@@ -65,7 +70,7 @@ const FoodItems = ({
   );
 
   return (
-    <div className="mt-2 min-h-[calc(100vh-312px)] flex-1 bg-slate-400 sm:flex sm:flex-col ">
+    <div className="mt-2 flex-1 bg-slate-400 sm:flex sm:flex-col  ">
       {searchingForProduct ? (
         <div className="flex w-full flex-col items-center justify-center">
           <p className="text-center text-lg font-semibold">
@@ -73,8 +78,8 @@ const FoodItems = ({
           </p>
           <LoadingSpinner size={60} />
         </div>
-      ) : sortType === "All" ? (
-        <div className="flex h-full flex-col">
+      ) : sortType === "All" && domLoaded ? (
+        <div className="flex h-full flex-col ">
           {getAllItemsInfinite.isError && (
             <p className="pt-8 text-center text-lg">
               There was a problem loading items.
@@ -124,9 +129,12 @@ const FoodItems = ({
               }
             >
               <div
-                className={cn("m-2 flex flex-wrap justify-center gap-1", {
-                  "m-4 gap-4": showingItemCards,
-                })}
+                className={cn(
+                  "m-2 flex flex-wrap justify-center gap-1 3xl:mx-auto ",
+                  {
+                    "m-4 gap-4": showingItemCards,
+                  }
+                )}
               >
                 {getAllItemsInfinite.isSuccess &&
                   getAllItemsInfinite.data?.pages

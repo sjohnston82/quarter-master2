@@ -8,7 +8,6 @@ import ItemOptionsMenu from "./optionsMenu/ItemOptionsMenu";
 import { chipIcons } from "~/utils/helperLists";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 
-
 type Item = RouterOutputs["items"]["getAllItems"][0];
 
 const ItemCard = ({ ...item }: Item) => {
@@ -17,11 +16,20 @@ const ItemCard = ({ ...item }: Item) => {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const { windowSize } = useContext(GlobalContext)
+  const { windowSize } = useContext(GlobalContext);
+
+  let size;
+  if (item.foodCategories.length > 3) {
+    size = 3;
+  } else {
+    size = item.foodCategories.length;
+  }
   return (
-    <div className="relative w-72 rounded bg-snow p-2 shadow-lg shadow-black">
-      <div className="flex flex-col space-y-1">
-        <h1 className="text-center text-xl font-semibold">{item.name}</h1>
+    <div className="relative max-h-[268px] w-[295px] rounded bg-snow p-2 shadow-lg shadow-black ">
+      <div className="flex w-full flex-col space-y-1">
+        <h1 className="min-h-[56px] text-center text-xl font-semibold">
+          {item.name}
+        </h1>
         <div className="text-center">
           {item.daysUntilExpiry === null ? (
             <p className="text-center text-schooner">Expires: No date given</p>
@@ -71,12 +79,13 @@ const ItemCard = ({ ...item }: Item) => {
           </div>
         </div>
       </div>
-      <div className="mx-2 my-4 flex flex-wrap justify-center gap-2">
-        {item.foodCategories.map((category, i) => (
+      <div className="mx-2 my-4 flex w-full flex-wrap justify-center gap-2">
+        {item.foodCategories.slice(0, size).map((category, i) => (
           <Chip
             key={i}
             label={category}
-            size={windowSize.innerWidth > 1279 ? "medium" : "small"}
+            // size={windowSize.innerWidth > 1279 ? "medium" : "small"}
+            size="small"
             avatar={
               <Avatar src={chipIcons[category as keyof typeof chipIcons]} />
             }

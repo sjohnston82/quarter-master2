@@ -55,8 +55,8 @@ const ShoppingListPage = () => {
   }, [deleteAllCompletedItems]);
 
   return (
-    <div className="bg-snow text-woodsmoke">
-      <div className="p-4 flex justify-between">
+    <div className="w-full bg-snow text-woodsmoke">
+      <div className="flex justify-between p-4">
         <Button
           fontSize="text-lg"
           onClick={() => setShowingAddToShoppingListModal(true)}
@@ -69,7 +69,7 @@ const ShoppingListPage = () => {
           </Button>
         </div>
       </div>
-      <div className="flex w-full justify-center mb-1">
+      <div className="mb-1 flex w-full justify-center">
         <TextField
           // size="small"
           select

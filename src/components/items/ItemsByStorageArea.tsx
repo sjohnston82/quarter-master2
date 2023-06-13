@@ -37,7 +37,7 @@ const ItemsByStorageArea = ({ storageAreaId }: ItemsByStorageAreaProps) => {
 
   const shouldShowLoading = shouldEnableQuery && isLoading;
   return (
-    <div className="min-h-[calc(100vh-312px)]">
+    <div className="h-full ">
       <Banner>
         {getCurrentStorageArea.data && getCurrentStorageArea.data.name}
       </Banner>
@@ -68,9 +68,12 @@ const ItemsByStorageArea = ({ storageAreaId }: ItemsByStorageAreaProps) => {
         </p>
       ) : (
         <div
-          className={cn("m-2 flex flex-wrap justify-center gap-1", {
-            "m-4 gap-4": showingItemCards,
-          })}
+          className={cn(
+            "m-2 flex flex-wrap justify-center gap-1",
+            {
+              "m-4 gap-4": showingItemCards,
+            }
+          )}
         >
           {data
             ?.filter((item) => {

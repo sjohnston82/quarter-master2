@@ -56,7 +56,9 @@ type GlobalContextType = {
   showingItemCards: boolean;
   setShowingItemCards: React.Dispatch<React.SetStateAction<boolean>>;
   limit: number;
-  setLimit: React.Dispatch<React.SetStateAction<number>>
+  setLimit: React.Dispatch<React.SetStateAction<number>>;
+  showingSidebar: boolean;
+  setShowingSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const GlobalContext = createContext<GlobalContextType>(
@@ -87,6 +89,7 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
   );
   const [showingItemCards, setShowingItemCards] = useState(false);
   const [limit, setLimit] = useState(10);
+  const [showingSidebar, setShowingSidebar] = useState(false);
 
   useEffect(() => {
     function handleWindowResize() {
@@ -99,6 +102,14 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
       window.removeEventListener("resize", handleWindowResize);
     };
   }, []);
+
+  useEffect(() => {
+    if (windowSize.innerWidth > 1023) {
+      setShowingSidebar(true);
+    } else {
+      setShowingSidebar(false);
+    }
+  }, [windowSize.innerWidth]);
 
   return (
     <GlobalContext.Provider
@@ -137,7 +148,9 @@ const GlobalContextProvider = ({ children }: React.PropsWithChildren) => {
         showingItemCards,
         setShowingItemCards,
         limit,
-        setLimit
+        setLimit,
+        showingSidebar,
+        setShowingSidebar,
       }}
     >
       {children}

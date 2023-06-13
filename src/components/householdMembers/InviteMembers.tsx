@@ -60,7 +60,7 @@ const InviteMembers = () => {
   };
 
   return (
-    <div className="h-full">
+    <div className="">
       <Modal
         isOpen={isShowingInviteModal}
         // title="Invite members to household"
