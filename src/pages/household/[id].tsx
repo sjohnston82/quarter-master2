@@ -89,7 +89,7 @@ const HouseholdPage = () => {
   ]);
 
   return showingSidebar ? (
-    <div className="flex">
+    <div className="flex " id="main">
       <div className=" flex-1 bg-snow">
         {navValue === 0 && domLoaded && <FoodItemsPage />}
         {navValue === 1 && <ShoppingListPage />}

@@ -7,8 +7,11 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ItemOptionsMenu from "./optionsMenu/ItemOptionsMenu";
 import { chipIcons } from "~/utils/helperLists";
 import { GlobalContext } from "~/context/GlobalContextProvider";
+import { TruncatedText } from "../ui/TruncatedText";
 
 type Item = RouterOutputs["items"]["getAllItems"][0];
+
+
 
 const ItemCard = ({ ...item }: Item) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -25,10 +28,23 @@ const ItemCard = ({ ...item }: Item) => {
     size = item.foodCategories.length;
   }
   return (
-    <div className="relative max-h-[268px] w-[295px] rounded bg-snow p-2 shadow-lg shadow-black ">
+    <div className="relative max-h-[268px] w-[320px] rounded bg-snow p-2 shadow-lg shadow-black ">
       <div className="flex w-full flex-col space-y-1">
-        <h1 className="min-h-[56px] text-center text-xl font-semibold">
-          {item.name}
+        <div className="py-2 flex w-full flex-wrap justify-center gap-2 ">
+          {item.foodCategories.slice(0, size).map((category, i) => (
+            <Chip
+              key={i}
+              label={category}
+              // size={windowSize.innerWidth > 1279 ? "medium" : "small"}
+              size="small"
+              avatar={
+                <Avatar src={chipIcons[category as keyof typeof chipIcons]} />
+              }
+            />
+          ))}
+        </div>
+        <h1 className=" text-center text-xl font-semibold">
+          <TruncatedText text={item.name} maxLength={25} classes="text-2xl font-light" />
         </h1>
         <div className="text-center">
           {item.daysUntilExpiry === null ? (
@@ -79,26 +95,15 @@ const ItemCard = ({ ...item }: Item) => {
           </div>
         </div>
       </div>
-      <div className="mx-2 my-4 flex w-full flex-wrap justify-center gap-2">
-        {item.foodCategories.slice(0, size).map((category, i) => (
-          <Chip
-            key={i}
-            label={category}
-            // size={windowSize.innerWidth > 1279 ? "medium" : "small"}
-            size="small"
-            avatar={
-              <Avatar src={chipIcons[category as keyof typeof chipIcons]} />
-            }
-          />
-        ))}
-      </div>
-      <div className="absolute -right-3 top-1">
+
+      <div className="absolute -right-5 top-2 ">
         <Button
           id="basic-button"
           aria-controls={open ? "basic-menu" : undefined}
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
           onClick={handleClick}
+          size="large"
         >
           <MoreVertIcon />
         </Button>

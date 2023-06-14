@@ -2,7 +2,6 @@
 html {
   scroll-behavior: smooth;
   background-color: "#f2f6f9";
- 
 }
 /* :root,
 body,
@@ -17,12 +16,14 @@ body,
   inset: 0;
 } */
 
+#main {
+  max-height: calc(100vh-120px);
+}
 @tailwind components;
 @tailwind utilities;
 
 body {
   font-family: "Roboto";
-
 }
 
 @layer base {
@@ -59,4 +60,3 @@ body {
 }
 
 /** For mobile devices **/
-

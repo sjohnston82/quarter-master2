@@ -44,7 +44,7 @@ const Features = () => {
             text="Keep informed"
             secondaryText=" - store all your family's food items in one convenient location"
           />
-          <Divider variant="middle" />
+
           <FeatureListItem
             text="Barcode scanning "
             secondaryText="- quickly add items to your household"
@@ -54,7 +54,7 @@ const Features = () => {
             text="Track expiration dates "
             secondaryText="- so you always know when you need to use something or throw it out"
           />
-          <Divider variant="middle" />
+
           <FeatureListItem
             text="Shopping List"
             secondaryText=" - send items to a shopping list so your entire family knows

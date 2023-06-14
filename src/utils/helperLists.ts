@@ -22,6 +22,7 @@ export const foodCategories = [
   "breads",
   "ingredients",
   "seafood",
+  "condiments",
 ];
 
 export const groceryStoreAreas = [
@@ -73,6 +74,9 @@ export const chipIcons = {
 
   desserts:
     "https://icons.veryicon.com/png/o/cartoon/christmas-icon/dessert-2.png",
+
+  condiments:
+    "https://icons.veryicon.com/png/o/food--drinks/flat-color-restaurant-icon/ketchup.png",
 };
 
 export const shoppingListAmountTypes = ["lbs", "oz", "g", "kgs"];
