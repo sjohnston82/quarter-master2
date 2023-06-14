@@ -99,7 +99,7 @@ const FoodItemsPage = () => {
           )}
 
           {domLoaded && (
-            <div className="flex h-[calc(100vh-250px)]  flex-col overflow-y-scroll pb-[56px] sm:pb-0 lg:h-[calc(100vh-202px)]">
+            <div className="flex flex-col overflow-y-scroll pb-[56px] sm:pb-0">
               <FoodItems
                 sortType={filterItemsCategory}
                 storageAreaId={

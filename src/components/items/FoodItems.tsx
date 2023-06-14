@@ -33,7 +33,7 @@ const FoodItems = ({
     showingItemCards,
     windowSize,
     limit,
-    setShowingItemCards
+    setShowingItemCards,
   } = useContext(GlobalContext);
 
   const [domLoaded, setDomLoaded] = useState(false);
@@ -71,7 +71,8 @@ const FoodItems = ({
 
   return (
     <div className="flex-1 bg-slate-400   ">
-      {searchingForProduct  ? (
+      <Banner>All Food Items</Banner>
+      {searchingForProduct ? (
         <div className="flex w-full flex-col items-center justify-center">
           <p className="text-center text-lg font-semibold">
             Searching for product info...
@@ -79,13 +80,12 @@ const FoodItems = ({
           <LoadingSpinner size={60} />
         </div>
       ) : sortType === "All" ? (
-        <div className="flex h-full flex-col ">
+        <div className="flex h-[calc(100vh-250px)] overflow-y-scroll flex-col lg:h-[calc(100vh-250px)]">
           {getAllItemsInfinite.isError && (
             <p className="pt-8 text-center text-lg">
               There was a problem loading items.
             </p>
           )}
-          <Banner>All Food Items</Banner>
           {getAllItemsInfinite.isLoading && (
             <div className="flex flex-col items-center justify-center">
               <p className="text-center text-lg font-semibold">
@@ -130,7 +130,7 @@ const FoodItems = ({
             >
               <div
                 className={cn(
-                  "m-2 flex flex-wrap justify-center h-full gap-1 3xl:mx-auto ",
+                  "m-2 flex h-full flex-wrap justify-center gap-1 3xl:mx-auto ",
                   {
                     "m-4 gap-4": showingItemCards,
                   }
