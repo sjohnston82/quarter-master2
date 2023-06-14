@@ -80,7 +80,7 @@ const FoodItems = ({
           <LoadingSpinner size={60} />
         </div>
       ) : sortType === "All" ? (
-        <div className="flex h-[calc(100vh-250px)] overflow-y-scroll flex-col lg:h-[calc(100vh-250px)]">
+        <div className="flex h-[calc(100vh-346px)] flex-col overflow-y-scroll lg:h-[calc(100vh-250px)]">
           {getAllItemsInfinite.isError && (
             <p className="pt-8 text-center text-lg">
               There was a problem loading items.
