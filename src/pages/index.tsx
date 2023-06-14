@@ -43,7 +43,7 @@ const Home: NextPage = () => {
   return (
     <>
       {domLoaded && (
-        <main className="flex min-h-screen w-full flex-col scroll-smooth bg-snow text-woodsmoke">
+        <main className="flex min-h-screen flex-col scroll-smooth bg-snow text-woodsmoke">
           <div className="w-full">
             <motion.div
               initial={{ opacity: 0, scale: 0 }}

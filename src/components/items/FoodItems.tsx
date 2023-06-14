@@ -70,15 +70,15 @@ const FoodItems = ({
   );
 
   return (
-    <div className="mt-2 flex-1 bg-slate-400 sm:flex sm:flex-col  ">
-      {searchingForProduct ? (
+    <div className="flex-1 bg-slate-400   ">
+      {searchingForProduct  ? (
         <div className="flex w-full flex-col items-center justify-center">
           <p className="text-center text-lg font-semibold">
             Searching for product info...
           </p>
           <LoadingSpinner size={60} />
         </div>
-      ) : sortType === "All" && domLoaded ? (
+      ) : sortType === "All" ? (
         <div className="flex h-full flex-col ">
           {getAllItemsInfinite.isError && (
             <p className="pt-8 text-center text-lg">
@@ -130,7 +130,7 @@ const FoodItems = ({
             >
               <div
                 className={cn(
-                  "m-2 flex flex-wrap justify-center gap-1 3xl:mx-auto ",
+                  "m-2 flex flex-wrap justify-center h-full gap-1 3xl:mx-auto ",
                   {
                     "m-4 gap-4": showingItemCards,
                   }

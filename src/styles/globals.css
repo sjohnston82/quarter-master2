@@ -2,12 +2,27 @@
 html {
   scroll-behavior: smooth;
   background-color: "#f2f6f9";
+ 
 }
+/* :root,
+body,
+#__next {
+  @apply flex flex-col flex-1;
+  @apply h-auto min-h-full w-screen max-w-full;
+  @apply m-0 p-0;
+  @apply overflow-y-auto overflow-x-hidden;
+} */
+/* #__next {
+  position: absolute;
+  inset: 0;
+} */
+
 @tailwind components;
 @tailwind utilities;
 
 body {
   font-family: "Roboto";
+
 }
 
 @layer base {
@@ -44,9 +59,4 @@ body {
 }
 
 /** For mobile devices **/
-@media (max-width: 767px) {
-  .custom-shape-divider-top-1684701837 svg {
-    width: calc(100% + 1.3px);
-    height: 248px;
-  }
-}
+

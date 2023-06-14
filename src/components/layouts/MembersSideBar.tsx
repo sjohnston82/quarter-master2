@@ -11,7 +11,7 @@ const MembersSideBar = () => {
   const getInviteList = api.household.getInviteList.useQuery({ householdId });
 
   return (
-    <div className="flex h-[calc(100vh-104px)]  w-full flex-col overflow-y-scroll border-l-4 border-woodsmoke bg-snow">
+    <div className="flex h-[calc(100vh-104px)]  w-full flex-col overflow-y-scroll border-l-2 border-woodsmoke bg-snow">
       <SideBarNavButtons />
       <div className="">
         <h1 className="text-center text-2xl">{householdName} Household</h1>

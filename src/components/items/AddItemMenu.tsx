@@ -10,7 +10,7 @@ import CreateStorageArea from "../storageAreas/CreateStorageArea";
 import { useForm } from "react-hook-form";
 import { type UPCInfo } from "~/context/GlobalContextProvider";
 import { toast } from "react-hot-toast";
-import { TooltipClasses } from "@mui/material";
+import { type TooltipClasses } from "@mui/material";
 
 type NewItemInputProps = {
   name: string;
@@ -37,6 +37,10 @@ const AddItemMenu = () => {
   const { reset } = useForm<NewItemInputProps>();
   const [showingMenu, setShowingMenu] = useState(false);
   // const [searchingForProduct, setSearchingForProduct] = useState(false)
+  const [domLoaded, setDomLoaded] = useState(false);
+  useEffect(() => {
+    setDomLoaded(true);
+  }, []);
 
   useEffect(() => {
     const apiUrl =
@@ -121,7 +125,7 @@ const AddItemMenu = () => {
     tooltip: "custom-tooltip-class",
   };
   return (
-    <div className="mt-2  ">
+    <div className="mt-2 sm:mt-3 sm:ml-auto sm:mr-5">
       <SpeedDial
         ariaLabel="Add item speed dial"
         sx={{

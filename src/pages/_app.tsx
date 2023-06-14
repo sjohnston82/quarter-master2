@@ -9,11 +9,16 @@ import "~/styles/globals.css";
 import Head from "next/head";
 import MainLayout from "~/components/layouts/MainLayout";
 import GlobalContextProvider from "~/context/GlobalContextProvider";
+import { useEffect, useState } from "react";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+  const [domLoaded, setDomLoaded] = useState(false);
+  useEffect(() => {
+    setDomLoaded(true);
+  }, []);
   return (
     <SessionProvider session={session}>
       <Head>
@@ -23,12 +28,13 @@ const MyApp: AppType<{ session: Session | null }> = ({
           content="Quartermaster pantry inventory manager"
         />
         <link rel="icon" href="/favicon.ico" />
-        
       </Head>
       <Toaster position="top-center" />
       <GlobalContextProvider>
+        <div className="h-screen max-h-screen">
         <MainLayout></MainLayout>
-        <Component {...pageProps} />
+          <Component {...pageProps} />
+        </div>
       </GlobalContextProvider>
     </SessionProvider>
   );

@@ -1,14 +1,20 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { GlobalContext } from "~/context/GlobalContextProvider";
+import Searchbar from "../ui/Searchbar";
+import { cn } from "~/utils/cn";
 
 const MainLayout = () => {
   const { data: sessionData } = useSession();
   const router = useRouter();
-  const { householdName, setNavValue } = useContext(GlobalContext);
+  const { householdName, setNavValue, windowSize } = useContext(GlobalContext);
+  const [domLoaded, setDomLoaded] = useState(false);
+  useEffect(() => {
+    setDomLoaded(true);
+  }, []);
 
   const signOutWithRedirect = () => {
     void signOut();
@@ -17,34 +23,43 @@ const MainLayout = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex h-16 items-center justify-center bg-snow font-ALoveofThunder text-4xl lg:text-5xl text-woodsmoke underline  ">
+      <div className="flex h-16 items-center justify-center bg-snow font-ALoveofThunder text-4xl text-woodsmoke underline lg:text-5xl  ">
         <h1 className="">
           <span className="text-[42px] lg:text-6xl">Q</span>uartermaster
         </h1>
       </div>
-      <div className="flex h-10 items-center justify-between bg-mango px-2">
-        <div className="">
-          <p
-            className="w-full cursor-pointer p-1 text-sm text-snow "
-            onClick={() => setNavValue(2)}
-            role="dialog"
-          >
-            {householdName && `${householdName} Household`}
-          </p>
-        </div>
+      <div className="flex h-14 items-center justify-between bg-mango px-2">
+      
+          <div className="flex items-center sm:w-1/2 md:w-2/5 lg:w-1/3 xl:w-1/4 2xl:w-1/5">
+            {windowSize.innerWidth < 640 && domLoaded ? (
+              <p
+                className="w-full cursor-pointer p-1 text-sm text-snow "
+                onClick={() => setNavValue(2)}
+                role="dialog"
+              >
+                {householdName && `${householdName} Household`}
+              </p>
+            ) : (
+              domLoaded && <Searchbar />
+            )}
+          </div>
+     
         <div className="">
           {sessionData ? (
             <div className="flex-end flex items-end">
               <div className="flex items-center gap-2 ">
                 <Image
                   src={sessionData?.user?.image ?? ""}
-                  width={30}
-                  height={30}
+                  width={windowSize.innerWidth > 639 ? 40 : 30}
+                  height={windowSize.innerWidth > 639 ? 40 : 30}
                   className="rounded-full"
                   alt={sessionData?.user?.name ?? ""}
                 />
                 <LogoutIcon
-                  className="cursor-pointer text-snow hover:text-indigo-600"
+                  className={
+                    cn("cursor-pointer text-snow hover:text-indigo-600",
+                    { "text-4xl font-light": windowSize.innerWidth > 639 })
+                  }
                   onClick={() => void signOutWithRedirect()}
                 />
               </div>

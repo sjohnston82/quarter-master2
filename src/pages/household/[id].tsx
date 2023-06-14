@@ -67,6 +67,10 @@ const HouseholdPage = () => {
     getHouseholdInfo.data &&
       getHouseholdInfo.data !== null &&
       setHouseholdName(getHouseholdInfo.data.name);
+
+    if (navValue === 2 && windowSize.innerWidth > 1023) {
+      setNavValue(0);
+    }
   }, [
     sessionData,
     status,
@@ -79,12 +83,15 @@ const HouseholdPage = () => {
     getStorageAreas.data,
     setStorageAreas,
     storageAreas,
+    navValue,
+    windowSize.innerWidth,
+    setNavValue,
   ]);
 
   return showingSidebar ? (
-    <div className="flex h-full">
-      <div className="flex-1 overflow-hidden bg-snow">
-        {navValue === 0 && <FoodItemsPage />}
+    <div className="flex">
+      <div className=" flex-1 bg-snow">
+        {navValue === 0 && domLoaded && <FoodItemsPage />}
         {navValue === 1 && <ShoppingListPage />}
       </div>
       <div className="overflow-y-auto">
@@ -92,14 +99,13 @@ const HouseholdPage = () => {
       </div>
     </div>
   ) : (
-    <div className="h-full w-full pb-[56px]">
+    <div className=" w-full ">
       {navValue === 0 && <FoodItemsPage />}
       {navValue === 1 && <ShoppingListPage />}
       {navValue === 2 && <HouseholdMembersPage />}
 
       <BottomNavigation
         sx={{ position: "fixed", bottom: 0, width: 1.0 }}
-        // className="fixed bottom-0 w-full"
         showLabels
         value={navValue}
         onChange={(event, newValue: number) => {
