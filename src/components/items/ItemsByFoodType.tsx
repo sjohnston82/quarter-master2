@@ -37,50 +37,52 @@ const ItemsByFoodType = ({ selectedFoodCategory }: ItemsByFoodTypeProps) => {
   const shouldShowLoading = shouldEnableQuery && isLoading;
 
   return (
-    <div className="h-full">
-      <Banner>{capitalizedName}</Banner>
-      {isError && (
-        <p className="pt-8 text-center text-lg">
-          There was an error fetching items.
-        </p>
-      )}
-      {idsToFind.length === 0 && (
-        <p className="pt-8 text-center text-lg">
-          Select a food category to retrieve items.
-        </p>
-      )}
-      {shouldShowLoading && (
-        <div className="relative mt-20 flex h-full flex-col items-center justify-center gap-2">
-          <div className="absolute  top-1/2 flex h-full w-full flex-col items-center justify-center ">
-            <p className="text-lg font-semibold">Fetching items...</p>
-            <LoadingSpinner size={60} />
+    <div className="">
+      <div className="flex h-[calc(100vh-298px)] flex-col overflow-y-scroll sm:h-[calc(100vh-240px)] lg:h-[calc(100vh-250px)]">
+        <Banner>{capitalizedName}</Banner>
+        {isError && (
+          <p className="pt-8 text-center text-lg">
+            There was an error fetching items.
+          </p>
+        )}
+        {idsToFind.length === 0 && (
+          <p className="pt-8 text-center text-lg">
+            Select a food category to retrieve items.
+          </p>
+        )}
+        {shouldShowLoading && (
+          <div className="relative mt-20 flex h-full flex-col items-center justify-center gap-2">
+            <div className="absolute  top-0 flex h-full w-full flex-col items-center justify-center ">
+              <p className="text-lg font-semibold">Fetching items...</p>
+              <LoadingSpinner size={60} />
+            </div>
           </div>
+        )}
+        <div
+          className={cn("m-2 flex flex-wrap justify-center gap-1", {
+            "m-4 gap-4": showingItemCards,
+          })}
+        >
+          {data &&
+            data
+              .filter((item) => {
+                if (debouncedValue === "") {
+                  return item;
+                } else if (
+                  item.name.toLowerCase().includes(debouncedValue) ||
+                  item.brand?.toLowerCase().includes(debouncedValue)
+                ) {
+                  return item;
+                }
+              })
+              .map((item) =>
+                showingItemCards ? (
+                  <ItemCard key={item.id} {...item} />
+                ) : (
+                  <Item key={item.id} {...item} />
+                )
+              )}
         </div>
-      )}
-      <div
-        className={cn("m-2 flex flex-wrap justify-center gap-1", {
-          "m-4 gap-4": showingItemCards,
-        })}
-      >
-        {data &&
-          data
-            .filter((item) => {
-              if (debouncedValue === "") {
-                return item;
-              } else if (
-                item.name.toLowerCase().includes(debouncedValue) ||
-                item.brand?.toLowerCase().includes(debouncedValue)
-              ) {
-                return item;
-              }
-            })
-            .map((item) =>
-              showingItemCards ? (
-                <ItemCard key={item.id} {...item} />
-              ) : (
-                <Item key={item.id} {...item} />
-              )
-            )}
       </div>
     </div>
   );

@@ -63,15 +63,16 @@ const FoodItems = ({
   }, [setLimit, setShowingItemCards, showingItemCards, windowSize.innerWidth]);
 
   const getAllItemsInfinite = api.items.getAllItemsInfinite.useInfiniteQuery(
-    { householdId, limit },
+    { householdId },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
   );
 
+  console.log(getAllItemsInfinite.data?.pages);
+
   return (
     <div className="flex-1 bg-slate-400   ">
-      <Banner>All Food Items</Banner>
       {searchingForProduct ? (
         <div className="flex w-full flex-col items-center justify-center">
           <p className="text-center text-lg font-semibold">
@@ -80,89 +81,96 @@ const FoodItems = ({
           <LoadingSpinner size={60} />
         </div>
       ) : sortType === "All" ? (
-        <div className="flex h-[calc(100vh-346px)] flex-col overflow-y-scroll lg:h-[calc(100vh-250px)]">
-          {getAllItemsInfinite.isError && (
-            <p className="pt-8 text-center text-lg">
-              There was a problem loading items.
-            </p>
-          )}
-          {getAllItemsInfinite.isLoading && (
-            <div className="flex flex-col items-center justify-center">
-              <p className="text-center text-lg font-semibold">
-                Loading items...
-              </p>
-              <LoadingSpinner size={60} />
-            </div>
-          )}
-          {storageAreas.length === 0 &&
-            !getAllItemsInfinite.isInitialLoading && (
-              <p className="px-2 text-center text-lg font-semibold">
-                You must add a storage area before you can add items!
+        <div className="">
+          <Banner>All Food Items</Banner>
+          <div
+            className="flex min-h-[calc(100vh-346px)] flex-col overflow-y-scroll sm:h-[calc(100vh-288px)] lg:h-[calc(100vh-250px)]"
+            id="scrollable-target"
+          >
+            {getAllItemsInfinite.isError && (
+              <p className="pt-8 text-center text-lg">
+                There was a problem loading items.
               </p>
             )}
-          {getAllItemsInfinite.data?.pages[0] &&
-          getAllItemsInfinite.data?.pages[0].items.length === 0 &&
-          storageAreas.length > 0 ? (
-            <p className="text-center text-lg font-semibold">
-              There are not currently any items added.
-            </p>
-          ) : (
-            <InfiniteScroll
-              dataLength={
-                getAllItemsInfinite.data?.pages.flatMap((page) => page.items)
-                  .length ?? 0
-              }
-              next={getAllItemsInfinite.fetchNextPage}
-              hasMore={!!getAllItemsInfinite.hasNextPage}
-              loader={
-                <h4 style={{ textAlign: "center", marginTop: "1rem" }}>
-                  Loading...
-                </h4>
-              }
-              endMessage={
-                getAllItemsInfinite.data?.pages[0]?.items.length !== 0 &&
-                !getAllItemsInfinite.isLoading && (
-                  <p style={{ textAlign: "center" }}>
-                    <b>End of items.</b>
-                  </p>
-                )
-              }
-            >
-              <div
-                className={cn(
-                  "m-2 flex h-full flex-wrap justify-center gap-1 3xl:mx-auto ",
-                  {
-                    "m-4 gap-4": showingItemCards,
-                  }
-                )}
-              >
-                {getAllItemsInfinite.isSuccess &&
-                  getAllItemsInfinite.data?.pages
-                    .flatMap((page) => page.items)
-                    .filter((item) => {
-                      if (debouncedValue === "") {
-                        return item;
-                      } else if (
-                        item.name
-                          .toLowerCase()
-                          .includes(debouncedValue.toLowerCase()) ||
-                        item.brand
-                          ?.toLowerCase()
-                          .includes(debouncedValue.toLowerCase())
-                      ) {
-                        return item;
-                      }
-                    })
-                    .map((item) =>
-                      showingItemCards ? (
-                        <ItemCard key={item.id} {...item} />
-                      ) : (
-                        <Item key={item.id} {...item} />
-                      )
-                    )}
+            {getAllItemsInfinite.isLoading && (
+              <div className="flex flex-col items-center justify-center">
+                <p className="text-center text-lg font-semibold">
+                  Loading items...
+                </p>
+                <LoadingSpinner size={60} />
               </div>
-            </InfiniteScroll>
-          )}
+            )}
+            {storageAreas.length === 0 &&
+              !getAllItemsInfinite.isInitialLoading && (
+                <p className="px-2 text-center text-lg font-semibold">
+                  You must add a storage area before you can add items!
+                </p>
+              )}
+            {getAllItemsInfinite.data?.pages[0] &&
+            getAllItemsInfinite.data?.pages[0].items.length === 0 &&
+            storageAreas.length > 0 ? (
+              <p className="text-center text-lg font-semibold">
+                There are not currently any items added.
+              </p>
+            ) : (
+              <InfiniteScroll
+                dataLength={
+                  getAllItemsInfinite.data?.pages.flatMap((page) => page.items)
+                    .length ?? 0
+                }
+                next={getAllItemsInfinite.fetchNextPage}
+                hasMore={!!getAllItemsInfinite.hasNextPage}
+                loader={
+                  <h4 style={{ textAlign: "center", marginTop: "1rem" }}>
+                    Loading...
+                  </h4>
+                }
+                endMessage={
+                  getAllItemsInfinite.data?.pages[0]?.items.length !== 0 &&
+                  !getAllItemsInfinite.isLoading && (
+                    <p style={{ textAlign: "center" }}>
+                      <b>End of items.</b>
+                    </p>
+                  )
+                }
+                scrollableTarget="scrollable-target"
+              >
+                <div
+                  className={cn(
+                    "m-2 flex  flex-wrap justify-center gap-1 3xl:mx-auto ",
+                    {
+                      "m-4 gap-4": showingItemCards,
+                    }
+                  )}
+                >
+                  {getAllItemsInfinite.isSuccess &&
+                    getAllItemsInfinite.data?.pages
+                      .flatMap((page) => page.items)
+                      .filter((item) => {
+                        if (debouncedValue === "") {
+                          return item;
+                        } else if (
+                          item.name
+                            .toLowerCase()
+                            .includes(debouncedValue.toLowerCase()) ||
+                          item.brand
+                            ?.toLowerCase()
+                            .includes(debouncedValue.toLowerCase())
+                        ) {
+                          return item;
+                        }
+                      })
+                      .map((item) =>
+                        showingItemCards ? (
+                          <ItemCard key={item.id} {...item} />
+                        ) : (
+                          <Item key={item.id} {...item} />
+                        )
+                      )}
+                </div>
+              </InfiniteScroll>
+            )}
+          </div>
         </div>
       ) : sortType === "Storage Area" ? (
         <ItemsByStorageArea storageAreaId={storageAreaId!} />

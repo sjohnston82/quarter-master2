@@ -1,10 +1,18 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
-// const LIMIT = 10;
+const limit = 10;
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { calculateDaysUntilExpiry } from "~/utils/calculateDaysUntilExpiry";
+
+interface CategoryCount {
+  name: string;
+  count: number;
+  ids: string[];
+}
+
+type CategoryCounts = Record<string, CategoryCount>;
 
 export const itemsRouter = createTRPCRouter({
   getAllItemsInfinite: protectedProcedure
@@ -12,11 +20,10 @@ export const itemsRouter = createTRPCRouter({
       z.object({
         cursor: z.string().nullish(),
         householdId: z.string(),
-        limit: z.number(),
       })
     )
     .query(async ({ ctx, input }) => {
-      const { cursor, householdId, limit } = input;
+      const { cursor, householdId } = input;
       const items = await ctx.prisma.item.findMany({
         cursor: cursor ? { id: cursor } : undefined,
         take: limit + 1,
@@ -279,30 +286,61 @@ export const itemsRouter = createTRPCRouter({
       });
     }),
 
+  // getFoodCategoryCount: protectedProcedure
+  //   .input(z.object({ householdId: z.string() }))
+  //   .query(async ({ ctx, input }) => {
+  //     const allItems = await ctx.prisma.item.findMany({
+  //       where: { householdId: input.householdId },
+  //     });
+  //     const categoryCounts: { name: string; count: number; ids: string[] }[] =
+  //       [];
+
+  //     allItems.forEach((item) => {
+  //       item.foodCategories.forEach((category) => {
+  //         const existingCategory = categoryCounts.find(
+  //           (count) => count.name === category
+  //         );
+  //         if (existingCategory) {
+  //           existingCategory.count++;
+  //           existingCategory.ids.push(item.id);
+  //         } else {
+  //           categoryCounts.push({ name: category, count: 1, ids: [item.id] });
+  //         }
+  //       });
+  //     });
+
+  //     return categoryCounts;
+  //   }),
+
   getFoodCategoryCount: protectedProcedure
     .input(z.object({ householdId: z.string() }))
     .query(async ({ ctx, input }) => {
       const allItems = await ctx.prisma.item.findMany({
         where: { householdId: input.householdId },
       });
-      const categoryCounts: { name: string; count: number; ids: string[] }[] =
-        [];
+      const categoryCounts: CategoryCounts = {};
 
       allItems.forEach((item) => {
         item.foodCategories.forEach((category) => {
-          const existingCategory = categoryCounts.find(
-            (count) => count.name === category
-          );
-          if (existingCategory) {
-            existingCategory.count++;
-            existingCategory.ids.push(item.id);
+          if (categoryCounts.hasOwnProperty(category)) {
+            const count = categoryCounts[category]?.count ?? 0;
+            const ids = categoryCounts[category]?.ids ?? [];
+            categoryCounts[category] = {
+              name: category,
+              count: count + 1,
+              ids: [...ids, item.id],
+            };
           } else {
-            categoryCounts.push({ name: category, count: 1, ids: [item.id] });
+            categoryCounts[category] = {
+              name: category,
+              count: 1,
+              ids: [item.id],
+            };
           }
         });
       });
 
-      return categoryCounts;
+      return Object.values(categoryCounts);
     }),
 
   getItemsByFoodType: protectedProcedure
@@ -317,4 +355,17 @@ export const itemsRouter = createTRPCRouter({
       });
       return foodTypeItems;
     }),
+
+  // this is for when a food tag is clicked to return all items with the same tag
+  // getItemsByFoodTypeClick: protectedProcedure.input(z.object({ foodType: z.string(), householdId: z.string() })).query(async ({ ctx, input }) => {
+  //   const allItems = await ctx.prisma.items.findMany({
+  //     where: {
+  //       householdId: input.householdId,
+  //     }
+  //   })
+
+  //   allItems.forEach((item) => {
+  //     item.foodCategories
+  //   })
+  // })
 });
