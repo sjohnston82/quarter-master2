@@ -11,10 +11,9 @@ body,
   @apply m-0 p-0;
   @apply overflow-y-auto overflow-x-hidden;
 } */
-/* #__next {
-  position: absolute;
-  inset: 0;
-} */
+#__next {
+ background-color: #000000
+}
 
 #main {
   max-height: calc(100vh-120px);

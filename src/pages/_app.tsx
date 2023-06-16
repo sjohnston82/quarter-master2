@@ -31,7 +31,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
       </Head>
       <Toaster position="top-center" />
       <GlobalContextProvider>
-        <div className="h-screen max-h-screen">
+        <div className="h-[100vw-50px] w-[98%] bg-snow mx-auto">
         <MainLayout></MainLayout>
           <Component {...pageProps} />
         </div>

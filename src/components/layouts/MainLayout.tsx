@@ -22,13 +22,13 @@ const MainLayout = () => {
   };
 
   return (
-    <div className="flex  flex-col">
-      <div className="flex h-full items-center justify-center bg-snow font-ALoveofThunder text-4xl text-woodsmoke underline lg:text-5xl  ">
-        <h1 className="">
+    <div className="flex bg-black flex-col">
+      <div className="flex h-full items-center justify-center bg-black font-ALoveofThunder text-4xl text-woodsmoke underline lg:text-5xl  ">
+        <h1 className=" text-slate-300">
           <span className="text-[42px] lg:text-6xl">Q</span>uartermaster
         </h1>
       </div>
-      <div className="flex items-center justify-between bg-mango h-14 px-2">
+      <div className="flex h-14 items-center justify-between rounded-t-xl bg-mango px-2">
         <div className="flex items-center sm:w-1/2 md:w-2/5 lg:w-1/3 xl:w-1/4 2xl:w-1/5">
           {windowSize.innerWidth < 640 && domLoaded ? (
             <p
