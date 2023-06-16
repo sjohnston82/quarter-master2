@@ -10,7 +10,7 @@ const HouseholdMembersPage = () => {
   const getInviteList = api.household.getInviteList.useQuery({ householdId });
 
   return (
-    <div className="mt-3 flex w-full flex-col  space-y-4">
+    <div className="mt-3 flex w-full flex-col h-[calc(100vh-166px)] overflow-y-scroll mb-[56px] space-y-4">
       <div className="">
         <h1 className="text-center text-2xl">{householdName} Household</h1>
       </div>

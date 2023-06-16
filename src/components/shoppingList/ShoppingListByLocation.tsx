@@ -1,6 +1,7 @@
 import LocationContainer from "./LocationContainer";
 import { RouterOutputs } from "~/utils/api";
 import LoadingSpinner from "../ui/LoadingSpinner";
+import Banner from "../ui/Banner";
 
 type Item = RouterOutputs["shoppingList"]["getAllShoppingListItems"][0];
 
@@ -33,11 +34,17 @@ const ShoppingListByLocation = ({
   const uncategorized = data?.filter((item) => item.location === "");
 
   return (
-    <div className="flex w-full flex-col bg-snow text-woodsmoke">
+    <div className="flex h-[calc(100vh-252px)] w-full flex-col overflow-y-scroll bg-snow text-woodsmoke lg:h-[calc(100vh-269px)]">
+      {data?.length === 0 && (
+        <Banner fontSize="text-xl">Shopping List By Location</Banner>
+      )}
       {isLoading && <LoadingSpinner size={40} />}
       {data?.length === 0 && (
-        <p className="text-center pt-8 text-lg">Your shopping list is currently empty.</p>
+        <p className="pt-8 text-center text-lg">
+          Your shopping list is currently empty.
+        </p>
       )}
+
       {/* this div renders first if the lists are not empty */}
       <div className="">
         {produceItems && produceItems.length > 0 && (

@@ -47,10 +47,18 @@ const FilterByFoodType = ({filterItemsCategory, handleChange, foodTypeRef, selec
           onChange={handleChange}
           className="shadow "
         >
-          <MenuItem value="All">All</MenuItem>
-          <MenuItem value="Storage Area">Storage Area</MenuItem>
-          <MenuItem value="Food Type">Food Type</MenuItem>
-          <MenuItem value="Expiring Soon">Expiring Soon</MenuItem>
+          <MenuItem value="All">
+            <span className="font-semibold">All Items</span>
+          </MenuItem>
+          <MenuItem value="Storage Area">
+            <span className="font-semibold">Storage Area</span>
+          </MenuItem>
+          <MenuItem value="Food Type">
+            <span className="font-semibold">Food Type</span>
+          </MenuItem>
+          <MenuItem value="Expiring Soon">
+            <span className="font-semibold">Expiring Soon/Expired</span>
+          </MenuItem>
         </Select>
       </FormControl>
       <TextField

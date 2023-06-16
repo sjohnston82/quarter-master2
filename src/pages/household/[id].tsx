@@ -12,6 +12,8 @@ import HouseholdMembersPage from "~/components/bottomNavScreens/HouseholdMembers
 import FoodItemsPage from "~/components/bottomNavScreens/FoodItemsPage";
 import ShoppingListPage from "~/components/bottomNavScreens/ShoppingListPage";
 import MembersSideBar from "~/components/layouts/MembersSideBar";
+import Footer from "~/components/layouts/Footer";
+import { cn } from "~/utils/cn";
 
 const HouseholdPage = () => {
   const router = useRouter();
@@ -89,35 +91,91 @@ const HouseholdPage = () => {
   ]);
 
   return showingSidebar ? (
-    <div className="flex " id="main">
-      <div className=" flex-1 bg-snow">
-        {navValue === 0 && domLoaded && <FoodItemsPage />}
-        {navValue === 1 && <ShoppingListPage />}
+    <div className="flex flex-col">
+      <div className="flex " id="main">
+        <div className=" flex-1 bg-snow">
+          {navValue === 0 && domLoaded && <FoodItemsPage />}
+          {navValue === 1 && <ShoppingListPage />}
+        </div>
+        <div className="overflow-y-auto">
+          <MembersSideBar />
+        </div>
       </div>
-      <div className="overflow-y-auto">
-        <MembersSideBar />
+      <div className="">
+        <Footer />
       </div>
     </div>
   ) : (
-    <div className=" w-full ">
+    <div className=" w-full pb-[56px]">
       {navValue === 0 && <FoodItemsPage />}
       {navValue === 1 && <ShoppingListPage />}
       {navValue === 2 && <HouseholdMembersPage />}
 
       <BottomNavigation
-        sx={{ position: "fixed", bottom: 0, width: 1.0 }}
+        sx={{
+          position: "fixed",
+          bottom: 0,
+          width: 0.98,
+          marginLeft: "auto",
+          backgroundColor: "black",
+        }}
         showLabels
         value={navValue}
         onChange={(event, newValue: number) => {
           setNavValue(newValue);
         }}
       >
-        <BottomNavigationAction label="Items" icon={<KitchenIcon />} />
         <BottomNavigationAction
-          label="ShoppingList"
-          icon={<ShoppingCartIcon />}
+          label="Items"
+          sx={{
+            "& .Mui-selected": {
+              color: "#fb8905",
+            },
+            color: "#cbd5e1",
+          }}
+          icon={
+            <KitchenIcon
+              className={cn({
+                "text-slate-300": navValue !== 0,
+                "text-mango": navValue === 0,
+              })}
+            />
+          }
         />
-        <BottomNavigationAction label="Members" icon={<GroupIcon />} />
+        <BottomNavigationAction
+          label="Shopping List"
+          sx={{
+            "& .Mui-selected": {
+              color: "#fb8905",
+            },
+            color: "#cbd5e1",
+          }}
+          icon={
+            <ShoppingCartIcon
+              className={cn({
+                "text-slate-300": navValue !== 1,
+                "text-mango": navValue === 1,
+              })}
+            />
+          }
+        />
+        <BottomNavigationAction
+          sx={{
+            "& .Mui-selected": {
+              color: "#fb8905",
+            },
+            color: "#cbd5e1",
+          }}
+          label="Members"
+          icon={
+            <GroupIcon
+              className={cn({
+                "text-slate-300": navValue !== 2,
+                "text-mango": navValue === 2,
+              })}
+            />
+          }
+        />
       </BottomNavigation>
     </div>
   );

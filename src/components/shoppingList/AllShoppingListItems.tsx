@@ -15,7 +15,7 @@ const AllShoppingListItems = ({
   isLoading,
 }: AllShoppingListItemsProps) => {
   return (
-    <div className="relative h-full w-full bg-snow text-woodsmoke">
+    <div className="h-[calc(100vh-252px)] md:h-[calc(100vh-242px)] lg:h-[calc(100vh-229px)] overflow-y-scroll relative w-full bg-blue-400  text-woodsmoke">
       <Banner fontSize="text-xl">All Shopping List Items</Banner>
       {isLoading && (
         <div className="relative mt-20 flex h-full flex-col items-center justify-center">

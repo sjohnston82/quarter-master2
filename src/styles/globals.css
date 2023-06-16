@@ -1,7 +1,7 @@
 @tailwind base;
 html {
   scroll-behavior: smooth;
-  background-color: "#f2f6f9";
+  background-color: #000000;
 }
 /* :root,
 body,
@@ -12,7 +12,7 @@ body,
   @apply overflow-y-auto overflow-x-hidden;
 } */
 #__next {
- background-color: #000000
+  background-color: #000000;
 }
 
 #main {

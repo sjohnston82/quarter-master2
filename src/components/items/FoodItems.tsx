@@ -72,7 +72,7 @@ const FoodItems = ({
   console.log(getAllItemsInfinite.data?.pages);
 
   return (
-    <div className="flex-1 bg-slate-400   ">
+    <div className="flex-1 bg-slate-600 rounded-b-xl  ">
       {searchingForProduct ? (
         <div className="flex w-full flex-col items-center justify-center">
           <p className="text-center text-lg font-semibold">
@@ -84,7 +84,7 @@ const FoodItems = ({
         <div className="">
           <Banner>All Food Items</Banner>
           <div
-            className="flex min-h-[calc(100vh-346px)] flex-col overflow-y-scroll sm:h-[calc(100vh-288px)] lg:h-[calc(100vh-250px)]"
+            className="flex h-[calc(100vh-346px)] flex-col overflow-y-scroll sm:h-[calc(100vh-288px)] lg:h-[calc(100vh-270px)]"
             id="scrollable-target"
           >
             {getAllItemsInfinite.isError && (
@@ -127,7 +127,7 @@ const FoodItems = ({
                 }
                 endMessage={
                   getAllItemsInfinite.data?.pages[0]?.items.length !== 0 &&
-                  !getAllItemsInfinite.isLoading && (
+                  !getAllItemsInfinite.isLoading && !getAllItemsInfinite.isError && (
                     <p style={{ textAlign: "center" }}>
                       <b>End of items.</b>
                     </p>
