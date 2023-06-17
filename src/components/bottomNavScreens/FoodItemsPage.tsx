@@ -40,7 +40,7 @@ const FoodItemsPage = () => {
   }, [setSelectedStorageArea]);
 
   return (
-    <div className=" flex-1 bg-black text-woodsmoke ">
+    <div className=" flex-1 bg-darkgray text-woodsmoke ">
       {showingBarcodeScanner ? (
         <div className="">
           <BarcodeScanner />
@@ -48,7 +48,7 @@ const FoodItemsPage = () => {
       ) : (
         <div className=" w-full">
           {domLoaded && (
-            <div className="w-full h-full ">
+            <div className="h-full w-full ">
               {windowSize.innerWidth < 640 ? (
                 <ActionBarSmall />
               ) : (
@@ -65,7 +65,7 @@ const FoodItemsPage = () => {
             </div>
           )}
           {windowSize.innerWidth < 640 && domLoaded && (
-            <div className="bg-slate-600">
+            <div className="bg-snow">
               {filterItemsCategory === "All" && (
                 <FilterByAll
                   filterItemsCategory={filterItemsCategory}

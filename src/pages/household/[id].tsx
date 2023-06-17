@@ -97,7 +97,7 @@ const HouseholdPage = () => {
           {navValue === 0 && domLoaded && <FoodItemsPage />}
           {navValue === 1 && <ShoppingListPage />}
         </div>
-        <div className="overflow-y-auto">
+        <div className="overflow-y-auto bg-darkgray">
           <MembersSideBar />
         </div>
       </div>
@@ -116,7 +116,6 @@ const HouseholdPage = () => {
           position: "fixed",
           bottom: 0,
           width: 0.98,
-          marginLeft: "auto",
           backgroundColor: "black",
         }}
         showLabels

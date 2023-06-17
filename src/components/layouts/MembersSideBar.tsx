@@ -11,28 +11,30 @@ const MembersSideBar = () => {
   const getInviteList = api.household.getInviteList.useQuery({ householdId });
 
   return (
-    <div className="flex h-[calc(100vh-136px)]  w-full flex-col overflow-y-scroll border-l-2 border-woodsmoke rounded-br bg-snow">
+    <div className="flex h-[calc(100vh-136px)]  w-full flex-col  rounded-br-xl border-l-2 border-woodsmoke bg-snow">
       <SideBarNavButtons />
-      <div className="">
-        <h1 className="text-center text-2xl">{householdName} Household</h1>
-      </div>
-      <InviteMembers />
-      <div className="flex w-full flex-col items-center justify-center">
-        <h2 className="border-b border-slate-300 px-2 text-center text-xl font-semibold">
-          Members
-        </h2>
-        <div className=" h-full">
-          <ShowUsers />
-        </div>
-      </div>
-      <div className="flex w-full flex-col  items-center ">
-        <h2 className="border-b border-slate-300 px-2 text-center text-xl font-semibold">
-          Invited
-        </h2>
+      <div className="overflow-y-scroll">
         <div className="">
-          {getInviteList.data && (
-            <InvitedMembers getInviteList={getInviteList.data[0]} />
-          )}
+          <h1 className="text-center text-xl py-2 w-full ">{householdName} Household</h1>
+        </div>
+        <InviteMembers />
+        <div className="flex w-full flex-col items-center justify-center pt-2">
+          <h2 className="border-b border-slate-300 px-2 text-center text-xl font-semibold">
+            Members
+          </h2>
+          <div className=" h-full">
+            <ShowUsers />
+          </div>
+        </div>
+        <div className="flex w-full flex-col  items-center pb-8">
+          <h2 className="border-b border-slate-300 px-2 text-center text-xl font-semibold">
+            Invited
+          </h2>
+          <div className="">
+            {getInviteList.data && (
+              <InvitedMembers getInviteList={getInviteList.data[0]} />
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -16,7 +16,7 @@ const ItemsByExpiringSoon = () => {
   return (
     <div className="">
       <Banner>Expiring Soon</Banner>
-      <div className="flex h-[calc(100vh-346px)] flex-col overflow-y-scroll sm:h-[calc(100vh-288px)] lg:h-[calc(100vh-250px)]">
+      <div className="flex h-[calc(100vh-346px)] overflow-y-scroll sm:h-[calc(100vh-288px)] lg:h-[calc(100vh-270px)]">
         {getItemsByExpiryDate.isError && (
           <p className="pt-8 text-center text-lg">
             There was a problem fetching items.

@@ -15,7 +15,7 @@ const ActionBarSmall = () => {
   }, []);
 
   return (
-    <div className=" bg-slate-600 ">
+    <div className=" bg-snow ">
       <div className="mx-auto flex w-4/5 justify-center gap-4 ">
         <Searchbar />
         <AddItemMenu />

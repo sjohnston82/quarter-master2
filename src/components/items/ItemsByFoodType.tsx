@@ -38,8 +38,8 @@ const ItemsByFoodType = ({ selectedFoodCategory }: ItemsByFoodTypeProps) => {
 
   return (
     <div className="">
-      <div className="flex h-[calc(100vh-298px)] flex-col overflow-y-scroll sm:h-[calc(100vh-240px)] lg:h-[calc(100vh-250px)]">
-        <Banner>{capitalizedName}</Banner>
+      <Banner>{capitalizedName}</Banner>
+      <div className="h-[calc(100vh-346px)] overflow-y-scroll sm:h-[calc(100vh-288px)] lg:h-[calc(100vh-270px)]">
         {isError && (
           <p className="pt-8 text-center text-lg">
             There was an error fetching items.

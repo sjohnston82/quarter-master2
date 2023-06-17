@@ -18,7 +18,7 @@ const ShoppingListItem = ({ item }: ShoppingListItemProps) => {
     useState(false);
 
   return (
-    <div className="flex w-full items-center justify-between border-b last:border-none">
+    <div className="flex w-full items-center justify-between bg-snow ">
       <div
         className="flex w-full cursor-pointer"
         role="dialog"

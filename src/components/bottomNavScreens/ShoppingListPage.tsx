@@ -56,10 +56,10 @@ const ShoppingListPage = () => {
   }, [deleteAllCompletedItems]);
 
   return (
-    <div className="h-[calc(100vh-153px)] w-full bg-red-400 text-woodsmoke  lg:h-[calc(100vh-270px)]">
+    <div className="h-[calc(100vh-155px)] w-full bg-darkgray text-woodsmoke lg:h-[calc(100vh-270px)]">
       {windowSize.innerWidth < 768 ? (
         <>
-          <div className="flex justify-between p-4">
+          <div className="flex justify-between bg-snow p-4">
             <Button
               fontSize="text-lg"
               onClick={() => setShowingAddToShoppingListModal(true)}
@@ -72,11 +72,11 @@ const ShoppingListPage = () => {
               </Button>
             </div>
           </div>
-          <div className="mb-1 flex w-full justify-center">
+          <div className="flex w-full justify-center bg-snow pb-3">
             <TextField
               // size="small"
               select
-              className="w-1/2 bg-snow"
+              className="w-1/2 bg-snow shadow shadow-black"
               defaultValue="all"
               onChange={(e) => handleFilterChange(e)}
             >

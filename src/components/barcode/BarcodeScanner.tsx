@@ -9,18 +9,21 @@ const BarcodeScanner = ({ onResult = () => {}, onError = () => {} }) => {
   const { setShowingBarcodeScanner } = useContext(GlobalContext);
 
   return (
-    <div className="">
-      <div className="flex justify-end w-full my-2 mr-4 ">
+    <div className="bg-snow">
+      <div className="my-2 -ml-2 flex w-full justify-end  ">
         <Button
           fontSize="text-sm"
           onClick={() => setShowingBarcodeScanner(false)}
-          className="my-2"
+          className="my-2 "
         >
           Close Camera
         </Button>
       </div>
-      <video ref={ref} autoPlay={true} className="w-full" />
-
+      <video
+        ref={ref}
+        autoPlay={true}
+        className="h-[calc(100vh-200px)] lg:h-[calc(100vh-182px)] w-full bg-darkgray"
+      />
     </div>
   );
 };

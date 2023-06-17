@@ -37,64 +37,65 @@ const ItemsByStorageArea = ({ storageAreaId }: ItemsByStorageAreaProps) => {
 
   const shouldShowLoading = shouldEnableQuery && isLoading;
   return (
-    <div className="h-full ">
+    <div className="">
       <Banner>
-        {getCurrentStorageArea.data && getCurrentStorageArea.data.name}
+        {getCurrentStorageArea.data
+          ? getCurrentStorageArea.data.name
+          : "Storage Areas"}
       </Banner>
-      {isError && (
-        <p className="pt-8 text-center text-lg">
-          There was a problem fetching storage area information.
-        </p>
-      )}
-      {shouldShowLoading && (
-        <div className="relative mt-20 flex h-full flex-col items-center justify-center gap-2">
-          <div className="absolute  top-1/2 flex h-full w-full flex-col items-center justify-center ">
-            <p className="text-lg font-semibold">Fetching items...</p>
-            <LoadingSpinner size={60} />
+      <div className="h-[calc(100vh-346px)] overflow-y-scroll sm:h-[calc(100vh-288px)] lg:h-[calc(100vh-270px)]">
+        {isError && (
+          <p className="pt-8 text-center text-lg">
+            There was a problem fetching storage area information.
+          </p>
+        )}
+        {shouldShowLoading && (
+          <div className="relative mt-20 flex h-full flex-col items-center justify-center gap-2">
+            <div className="absolute  top-1/2 flex h-full w-full flex-col items-center justify-center ">
+              <p className="text-lg font-semibold">Fetching items...</p>
+              <LoadingSpinner size={60} />
+            </div>
           </div>
-        </div>
-      )}
-      {allItems?.length === 0 ? (
-        <p className="mx-2 mt-5 text-center text-lg">
-          There are no items currently saved in this household.
-        </p>
-      ) : !data ? (
-        <p className="pt-8 text-center text-lg">
-          Select a storage area to see its items.
-        </p>
-      ) : data.length === 0 ? (
-        <p className="pt-8 text-center text-lg">
-          There are no items stored in this storage area.
-        </p>
-      ) : (
-        <div
-          className={cn(
-            "m-2 flex flex-wrap justify-center gap-1",
-            {
+        )}
+        {allItems?.length === 0 ? (
+          <p className="mx-2 mt-5 text-center text-lg">
+            There are no items currently saved in this household.
+          </p>
+        ) : !data ? (
+          <p className="pt-8 text-center text-lg">
+            Select a storage area to see its items.
+          </p>
+        ) : data.length === 0 ? (
+          <p className="pt-8 text-center text-lg">
+            There are no items stored in this storage area.
+          </p>
+        ) : (
+          <div
+            className={cn("m-2 flex flex-wrap justify-center gap-1", {
               "m-4 gap-4": showingItemCards,
-            }
-          )}
-        >
-          {data
-            ?.filter((item) => {
-              if (debouncedValue === "") {
-                return item;
-              } else if (
-                item.name.toLowerCase().includes(debouncedValue) ||
-                item.brand?.toLowerCase().includes(debouncedValue)
-              ) {
-                return item;
-              }
-            })
-            .map((item) =>
-              showingItemCards ? (
-                <ItemCard key={item.id} {...item} />
-              ) : (
-                <Item key={item.id} {...item} />
-              )
-            )}
-        </div>
-      )}
+            })}
+          >
+            {data
+              ?.filter((item) => {
+                if (debouncedValue === "") {
+                  return item;
+                } else if (
+                  item.name.toLowerCase().includes(debouncedValue) ||
+                  item.brand?.toLowerCase().includes(debouncedValue)
+                ) {
+                  return item;
+                }
+              })
+              .map((item) =>
+                showingItemCards ? (
+                  <ItemCard key={item.id} {...item} />
+                ) : (
+                  <Item key={item.id} {...item} />
+                )
+              )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

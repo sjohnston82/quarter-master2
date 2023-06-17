@@ -72,7 +72,7 @@ const FoodItems = ({
   console.log(getAllItemsInfinite.data?.pages);
 
   return (
-    <div className="flex-1 bg-slate-600 rounded-b-xl  ">
+    <div className="flex-1 bg-slate-400 rounded-b-xl lg:rounded-bl-xl lg:rounded-b-none  ">
       {searchingForProduct ? (
         <div className="flex w-full flex-col items-center justify-center">
           <p className="text-center text-lg font-semibold">

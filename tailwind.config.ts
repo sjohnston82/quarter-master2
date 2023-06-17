@@ -14,6 +14,7 @@ export default {
         schooner: "#8a8683",
         woodsmoke: "#141416",
         buttonblue: "#6F01FE",
+        darkgray: "#121212",
       },
       fontFamily: {
         Evogria: ["Evogria"],
