@@ -16,7 +16,7 @@ interface ShoppingListButtonBarProps {
 
 const ShoppingListButtonBar = ({ setShowingAddToShoppingListModal, handleFilterChange, deleteAllComplete}: ShoppingListButtonBarProps) => {
   return (
-    <div className="flex justify-between p-4">
+    <div className="flex justify-between p-4 bg-snow">
       <Button
         fontSize="text-lg"
         onClick={() => setShowingAddToShoppingListModal(true)}

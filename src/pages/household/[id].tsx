@@ -116,7 +116,7 @@ const HouseholdPage = () => {
           position: "fixed",
           bottom: 0,
           width: 0.98,
-          backgroundColor: "black",
+          backgroundColor: "#121212",
         }}
         showLabels
         value={navValue}

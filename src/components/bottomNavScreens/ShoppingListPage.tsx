@@ -56,7 +56,7 @@ const ShoppingListPage = () => {
   }, [deleteAllCompletedItems]);
 
   return (
-    <div className="h-[calc(100vh-155px)] w-full bg-darkgray text-woodsmoke lg:h-[calc(100vh-270px)]">
+    <div className="h-[calc(100vh-154px)] w-full  bg-darkgray pb-[56px] text-woodsmoke lg:h-[calc(100vh-270px)]">
       {windowSize.innerWidth < 768 ? (
         <>
           <div className="flex justify-between bg-snow p-4">

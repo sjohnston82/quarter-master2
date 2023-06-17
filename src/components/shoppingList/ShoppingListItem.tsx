@@ -18,7 +18,7 @@ const ShoppingListItem = ({ item }: ShoppingListItemProps) => {
     useState(false);
 
   return (
-    <div className="flex w-full items-center justify-between bg-snow ">
+    <div className="flex items-center justify-between w-full mx-auto bg-snow ">
       <div
         className="flex w-full cursor-pointer"
         role="dialog"
@@ -32,12 +32,12 @@ const ShoppingListItem = ({ item }: ShoppingListItemProps) => {
           }`}
         >
           {item.amount !== null || 0 ? (
-            <span className="w-full text-lg">
+            <span className="w-full text-xl">
               {item.amount === 0 ? "" : item.amount}
               {item.amount === 0 ? "" : item.amountType} {item.name}
             </span>
           ) : (
-            <span className="">{item.name} </span>
+            <span className="text-xl">{item.name} </span>
           )}
         </div>
       </div>

@@ -13,9 +13,11 @@ const MembersSideBar = () => {
   return (
     <div className="flex h-[calc(100vh-136px)]  w-full flex-col  rounded-br-xl border-l-2 border-woodsmoke bg-snow">
       <SideBarNavButtons />
-      <div className="overflow-y-scroll">
+      <div className="overflow-y-scroll rounded-br-xl">
         <div className="">
-          <h1 className="text-center text-xl py-2 w-full ">{householdName} Household</h1>
+          <h1 className="w-full py-2 text-center text-xl ">
+            {householdName} Household
+          </h1>
         </div>
         <InviteMembers />
         <div className="flex w-full flex-col items-center justify-center pt-2">
