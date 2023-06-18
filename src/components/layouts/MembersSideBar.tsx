@@ -15,7 +15,7 @@ const MembersSideBar = () => {
       <SideBarNavButtons />
       <div className="overflow-y-scroll rounded-br-xl">
         <div className="">
-          <h1 className="w-full py-2 text-center text-xl ">
+          <h1 className="w-4/5 py-2 text-center text-xl mx-auto">
             {householdName} Household
           </h1>
         </div>
