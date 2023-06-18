@@ -56,7 +56,7 @@ const ShoppingListPage = () => {
   }, [deleteAllCompletedItems]);
 
   return (
-    <div className="h-[calc(100vh-154px)] w-full  bg-darkgray pb-[56px] text-woodsmoke lg:h-[calc(100vh-270px)]">
+    <div className="h-[calc(100vh-154px)] w-full  bg-darkgray  text-woodsmoke lg:h-[calc(100vh-270px)]">
       {windowSize.innerWidth < 768 ? (
         <>
           <div className="flex justify-between bg-snow p-4">
@@ -95,9 +95,13 @@ const ShoppingListPage = () => {
         />
       )}
       {showingItemsByLocation ? (
-        <ShoppingListByLocation data={data} isLoading={isLoading} />
+        <div className="bg-darkgray">
+          <ShoppingListByLocation data={data} isLoading={isLoading} />
+        </div>
       ) : (
-        <AllShoppingListItems data={data} isLoading={isLoading} />
+        <div className="bg-darkgray">
+          <AllShoppingListItems data={data} isLoading={isLoading} />
+        </div>
       )}
       <AddShoppingListItemForm
         showingAddToShoppingListModal={showingAddToShoppingListModal}

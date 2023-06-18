@@ -1,6 +1,4 @@
-import React, { useContext, useEffect } from "react";
-import { GlobalContext } from "~/context/GlobalContextProvider";
-import { type RouterOutputs, api } from "~/utils/api";
+import { type RouterOutputs } from "~/utils/api";
 import ShoppingListItem from "./ShoppingListItem";
 import Banner from "../ui/Banner";
 
@@ -12,15 +10,14 @@ interface LocationContainerProps {
 }
 
 const LocationContainer = ({ location, items }: LocationContainerProps) => {
-  const { householdId } = useContext(GlobalContext);
 
   return (
     <div className="flex w-full flex-col items-center " role="dialog">
-      <Banner fontSize="text-xl" >
-        {location}
-      </Banner>
+      <Banner fontSize="text-xl">{location}</Banner>
       {items &&
-        items.map((item) => <ShoppingListItem item={item} key={item.id} />)}
+        items
+          .sort((item) => (item.completed ? 1 : -1))
+          .map((item) => <ShoppingListItem item={item} key={item.id} />)}
     </div>
   );
 };

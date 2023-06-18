@@ -15,9 +15,9 @@ const AllShoppingListItems = ({
   isLoading,
 }: AllShoppingListItemsProps) => {
   return (
-    <div className="">
+    <div className="bg-darkgray">
       <Banner fontSize="text-xl">All Shopping List Items</Banner>
-      <div className="relative h-[calc(100vh-340px)] w-full overflow-y-scroll  rounded-b-xl bg-snow  text-woodsmoke md:h-[calc(100vh-242px)]  lg:h-[calc(100vh-229px)]">
+      <div className="relative h-[calc(100vh-340px)] w-full overflow-y-scroll  rounded-b-xl md:rounded-b-xl lg:rounded-b-none lg:rounded-bl-xl bg-snow  lg:pb-0 text-woodsmoke md:h-[calc(100vh-290px)]  lg:h-[calc(100vh-272px)]">
         {isLoading && (
           <div className="relative mt-20 flex h-full flex-col items-center justify-center">
             <div className="absolute  top-1/2 flex h-full w-full flex-col items-center justify-center ">
@@ -32,12 +32,12 @@ const AllShoppingListItems = ({
           </p>
         )}
         {data &&
-          data.map((item) => (
-            // <div key={item.id} className="">
-            //   {/* <hr className="last-of-type:hidden" /> */}
-            // </div>
-            <ShoppingListItem item={item} key={item.id} />
-          ))}
+          data
+            .sort((item) => (item.completed ? 1 : -1))
+            .map((item) => (
+
+              <ShoppingListItem item={item} key={item.id} />
+            ))}
       </div>
     </div>
   );

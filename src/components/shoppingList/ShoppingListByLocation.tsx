@@ -34,7 +34,7 @@ const ShoppingListByLocation = ({
   const uncategorized = data?.filter((item) => item.location === "");
 
   return (
-    <div className="flex h-[calc(100vh-252px)] w-full flex-col overflow-y-scroll bg-snow text-woodsmoke lg:h-[calc(100vh-269px)]">
+    <div className="relative  w-full overflow-y-scroll  rounded-b-xl bg-darkgray text-woodsmoke lg:rounded-b-none  lg:rounded-bl-xl   ">
       {data?.length === 0 && (
         <Banner fontSize="text-xl">Shopping List By Location</Banner>
       )}
@@ -46,7 +46,7 @@ const ShoppingListByLocation = ({
       )}
 
       {/* this div renders first if the lists are not empty */}
-      <div className="">
+      <div className="h-[calc(100vh-340px)] bg-darkgray md:h-[calc(100vh-242px)] lg:h-[calc(100vh-224px)] ">
         {produceItems && produceItems.length > 0 && (
           <LocationContainer location="Produce" items={produceItems} />
         )}

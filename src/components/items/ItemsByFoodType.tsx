@@ -51,8 +51,8 @@ const ItemsByFoodType = ({ selectedFoodCategory }: ItemsByFoodTypeProps) => {
           </p>
         )}
         {shouldShowLoading && (
-          <div className="relative mt-20 flex h-full flex-col items-center justify-center gap-2">
-            <div className="absolute  top-0 flex h-full w-full flex-col items-center justify-center ">
+          <div className="relative mt-10 flex h-full flex-col items-center justify-center gap-2">
+            <div className="absolute  -top-20 flex h-full w-full flex-col items-center justify-center ">
               <p className="text-lg font-semibold">Fetching items...</p>
               <LoadingSpinner size={60} />
             </div>

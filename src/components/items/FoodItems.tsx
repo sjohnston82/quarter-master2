@@ -72,9 +72,9 @@ const FoodItems = ({
   console.log(getAllItemsInfinite.data?.pages);
 
   return (
-    <div className="flex-1 bg-slate-400 rounded-b-xl lg:rounded-bl-xl lg:rounded-b-none  ">
+    <div className="flex-1 rounded-b-xl bg-slate-400 lg:rounded-b-none lg:rounded-bl-xl  ">
       {searchingForProduct ? (
-        <div className="flex w-full flex-col items-center justify-center">
+        <div className="flex h-[calc(100vh-298px)] w-full flex-col items-center justify-center sm:h-[calc(100vh-240px)] lg:h-[calc(100vh-222px)]">
           <p className="text-center text-lg font-semibold">
             Searching for product info...
           </p>
@@ -127,7 +127,8 @@ const FoodItems = ({
                 }
                 endMessage={
                   getAllItemsInfinite.data?.pages[0]?.items.length !== 0 &&
-                  !getAllItemsInfinite.isLoading && !getAllItemsInfinite.isError && (
+                  !getAllItemsInfinite.isLoading &&
+                  !getAllItemsInfinite.isError && (
                     <p style={{ textAlign: "center" }}>
                       <b>End of items.</b>
                     </p>
