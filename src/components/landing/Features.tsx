@@ -91,11 +91,7 @@ const Features = () => {
           </button>
         )}
       </div>
-      {windowSize.innerWidth < 1280 ? (
-        <p className="text-center text-sm">© Stephen Johnston, 2023</p>
-      ) : (
-        ""
-      )}
+      
     </motion.div>
   );
 };

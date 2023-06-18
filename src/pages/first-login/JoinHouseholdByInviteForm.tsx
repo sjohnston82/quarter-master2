@@ -57,7 +57,7 @@ const JoinHouseholdByInviteForm = () => {
           <LoadingSpinner size={60} />
         </div>
       ) : (
-        <form onSubmit={handleSubmit((data) => onSubmitByInvite(data))}>
+        <form className="space-y-2" onSubmit={handleSubmit((data) => onSubmitByInvite(data))}>
           <TextField
             type="text"
             id="inviteCode"

@@ -36,7 +36,7 @@ const LandingSectionsLargeScreen = () => {
           </svg>
         </button>
       </div>
-      <p className="text-center text-sm">© Stephen Johnston, 2023</p>
+
     </div>
   );
 };

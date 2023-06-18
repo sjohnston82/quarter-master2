@@ -93,7 +93,7 @@ const FoodItems = ({
               </p>
             )}
             {getAllItemsInfinite.isLoading && (
-              <div className="flex flex-col items-center justify-center">
+              <div className="flex h-full flex-col items-center justify-center">
                 <p className="text-center text-lg font-semibold">
                   Loading items...
                 </p>
