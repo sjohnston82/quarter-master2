@@ -69,8 +69,6 @@ const FoodItems = ({
     }
   );
 
-  console.log(getAllItemsInfinite.data?.pages);
-
   return (
     <div className="flex-1 rounded-b-xl bg-slate-400 lg:rounded-b-none lg:rounded-bl-xl  ">
       {searchingForProduct ? (

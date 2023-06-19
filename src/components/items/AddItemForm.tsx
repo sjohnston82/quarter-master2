@@ -53,6 +53,7 @@ const AddItemForm = () => {
     setShowingAddItemModal,
     showingAddItemModal,
     currentItemByUPC,
+    setCurrentItemByUPC,
   } = useContext(GlobalContext);
 
   const [amount, setAmount] = useState("1");
@@ -114,6 +115,7 @@ const AddItemForm = () => {
     reset();
     setShowingAddItemModal(false);
     setAmount("");
+    setCurrentItemByUPC(null);
   };
 
   return (
@@ -253,6 +255,7 @@ const AddItemForm = () => {
               <Autocomplete
                 multiple
                 filterSelectedOptions
+                blurOnSelect
                 options={foodCategories}
                 getOptionLabel={(option) => option}
                 renderInput={(params) => (
