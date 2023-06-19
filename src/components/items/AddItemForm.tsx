@@ -255,7 +255,7 @@ const AddItemForm = () => {
               <Autocomplete
                 multiple
                 filterSelectedOptions
-                blurOnSelect
+                blurOnSelect="touch"
                 options={foodCategories}
                 getOptionLabel={(option) => option}
                 renderInput={(params) => (
