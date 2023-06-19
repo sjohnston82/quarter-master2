@@ -253,7 +253,7 @@ const AddItemForm = () => {
           </TextField>
           <Controller
             render={({ field: { onChange } }) => (
-              <div className="flex items-start justify-start">
+              <div className="">
                 <Autocomplete
                   multiple
                   filterSelectedOptions
