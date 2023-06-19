@@ -13,6 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-hot-toast";
 import { type DateValidationError } from "@mui/x-date-pickers";
 import LoadingSpinner from "../../ui/LoadingSpinner";
+import { start } from "repl";
 
 interface AddItemManuallyInputProps {
   name: string;
@@ -252,25 +253,26 @@ const AddItemForm = () => {
           </TextField>
           <Controller
             render={({ field: { onChange } }) => (
-              <Autocomplete
-                multiple
-                disablePortal={true}
-                filterSelectedOptions
-                blurOnSelect="touch"
-                options={foodCategories}
-                getOptionLabel={(option) => option}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Food categories"
-                    variant="outlined"
-                  />
-                )}
-                onChange={(_, data) => {
-                  onChange(data);
-                  return data;
-                }}
-              />
+              <div className="flex items-start justify-start">
+                <Autocomplete
+                  multiple
+                  filterSelectedOptions
+                  blurOnSelect="touch"
+                  options={foodCategories}
+                  getOptionLabel={(option) => option}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Food categories"
+                      variant="outlined"
+                    />
+                  )}
+                  onChange={(_, data) => {
+                    onChange(data);
+                    return data;
+                  }}
+                />
+              </div>
             )}
             name="foodCategories"
             control={control}
