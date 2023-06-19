@@ -6,7 +6,7 @@ import { IoAddCircleSharp } from "react-icons/io5";
 import { BsHouseAdd } from "react-icons/bs";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import AddItemForm from "./AddItemForm";
-import CreateStorageArea from "../storageAreas/CreateStorageArea";
+import CreateStorageArea from "../../storageAreas/CreateStorageArea";
 import { useForm } from "react-hook-form";
 import { type UPCInfo } from "~/context/GlobalContextProvider";
 import { toast } from "react-hot-toast";
@@ -125,7 +125,7 @@ const AddItemMenu = () => {
     tooltip: "custom-tooltip-class",
   };
   return (
-    <div className="mt-2 sm:mt-3 sm:ml-auto sm:mr-5">
+    <div className="mt-2 sm:ml-auto sm:mr-5 sm:mt-3">
       <SpeedDial
         ariaLabel="Add item speed dial"
         sx={{

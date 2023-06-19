@@ -5,7 +5,7 @@ import FilterByExpiringSoon from "../items/filters/FilterByExpiringSoon";
 import FilterByStorageArea from "../items/filters/FilterByStorageArea";
 import FilterByFoodType from "../items/filters/FilterByFoodType";
 import { type RouterOutputs } from "~/utils/api";
-import AddItemMenu from "../items/AddItemMenu";
+import AddItemMenu from "../items/addItems/AddItemMenu";
 
 type FoodType = RouterOutputs["items"]["getFoodCategoryCount"][0];
 
@@ -36,7 +36,7 @@ const ActionBarLarge = ({
     setDomLoaded(true);
   }, []);
   return (
-    <div className="flex items-center border-b-2 bg-snow border-woodsmoke ">
+    <div className="flex items-center border-b-2 border-woodsmoke bg-snow ">
       <div className="flex w-4/5">
         {filterItemsCategory === "All" && (
           <FilterByAll

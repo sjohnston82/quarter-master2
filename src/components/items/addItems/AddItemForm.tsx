@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import { Controller, useForm } from "react-hook-form";
 import { api } from "~/utils/api";
-import Modal from "../ui/Modal";
+import Modal from "../../ui/Modal";
 import { Autocomplete, MenuItem, TextField } from "@mui/material";
 import { packageTypes, foodCategories } from "~/utils/helperLists";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -12,7 +12,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-hot-toast";
 import { type DateValidationError } from "@mui/x-date-pickers";
-import LoadingSpinner from "../ui/LoadingSpinner";
+import LoadingSpinner from "../../ui/LoadingSpinner";
 
 interface AddItemManuallyInputProps {
   name: string;
@@ -254,6 +254,7 @@ const AddItemForm = () => {
             render={({ field: { onChange } }) => (
               <Autocomplete
                 multiple
+                disablePortal={true}
                 filterSelectedOptions
                 blurOnSelect="touch"
                 options={foodCategories}

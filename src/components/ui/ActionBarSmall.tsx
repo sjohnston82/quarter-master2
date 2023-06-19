@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
-import AddItemMenu from "../items/AddItemMenu";
+import AddItemMenu from "../items/addItems/AddItemMenu";
 import Searchbar from "./Searchbar";
 
 const ActionBarSmall = () => {
