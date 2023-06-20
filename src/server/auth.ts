@@ -79,7 +79,7 @@ export const authOptions: NextAuthOptions = {
      */
   ],
   pages: {
-    newUser: "/first-login",
+    newUser: "/firstLogin",
   },
 };
 

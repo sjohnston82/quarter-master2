@@ -32,7 +32,7 @@ const HouseholdAccessPage = () => {
   }, [joinByInviteCode, token])
 
   return (
-    <div></div>
+    <div>Joining household...</div>
   )
 }
 
