@@ -1,18 +1,18 @@
-import React, { useContext, useEffect } from 'react'
-import { useRouter } from 'next/router';
-import { api } from '~/utils/api';
-import { toast } from 'react-hot-toast';
-import { GlobalContext } from '~/context/GlobalContextProvider';
-
-
+import React, { useContext, useEffect } from "react";
+import { useRouter } from "next/router";
+import { api } from "~/utils/api";
+import { toast } from "react-hot-toast";
+import { GlobalContext } from "~/context/GlobalContextProvider";
 
 const HouseholdAccessPage = () => {
   const router = useRouter();
-    const token = Array.isArray(router.query.token)
-      ? router.query.token[0]
-      : (router.query.token as string);
+  const token = Array.isArray(router.query.token)
+    ? router.query.token[0]
+    : (router.query.token as string);
 
-  const { setHouseholdId, householdId } = useContext(GlobalContext)
+  const { setHouseholdId, householdId } = useContext(GlobalContext);
+
+  console.log(token);
 
   const joinByInviteCodeRoute = api.useContext().household;
 
@@ -24,16 +24,13 @@ const HouseholdAccessPage = () => {
       await joinByInviteCodeRoute.getHouseholdId.invalidate();
       await router.push(`/household/${householdId}`);
     },
-
   });
 
   useEffect(() => {
-    token && joinByInviteCode.mutate({inviteCode: token})
-  }, [joinByInviteCode, token])
+    token && joinByInviteCode.mutate({ inviteCode: token });
+  }, [joinByInviteCode, token]);
 
-  return (
-    <div>Joining household...</div>
-  )
-}
+  return <div>Joining household...</div>;
+};
 
 export default HouseholdAccessPage;
