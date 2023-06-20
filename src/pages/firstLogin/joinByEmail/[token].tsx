@@ -26,9 +26,7 @@ const HouseholdAccessPage = () => {
     },
   });
 
-  useEffect(() => {
-    token && joinByInviteCode.mutate({ inviteCode: token });
-  }, []);
+  token && joinByInviteCode.mutate({ inviteCode: token });
 
   return <div>Joining household...</div>;
 };
