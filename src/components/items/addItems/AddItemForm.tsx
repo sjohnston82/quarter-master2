@@ -96,7 +96,6 @@ const AddItemForm = () => {
   }, [currentItemByUPC, reset]);
 
   const onSubmit = (data: AddItemManuallyInputProps) => {
-    console.log(data.expirationDate);
     const mutationData = {
       householdId,
       name: data.name,

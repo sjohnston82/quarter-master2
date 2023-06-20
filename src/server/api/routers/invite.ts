@@ -40,12 +40,12 @@ export const inviteRouter = createTRPCRouter({
     }),
 
   joinByInviteCode: protectedProcedure
-    .input(z.object({ email: z.string(), inviteCode: z.string() }))
+    .input(z.object({ inviteCode: z.string() }))
     .mutation(
-      async ({ ctx: { prisma, session }, input: { email, inviteCode } }) => {
+      async ({ ctx: { prisma, session }, input: { inviteCode } }) => {
         const currUser = await prisma.invite.findUnique({
           where: {
-            email,
+            token: inviteCode,
           },
         });
         if (!currUser)
@@ -79,7 +79,7 @@ export const inviteRouter = createTRPCRouter({
         });
 
         await prisma.invite.delete({
-          where: { email },
+          where: { token: inviteCode },
         });
         return currUser.householdId;
       }

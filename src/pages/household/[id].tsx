@@ -14,6 +14,7 @@ import ShoppingListPage from "~/components/bottomNavScreens/ShoppingListPage";
 import MembersSideBar from "~/components/layouts/MembersSideBar";
 import Footer from "~/components/layouts/Footer";
 import { cn } from "~/utils/cn";
+import Head from "next/head";
 
 const HouseholdPage = () => {
   const router = useRouter();
@@ -27,6 +28,7 @@ const HouseholdPage = () => {
     setStorageAreas,
     windowSize,
     showingSidebar,
+    householdName,
   } = useContext(GlobalContext);
   const { data: sessionData, status } = useSession();
   const getHouseholdId = api.household.getHouseholdId.useQuery();
@@ -92,6 +94,10 @@ const HouseholdPage = () => {
 
   return showingSidebar ? (
     <div className="flex flex-col">
+      <Head>
+        <title>{householdName} Household - Quartermaster</title>
+        <meta name="description" content="Household page for all items, members and shopping lists." />
+      </Head>
       <div className="flex " id="main">
         <div className=" flex-1 bg-snow">
           {navValue === 0 && domLoaded && <FoodItemsPage />}

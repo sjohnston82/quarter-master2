@@ -30,9 +30,22 @@ export const sendEmail = async ({
     subject: "You have been invited to a Household on QuarterMaster!",
     html: `
       <h1>You have been invited to the ${household} Household on QuarterMaster by ${inviter}!</h1>
-      <p>Copy the following code after logging in at <a href="https://quarter-master.net">https://quarter-master.net</a> to join your household!</p>
-      <p>Your join code is: ${token}</p>
-
+      
+      <table width="100%" cellspacing="0" cellpadding="0">
+  <tr>
+      <td>
+          <table cellspacing="0" cellpadding="0">
+              <tr>
+                  <td style="border-radius: 2px;" bgcolor="#ED2939">
+                      <a href="https://quarter-master.net/firstLogin/joinByEmail?token=${token}" target="_blank" style="padding: 8px 12px; border: 1px solid #ED2939;border-radius: 2px;font-family: Helvetica, Arial, sans-serif;font-size: 14px; color: #ffffff;text-decoration: none;font-weight:bold;display: inline-block;">
+                          Click to Join Household            
+                      </a>
+                  </td>
+              </tr>
+          </table>
+      </td>
+  </tr>
+</table>
     `,
   });
 };

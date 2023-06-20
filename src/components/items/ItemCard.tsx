@@ -44,7 +44,7 @@ const ItemCard = ({ ...item }: Item) => {
           ))}
         </div>
         <h1 className=" text-center text-xl font-semibold">
-          <TruncatedText text={item.name} maxLength={25} classes="text-2xl font-light" />
+          <TruncatedText text={item.name} maxLength={21} classes="text-2xl font-light" />
         </h1>
         <div className="text-center">
           {item.daysUntilExpiry === null ? (
