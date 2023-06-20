@@ -34,7 +34,7 @@ const Home: NextPage = () => {
       sessionData !== undefined &&
       householdId === null
     ) {
-      void router.push("/first-login");
+      void router.push("/firstLogin");
     }
 
     if (status !== "loading" && sessionData == undefined) void router.push("/");
@@ -46,7 +46,7 @@ const Home: NextPage = () => {
     <>
       {domLoaded &&
         (sessionData && getHouseholdId.data ? (
-          <div className="flex h-[calc(100vh-120px)] lg:h-[calc(100vh-136px)] w-full flex-col items-center justify-center gap-4 rounded-b-xl bg-slate-400">
+          <div className="flex h-[calc(100vh-120px)] w-full flex-col items-center justify-center gap-4 rounded-b-xl bg-slate-400 lg:h-[calc(100vh-136px)]">
             <h1 className="font-semibold">Retrieving household info...</h1>
             <LoadingSpinner size={80} />
           </div>
