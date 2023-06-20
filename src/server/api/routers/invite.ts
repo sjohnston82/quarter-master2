@@ -2,7 +2,9 @@ import { z } from "zod";
 import crypto from "crypto";
 
 import {
-  createTRPCRouter, protectedProcedure
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
 } from "~/server/api/trpc";
 import { sendEmail } from "~/server/helpers/email";
 
@@ -39,51 +41,49 @@ export const inviteRouter = createTRPCRouter({
       });
     }),
 
-  joinByInviteCode: protectedProcedure
+  joinByInviteCode: publicProcedure
     .input(z.object({ inviteCode: z.string() }))
-    .mutation(
-      async ({ ctx: { prisma, session }, input: { inviteCode } }) => {
-        const currUser = await prisma.invite.findUnique({
-          where: {
-            token: inviteCode,
-          },
-        });
-        if (!currUser)
-          throw new Error("This email address hasn't been sent an invitation!");
+    .mutation(async ({ ctx: { prisma, session }, input: { inviteCode } }) => {
+      const currUser = await prisma.invite.findUnique({
+        where: {
+          token: inviteCode,
+        },
+      });
+      if (!currUser)
+        throw new Error("This email address hasn't been sent an invitation!");
 
-        if (currUser.token !== inviteCode)
-          throw new Error("The invite code is incorrect!");
+      if (currUser.token !== inviteCode)
+        throw new Error("The invite code is incorrect!");
 
-        if (!currUser.householdId) throw new Error("No householdId!");
+      if (!currUser.householdId) throw new Error("No householdId!");
 
-        await prisma.household.update({
-          where: {
-            householdId: currUser.householdId,
-          },
-          data: {
-            members: {
-              connect: {
-                id: session.user.id,
-              },
+      await prisma.household.update({
+        where: {
+          householdId: currUser.householdId,
+        },
+        data: {
+          members: {
+            connect: {
+              id: session.user.id,
             },
           },
-        });
+        },
+      });
 
-        await prisma.user.update({
-          where: {
-            id: session.user.id,
-          },
-          data: {
-            householdId: currUser.householdId,
-          },
-        });
+      await prisma.user.update({
+        where: {
+          id: session.user.id,
+        },
+        data: {
+          householdId: currUser.householdId,
+        },
+      });
 
-        await prisma.invite.delete({
-          where: { token: inviteCode },
-        });
-        return currUser.householdId;
-      }
-    ),
+      await prisma.invite.delete({
+        where: { token: inviteCode },
+      });
+      return currUser.householdId;
+    }),
 
   deleteInvite: protectedProcedure
     .input(z.object({ email: z.string() }))
