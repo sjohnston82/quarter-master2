@@ -15,7 +15,9 @@ const Home: NextPage = () => {
   const { householdId, setHouseholdId, windowSize } = useContext(GlobalContext);
   const { data: sessionData, status } = useSession();
   const [domLoaded, setDomLoaded] = useState(false);
+  const { token } = router.query;
 
+  console.log(token);
   const getHouseholdId = api.household.getHouseholdId.useQuery(undefined, {
     enabled: sessionData?.user !== undefined,
   });

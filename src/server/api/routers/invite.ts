@@ -41,49 +41,51 @@ export const inviteRouter = createTRPCRouter({
       });
     }),
 
-  joinByInviteCode: publicProcedure
-    .input(z.object({ inviteCode: z.string() }))
-    .mutation(async ({ ctx: { prisma, session }, input: { inviteCode } }) => {
-      const currUser = await prisma.invite.findUnique({
-        where: {
-          token: inviteCode,
-        },
-      });
-      if (!currUser)
-        throw new Error("This email address hasn't been sent an invitation!");
+  joinByInviteCode: protectedProcedure
+    .input(z.object({ email: z.string(), inviteCode: z.string() }))
+    .mutation(
+      async ({ ctx: { prisma, session }, input: { email, inviteCode } }) => {
+        const currUser = await prisma.invite.findUnique({
+          where: {
+            email,
+          },
+        });
+        if (!currUser)
+          throw new Error("This email address hasn't been sent an invitation!");
 
-      if (currUser.token !== inviteCode)
-        throw new Error("The invite code is incorrect!");
+        if (currUser.token !== inviteCode)
+          throw new Error("The invite code is incorrect!");
 
-      if (!currUser.householdId) throw new Error("No householdId!");
+        if (!currUser.householdId) throw new Error("No householdId!");
 
-      await prisma.household.update({
-        where: {
-          householdId: currUser.householdId,
-        },
-        data: {
-          members: {
-            connect: {
-              id: session.user.id,
+        await prisma.household.update({
+          where: {
+            householdId: currUser.householdId,
+          },
+          data: {
+            members: {
+              connect: {
+                id: session.user.id,
+              },
             },
           },
-        },
-      });
+        });
 
-      await prisma.user.update({
-        where: {
-          id: session.user.id,
-        },
-        data: {
-          householdId: currUser.householdId,
-        },
-      });
+        await prisma.user.update({
+          where: {
+            id: session.user.id,
+          },
+          data: {
+            householdId: currUser.householdId,
+          },
+        });
 
-      await prisma.invite.delete({
-        where: { token: inviteCode },
-      });
-      return currUser.householdId;
-    }),
+        await prisma.invite.delete({
+          where: { email },
+        });
+        return currUser.householdId;
+      }
+    ),
 
   deleteInvite: protectedProcedure
     .input(z.object({ email: z.string() }))
@@ -91,6 +93,17 @@ export const inviteRouter = createTRPCRouter({
       await ctx.prisma.invite.delete({
         where: {
           email: input.email,
+        },
+      });
+    }),
+
+  verifyByLink: publicProcedure
+    .input(z.object({ token: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.invite.update({
+        where: { token: input.token },
+        data: {
+          isVerified: true,
         },
       });
     }),
