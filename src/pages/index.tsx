@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import { signIn, useSession } from "next-auth/react";
 import { api } from "~/utils/api";
-import { useEffect, useState, useContext, useLayoutEffect } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import LandingTransitionContainer from "~/components/landing/LandingTransitionContainer";
@@ -39,7 +39,7 @@ const Home: NextPage = () => {
       void router.push("/firstLogin");
     }
 
-    if (status !== "loading" && sessionData == undefined) void router.push("/");
+    // if (status !== "loading" && sessionData == undefined) void router.push("/");
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getHouseholdId.data, householdId, sessionData, status]);
