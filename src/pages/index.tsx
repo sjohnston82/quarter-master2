@@ -28,7 +28,7 @@ const Home: NextPage = () => {
     onError: (error) => console.log(error),
   });
 
-  // token && verifyInvite.mutate({ token });
+  token !== undefined && verifyInvite.mutate({ token });
 
   const getHouseholdId = api.household.getHouseholdId.useQuery(undefined, {
     enabled: sessionData?.user !== undefined,
