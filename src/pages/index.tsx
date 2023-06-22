@@ -20,6 +20,7 @@ const Home: NextPage = () => {
     : { token: router.query?.token as string | undefined };
 
   const verifyInvite = api.invite.verifyByLink.useMutation({
+    retry: 10,
     onSuccess: async () => {
       await router.push("/");
       // await signIn();
