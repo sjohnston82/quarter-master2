@@ -36,7 +36,7 @@ export const inviteRouter = createTRPCRouter({
         householdId: input.householdId,
         inviter: input.inviter,
       };
-      sendEmail(emailData).catch((err) => {
+      await sendEmail(emailData).catch((err) => {
         console.log("email failed", err);
       });
     }),
