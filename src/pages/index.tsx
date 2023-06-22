@@ -10,10 +10,6 @@ import LandingSectionsLargeScreen from "~/components/landing/LandingSectionsLarg
 import Footer from "~/components/layouts/Footer";
 import LoadingSpinner from "~/components/ui/LoadingSpinner";
 
-
-
-
-
 const Home: NextPage = () => {
   const router = useRouter();
   const { householdId, setHouseholdId, windowSize } = useContext(GlobalContext);
@@ -23,14 +19,13 @@ const Home: NextPage = () => {
     ? { token: router.query[0] as string | undefined }
     : { token: router.query?.token as string | undefined };
 
+  const verifyInvite = api.invite.verifyByLink.useMutation({
+    onSuccess: async () => {
+      await router.push("/");
+    },
+  });
 
-
-  console.log(token);
-
-  
-  const verifyInvite = api.invite.verifyByLink.useMutation();
-
-  token && verifyInvite.mutate({ token })
+  token && verifyInvite.mutate({ token });
 
   const getHouseholdId = api.household.getHouseholdId.useQuery(undefined, {
     enabled: sessionData?.user !== undefined,
