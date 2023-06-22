@@ -19,13 +19,14 @@ const Home: NextPage = () => {
     ? { token: router.query[0] as string | undefined }
     : { token: router.query?.token as string | undefined };
 
-  // const verifyInvite = api.invite.verifyByLink.useMutation({
-  //   retry: 10,
-  //   onSuccess: async () => {
-  //     await router.push("/");
-  //     // await signIn();
-  //   },
-  // });
+  const verifyInvite = api.invite.verifyByLink.useMutation({
+    retry: 3,
+    onSuccess: async () => {
+      await router.push("/");
+      // await signIn();
+    },
+    onError: (error) => console.log(error),
+  });
 
   // token && verifyInvite.mutate({ token });
 
