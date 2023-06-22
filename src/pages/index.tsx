@@ -21,7 +21,8 @@ const Home: NextPage = () => {
 
   const verifyInvite = api.invite.verifyByLink.useMutation({
     onSuccess: async () => {
-      await router.push("/");
+      // await router.push("/");
+      await signIn();
     },
   });
 
