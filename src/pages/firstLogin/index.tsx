@@ -35,12 +35,11 @@ const FirstTimeLogin = () => {
     }
 
     if (status !== "loading" && sessionData == undefined) {
-      void router.push("/");
+      void router.push("/")
     }
   }, [
     getHouseholdId.data,
     householdId,
-    joinOnceVerified,
     router,
     sessionData,
     setHouseholdId,
