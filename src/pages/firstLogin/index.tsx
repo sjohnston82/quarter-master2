@@ -18,7 +18,12 @@ const FirstTimeLogin = () => {
   const getHouseholdId = api.household.getHouseholdId.useQuery();
   const { data: sessionData, status } = useSession();
   const router = useRouter();
-  const joinOnceVerified = api.invite.joinOnceVerified.useMutation();
+  const joinOnceVerifiedRoute = api.useContext().household;
+  const joinOnceVerified = api.invite.joinOnceVerified.useMutation({
+    onSuccess: async () => {
+      await joinOnceVerifiedRoute.invalidate();
+    }
+  });
   useEffect(() => {
     joinOnceVerified.mutate();
     getHouseholdId.data &&
@@ -32,14 +37,7 @@ const FirstTimeLogin = () => {
     if (status !== "loading" && sessionData == undefined) {
       void router.push("/");
     }
-  }, [
-    getHouseholdId.data,
-    householdId,
-    router,
-    sessionData,
-    setHouseholdId,
-    status,
-  ]);
+  }, [getHouseholdId.data, householdId, joinOnceVerified, router, sessionData, setHouseholdId, status]);
   return (
     <div className="bg-darkgray">
       <div className="flex h-[calc(100vh-98px)] w-full flex-col justify-center space-y-2 rounded-b-xl  lg:h-[calc(100vh-116px)]">
