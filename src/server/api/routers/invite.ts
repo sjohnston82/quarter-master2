@@ -107,4 +107,46 @@ export const inviteRouter = createTRPCRouter({
         },
       });
     }),
+
+  joinOnceVerified: protectedProcedure.mutation(
+    async ({ ctx: { session, prisma } }) => {
+      const userEmail = session.user.email ?? undefined; // Set null to undefined
+      const currUser = await prisma.invite.findUnique({
+        where: {
+          email: userEmail,
+        },
+      });
+      if (!currUser) throw new Error("This user has not been found!");
+
+      if (currUser.isVerified) {
+        const userHouseholdId = currUser.householdId ?? undefined;
+        await prisma.household.update({
+          where: {
+            householdId: userHouseholdId,
+          },
+          data: {
+            members: {
+              connect: {
+                id: session.user.id,
+              },
+            },
+          },
+        });
+
+        await prisma.user.update({
+          where: {
+            id: session.user.id,
+          },
+          data: {
+            householdId: currUser.householdId,
+          },
+        });
+
+        await prisma.invite.delete({
+          where: { email: userEmail },
+        });
+        return currUser.householdId;
+      }
+    }
+  ),
 });

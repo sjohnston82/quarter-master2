@@ -24,11 +24,14 @@ const Home: NextPage = () => {
     onSuccess: async () => {
       await router.push("/");
       // await signIn();
+      joinOnceVerified.mutate();
     },
     onError: (error) => console.log(error),
   });
 
   token !== undefined && verifyInvite.mutate({ token });
+
+  const joinOnceVerified = api.invite.joinOnceVerified.useMutation();
 
   const getHouseholdId = api.household.getHouseholdId.useQuery(undefined, {
     enabled: sessionData?.user !== undefined,
