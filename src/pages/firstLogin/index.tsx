@@ -18,11 +18,11 @@ const FirstTimeLogin = () => {
   const getHouseholdId = api.household.getHouseholdId.useQuery();
   const { data: sessionData, status } = useSession();
   const router = useRouter();
-  const joinOnceVerifiedRoute = api.useContext().household;
+  // const joinOnceVerifiedRoute = api.useContext().invalidate();
   const joinOnceVerified = api.invite.joinOnceVerified.useMutation({
     onSuccess: async () => {
-      await joinOnceVerifiedRoute.invalidate();
-    }
+      await api.useContext().invalidate();
+    },
   });
   useEffect(() => {
     joinOnceVerified.mutate();
@@ -37,11 +37,19 @@ const FirstTimeLogin = () => {
     if (status !== "loading" && sessionData == undefined) {
       void router.push("/");
     }
-  }, [getHouseholdId.data, householdId, joinOnceVerified, router, sessionData, setHouseholdId, status]);
+  }, [
+    getHouseholdId.data,
+    householdId,
+    joinOnceVerified,
+    router,
+    sessionData,
+    setHouseholdId,
+    status,
+  ]);
   return (
     <div className="bg-darkgray">
       <div className="flex h-[calc(100vh-98px)] w-full flex-col justify-center space-y-2 rounded-b-xl  lg:h-[calc(100vh-116px)]">
-        <div className="h-full flex flex-col bg-snow rounded-b-xl">
+        <div className="flex h-full flex-col rounded-b-xl bg-snow">
           <div className="flex h-full w-full flex-col items-center justify-center">
             <p className=" px-6 py-6 text-center">
               Create a new household to start your journey to having a more
@@ -87,7 +95,7 @@ const FirstTimeLogin = () => {
               <JoinHouseholdByInviteForm />
             </Modal>
           </div>
-        <Footer />
+          <Footer />
         </div>
       </div>
     </div>
