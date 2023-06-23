@@ -18,7 +18,9 @@ const FirstTimeLogin = () => {
   const getHouseholdId = api.household.getHouseholdId.useQuery();
   const { data: sessionData, status } = useSession();
   const router = useRouter();
+  const joinOnceVerified = api.invite.joinOnceVerified.useMutation();
   useEffect(() => {
+    joinOnceVerified.mutate();
     getHouseholdId.data &&
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       setHouseholdId(getHouseholdId.data.householdId!);

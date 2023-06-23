@@ -146,6 +146,8 @@ export const inviteRouter = createTRPCRouter({
           where: { email: userEmail },
         });
         return currUser.householdId;
+      } else {
+        return;
       }
     }
   ),
