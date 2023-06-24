@@ -97,58 +97,59 @@ export const inviteRouter = createTRPCRouter({
       });
     }),
 
-  verifyByLink: publicProcedure
-    .input(z.object({ token: z.string() }))
-    .mutation(async ({ ctx, input }) => {
-      await ctx.prisma.invite.update({
-        where: { token: input.token },
-        data: {
-          isVerified: true,
-        },
-      });
-    }),
+  // verifyByLink: publicProcedure
+  //   .input(z.object({ token: z.string() }))
+  //   .mutation(async ({ ctx, input }) => {
+  //     const currInvite = await ctx.prisma.invite.update({
+  //       where: { token: input.token },
+  //       data: {
+  //         isVerified: true,
+  //       },
+  //     });
+  //     return currInvite;
+  //   }),
 
-  joinOnceVerified: protectedProcedure.mutation(
-    async ({ ctx: { session, prisma } }) => {
-      const userEmail = session.user.email ?? undefined; // Set null to undefined
-      const currUser = await prisma.invite.findUnique({
-        where: {
-          email: userEmail,
-        },
-      });
-      if (!currUser) throw new Error("This user has not been found!");
+  // joinOnceVerified: protectedProcedure.mutation(
+  //   async ({ ctx: { session, prisma } }) => {
+  //     const userEmail = session.user.email ?? undefined; // Set null to undefined
+  //     const currUser = await prisma.invite.findUnique({
+  //       where: {
+  //         email: userEmail,
+  //       },
+  //     });
+  //     if (!currUser) throw new Error("This user has not been found!");
 
-      if (currUser.isVerified) {
-        const userHouseholdId = currUser.householdId ?? undefined;
-        await prisma.household.update({
-          where: {
-            householdId: userHouseholdId,
-          },
-          data: {
-            members: {
-              connect: {
-                id: session.user.id,
-              },
-            },
-          },
-        });
+  //     if (currUser.isVerified === true) {
+  //       const userHouseholdId = currUser.householdId ?? undefined;
+  //       await prisma.household.update({
+  //         where: {
+  //           householdId: userHouseholdId,
+  //         },
+  //         data: {
+  //           members: {
+  //             connect: {
+  //               id: session.user.id,
+  //             },
+  //           },
+  //         },
+  //       });
 
-        await prisma.user.update({
-          where: {
-            id: session.user.id,
-          },
-          data: {
-            householdId: currUser.householdId,
-          },
-        });
+  //       await prisma.user.update({
+  //         where: {
+  //           id: session.user.id,
+  //         },
+  //         data: {
+  //           householdId: currUser.householdId,
+  //         },
+  //       });
 
-        await prisma.invite.delete({
-          where: { email: userEmail },
-        });
-        return currUser.householdId;
-      } else {
-        return;
-      }
-    }
-  ),
+  //       await prisma.invite.delete({
+  //         where: { email: userEmail },
+  //       });
+  //       return currUser.householdId;
+  //     } else {
+  //       return;
+  //     }
+  //   }
+  // ),
 });

@@ -15,21 +15,18 @@ const Home: NextPage = () => {
   const { householdId, setHouseholdId, windowSize } = useContext(GlobalContext);
   const { data: sessionData, status } = useSession();
   const [domLoaded, setDomLoaded] = useState(false);
-  const { token } = Array.isArray(router.query)
-    ? { token: router.query[0] as string | undefined }
-    : { token: router.query?.token as string | undefined };
+  // const { token } = Array.isArray(router.query)
+  //   ? { token: router.query[0] as string | undefined }
+  //   : { token: router.query?.token as string | undefined };
 
-  const verifyInvite = api.invite.verifyByLink.useMutation({
-    retry: 3,
-    onSuccess: async () => {
-      await router.push("/");
-      // await signIn();
-     
-    },
-    onError: (error) => console.log(error),
-  });
-
-  token !== undefined && verifyInvite.mutate({ token });
+  // const verifyInvite = api.invite.verifyByLink.useMutation({
+  //   retry: 3,
+  //   onSuccess: async () => {
+  //     await router.push("/");
+  //     // await signIn();
+  //   },
+  //   onError: (error) => console.log(error),
+  // });
 
   // const joinOnceVerified = api.invite.joinOnceVerified.useMutation();
 
@@ -39,6 +36,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     setDomLoaded(true);
+    // token !== undefined && verifyInvite.mutate({ token });
     getHouseholdId.data &&
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       setHouseholdId(getHouseholdId.data.householdId!);
@@ -54,7 +52,7 @@ const Home: NextPage = () => {
       void router.push("/firstLogin");
     }
 
-    // if (status !== "loading" && sessionData == undefined) void router.push("/");
+    if (status !== "loading" && sessionData == undefined) void router.push("/");
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getHouseholdId.data, householdId, sessionData, status]);
