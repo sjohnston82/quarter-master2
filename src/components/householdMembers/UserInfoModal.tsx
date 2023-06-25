@@ -6,6 +6,7 @@ import Image from "next/image";
 import dayjs from "dayjs";
 import { useSession } from "next-auth/react";
 import RemoveMemberConfirmationModal from "./RemoveMemberConfirmationModal";
+import { toast } from "react-hot-toast";
 
 type UserInfoModalProps = {
   showingUserInfoModal: string;
@@ -26,6 +27,17 @@ const UserInfoModal = ({
   const currUser = membersList?.find(
     (member) => member.id === showingUserInfoModal
   );
+  const promoteToAdminRoute = api.useContext().household;
+  const promoteToAdmin = api.user.promoteToAdmin.useMutation({
+    onSuccess: async () => {
+      toast.success(
+        currUser?.name
+          ? `Promoted ${currUser.name} to admin!`
+          : "Promoted user to admin."
+      );
+      await promoteToAdminRoute.getHouseholdMembers.invalidate();
+    },
+  });
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
   return (
@@ -66,9 +78,12 @@ const UserInfoModal = ({
 
             {sessionData?.user.role === "ADMIN" && (
               <div className="">
-                <div className="mt-3 flex gap-4 justify-center">
+                <div className="mt-3 flex justify-center gap-4">
                   <button
-                    className="rounded-3xl px-2 py-1 border border-slate-800 text-sm font-semibold disabled:border-slate-300 disabled:text-slate-400"
+                    className="rounded-3xl border border-slate-800 px-2 py-1 text-sm font-semibold disabled:border-slate-300 disabled:text-slate-400"
+                    onClick={() =>
+                      currUser && promoteToAdmin.mutate({ id: currUser.id })
+                    }
                     disabled={
                       currUser?.role === "ADMIN" ||
                       currUser?.id === sessionData.user.id
@@ -77,7 +92,7 @@ const UserInfoModal = ({
                     Promote to Admin
                   </button>
                   <button
-                    className="rounded-3xl px-2 border border-slate-800 text-sm font-semibold disabled:border-slate-300 disabled:text-slate-400"
+                    className="rounded-3xl border border-slate-800 px-2 text-sm font-semibold disabled:border-slate-300 disabled:text-slate-400"
                     onClick={() => setShowConfirmationModal(true)}
                     disabled={currUser?.role === "ADMIN"}
                   >
