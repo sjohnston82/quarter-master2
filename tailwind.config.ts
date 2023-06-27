@@ -19,6 +19,7 @@ export default {
       fontFamily: {
         Evogria: ["Evogria"],
         ALoveofThunder: ["ALoveofThunder"],
+        RubikMonoOne: ["Rubik Mono One"],
       },
       listStyleImage: {
         forkSpoon: 'url("/img/fork-spoon.webp")',

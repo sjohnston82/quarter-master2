@@ -23,9 +23,9 @@ const MainLayout = () => {
 
   return (
     <div className="flex flex-col bg-darkgray">
-      <div className="flex h-full items-center justify-center bg-darkgray font-ALoveofThunder text-4xl text-woodsmoke underline lg:text-5xl  ">
-        <h1 className=" text-slate-300">
-          <span className="text-[42px] lg:text-6xl">Q</span>uartermaster
+      <div className="flex h-full items-center justify-center bg-darkgray font-RubikMonoOne text-4xl text-woodsmoke underline lg:text-5xl  ">
+        <h1 className=" text-slate-300 ">
+          <span className="text-[42px] lg:text-6xl">Q</span>UARTERMASTER
         </h1>
       </div>
       <div className="flex h-14 items-center justify-between rounded-t-xl bg-mango px-2">
