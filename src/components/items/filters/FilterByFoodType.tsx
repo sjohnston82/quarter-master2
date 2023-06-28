@@ -13,7 +13,7 @@ interface FilterByFoodTypeProps {
 type FoodType = RouterOutputs["items"]["getFoodCategoryCount"][0];
 
 
-const FilterByFoodType = ({filterItemsCategory, handleChange, foodTypeRef, selectedFoodCategory, setSelectedFoodCategory}: FilterByFoodTypeProps) =>{
+const FilterByFoodType = ({filterItemsCategory, handleChange, foodTypeRef, setSelectedFoodCategory}: FilterByFoodTypeProps) =>{
   const { householdId } = useContext(GlobalContext)
   const [foodTypesList, setFoodTypesList] = useState<FoodType[]>();
 

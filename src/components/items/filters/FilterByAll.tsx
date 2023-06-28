@@ -1,6 +1,5 @@
 import {
   FormControl,
-  FormLabel,
   InputLabel,
   MenuItem,
   Select,
@@ -22,12 +21,6 @@ const FilterByAll = ({
       <FormControl fullWidth>
         <InputLabel
           id="filterItemsBy"
-          // sx={{
-          //   "&.Mui-focused": {
-          //     display: "none",
-          //   },
-          //   fontSize: "1.1rem",
-          // }}
         >
           Filter By:
         </InputLabel>

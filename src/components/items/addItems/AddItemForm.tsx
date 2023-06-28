@@ -12,8 +12,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-hot-toast";
 import { type DateValidationError } from "@mui/x-date-pickers";
-import LoadingSpinner from "../../ui/LoadingSpinner";
-import { start } from "repl";
 
 interface AddItemManuallyInputProps {
   name: string;
@@ -31,15 +29,6 @@ const addItemManuallySchema = z.object({
     .string()
     .min(2, { message: "You need at least two characters" })
     .max(75, { message: "You have exceeded the characters amount." }),
-  // brand_name: z
-  //   .union([
-  //     z
-  //       .string()
-  //       .length(0, { message: "You need at least two characters or blank." }),
-  //     z.string().min(2),
-  //   ])
-  //   .transform((e) => (e === "" ? null : e))
-  //   .optional(),
   amount: z.coerce.number().min(1),
   amountType: z.string().optional(),
   flavor: z.string().optional(),

@@ -3,7 +3,6 @@ import { useState, useContext, useRef, useEffect } from "react";
 import { GlobalContext } from "~/context/GlobalContextProvider";
 import FoodItems from "../items/FoodItems";
 import BarcodeScanner from "../barcode/BarcodeScanner";
-import Searchbar from "../ui/ActionBarSmall";
 import FilterByAll from "../items/filters/FilterByAll";
 import FilterByExpiringSoon from "../items/filters/FilterByExpiringSoon";
 import FilterByStorageArea from "../items/filters/FilterByStorageArea";

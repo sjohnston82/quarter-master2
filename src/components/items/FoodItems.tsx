@@ -29,38 +29,11 @@ const FoodItems = ({
     debouncedValue,
     searchingForProduct,
     storageAreas,
-    setLimit,
     showingItemCards,
-    windowSize,
-    limit,
-    setShowingItemCards,
   } = useContext(GlobalContext);
 
-  const [domLoaded, setDomLoaded] = useState(false);
-  useEffect(() => {
-    setDomLoaded(true);
-  }, []);
 
-  useEffect(() => {
-    windowSize.innerWidth < 640 && setShowingItemCards(false);
-
-    function setLimitSize() {
-      if (windowSize.innerWidth < 927 || !showingItemCards) {
-        setLimit(10);
-      }
-      if (windowSize.innerWidth > 927 && showingItemCards) {
-        setLimit(12);
-      }
-      if (windowSize.innerWidth > 1231 && showingItemCards) {
-        setLimit(16);
-      }
-
-      if (windowSize.innerWidth > 1535 && showingItemCards) {
-        setLimit(20);
-      }
-    }
-    setLimitSize();
-  }, [setLimit, setShowingItemCards, showingItemCards, windowSize.innerWidth]);
+  
 
   const getAllItemsInfinite = api.items.getAllItemsInfinite.useInfiniteQuery(
     { householdId },

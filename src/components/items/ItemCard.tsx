@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Avatar, Button, Chip } from "@mui/material";
 import dayjs from "dayjs";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { type RouterOutputs } from "~/utils/api";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ItemOptionsMenu from "./optionsMenu/ItemOptionsMenu";
@@ -19,7 +19,6 @@ const ItemCard = ({ ...item }: Item) => {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const { windowSize } = useContext(GlobalContext);
 
   let size;
   if (item.foodCategories.length > 3) {
@@ -35,7 +34,6 @@ const ItemCard = ({ ...item }: Item) => {
             <Chip
               key={i}
               label={category}
-              // size={windowSize.innerWidth > 1279 ? "medium" : "small"}
               size="small"
               avatar={
                 <Avatar src={chipIcons[category as keyof typeof chipIcons]} />

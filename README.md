@@ -1,28 +1,71 @@
-# Create T3 App
+# Quartermaster Pantry Inventory Manager
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## Introduction
 
-## What's next? How do I make an app with this?
+Quartermaster is a family-based pantry inventory manager where you can keep track of all the food items in your house. Invite your family members to a Household and everyone can stay up-to-date on what's on your shelves, what's on your shopping list and when things are going to expire.
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Features
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- Easily add items by using your phone's camera to scan bar codes
+- Invite the whole family to stay up-to-date together
+- Track expiration dates so you cut down on wastage
+- Share shopping lists so everyone knows what's needed at home while they're out
+- User authentication with Gmail and Facebook login
+- Responsive design ensuring optimal user experience on different devices
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## Usage
 
-## Learn More
+To start using Quartermaster, visit [https://www.quarter-master.net](https://www.quarter-master.net) and sign in with either your Gmail or Facebook account to create an account.
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+You will be redirected to a page where you can either create a new Household, which is the name for the space which you and whoever you invite can share inventories of your food items and shopping lists, or where you can join an existing household if you were sent an invitation code via email.
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+Once you have created a new household, you can start by either inviting your family members to join you, or by creating a Storage Area, which is where the food items in your house are stored, (pantry, refrigerator, etc...). Once you create one, you can start adding the food items you have there either by scanning the item's bar code, or by entering the item's information manually. You can add information such as expiration dates, brand, flavor and what type of food it is.
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## Installation
 
-## How do I deploy this?
+If you wish to install Quartermaster on your local machine, you can follow the following steps:
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+1. Clone the repository:
+
+```
+git clone https://github.com/sjohnston82/quarter-master2.git
+```
+
+2.  Navigate to the project directory:
+
+```
+cd quarter-master2
+```
+
+3.  Install dependencies:
+
+```
+npm install
+```
+
+4. Create a **.env** file based on the provided **.env.example** file and update the environment variables with your configuration.
+
+5. Set up the PostgreSQL database:
+
+- Create a new database in PostgreSQL.
+- Update the **DATABASE_URL** variable in the **.env** file with your database connection URL.
+
+6. Run database migrations:
+
+```
+npx prisma migrate dev
+```
+
+7. Start the development serverL
+
+```
+npm run dev
+```
+
+8. Open your browser and navigate to http://localhost:3000 to access the application.
+
+## Contributing
+
+Contributions to Quartermaster are welcome! If you encounter issues or have suggestions, please open an issue on the [Github Repository](https://github.com/sjohnston82/quarter-master2/issues/)
+
+Created and maintained by [Stephen Johnston](https://stephenmjohnston.net)

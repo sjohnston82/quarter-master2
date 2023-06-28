@@ -30,17 +30,11 @@ const AddItemMenu = () => {
     setBarcode,
     currentItemByUPC,
     setCurrentItemByUPC,
-    searchingForProduct,
     setSearchingForProduct,
   } = useContext(GlobalContext);
 
   const { reset } = useForm<NewItemInputProps>();
   const [showingMenu, setShowingMenu] = useState(false);
-  // const [searchingForProduct, setSearchingForProduct] = useState(false)
-  const [domLoaded, setDomLoaded] = useState(false);
-  useEffect(() => {
-    setDomLoaded(true);
-  }, []);
 
   useEffect(() => {
     const apiUrl =
@@ -75,7 +69,7 @@ const AddItemMenu = () => {
           });
       }
     }
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+
     getUPCInfo();
   }, [barcode, setBarcode, setCurrentItemByUPC, setSearchingForProduct]);
   useEffect(() => {

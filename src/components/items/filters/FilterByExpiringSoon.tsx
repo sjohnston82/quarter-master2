@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select, type SelectChangeEvent } from '@mui/material';
+import { FormControl, MenuItem, Select, type SelectChangeEvent } from '@mui/material';
 import React from 'react'
 
 interface FilterByExpiringSoonProps {
