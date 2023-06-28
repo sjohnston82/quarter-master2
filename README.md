@@ -15,7 +15,7 @@ Quartermaster is a family-based pantry inventory manager where you can keep trac
 
 ## Usage
 
-To start using Quartermaster, visit [https://www.quarter-master.net](https://www.quarter-master.net) and sign in with either your Gmail or Facebook account to create an account.
+To start using Quartermaster, visit [https://www.quarter-master.net](https://www.quarter-master.net) and sign in with either your Gmail or Facebook account.
 
 You will be redirected to a page where you can either create a new Household, which is the name for the space which you and whoever you invite can share inventories of your food items and shopping lists, or where you can join an existing household if you were sent an invitation code via email.
 

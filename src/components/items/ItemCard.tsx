@@ -1,17 +1,15 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Avatar, Button, Chip } from "@mui/material";
 import dayjs from "dayjs";
-import React, { useContext } from "react";
+import React from "react";
 import { type RouterOutputs } from "~/utils/api";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ItemOptionsMenu from "./optionsMenu/ItemOptionsMenu";
 import { chipIcons } from "~/utils/helperLists";
-import { GlobalContext } from "~/context/GlobalContextProvider";
+
 import { TruncatedText } from "../ui/TruncatedText";
 
 type Item = RouterOutputs["items"]["getAllItems"][0];
-
-
 
 const ItemCard = ({ ...item }: Item) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -29,12 +27,13 @@ const ItemCard = ({ ...item }: Item) => {
   return (
     <div className="relative max-h-[268px] w-[320px] rounded bg-snow p-2 shadow-lg shadow-black ">
       <div className="flex w-full flex-col space-y-1">
-        <div className="py-2 flex w-full flex-wrap justify-center gap-2 ">
+        <div className="flex min-h-[40px] w-full flex-wrap justify-center gap-2 rounded-t-xl bg-slate-400 py-2">
           {item.foodCategories.slice(0, size).map((category, i) => (
             <Chip
               key={i}
               label={category}
               size="small"
+              sx={{ backgroundColor: "#546e7a", color: "#fff" }}
               avatar={
                 <Avatar src={chipIcons[category as keyof typeof chipIcons]} />
               }
@@ -42,7 +41,9 @@ const ItemCard = ({ ...item }: Item) => {
           ))}
         </div>
         <h1 className=" text-center text-xl font-semibold">
-          <TruncatedText text={item.name} maxLength={21} classes="text-2xl font-light" />
+          <TruncatedText text={item.name} maxLength={21} classes="text-2xl ">
+            {item.name}
+          </TruncatedText>
         </h1>
         <div className="text-center">
           {item.daysUntilExpiry === null ? (
@@ -94,7 +95,7 @@ const ItemCard = ({ ...item }: Item) => {
         </div>
       </div>
 
-      <div className="absolute -right-5 top-2 ">
+      <div className="absolute -right-2 top-2 ">
         <Button
           id="basic-button"
           aria-controls={open ? "basic-menu" : undefined}
@@ -103,7 +104,7 @@ const ItemCard = ({ ...item }: Item) => {
           onClick={handleClick}
           size="large"
         >
-          <MoreVertIcon />
+          <MoreVertIcon className="text-black" />
         </Button>
         <ItemOptionsMenu
           open={open}
